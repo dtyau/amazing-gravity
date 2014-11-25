@@ -36,6 +36,12 @@ public class Ship {
 
     }
 
+    public float getLocationX() {
+
+        return locationX;
+
+    }
+
     private float radius, locationX, locationY;
 
     private static final float BASE_RADIUS = 24;
