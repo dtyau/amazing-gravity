@@ -49,7 +49,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         ship = new Ship();
 
-        //planet = new Planet();
+        planet = new Planet();
 
         stars = new ArrayList<Star>();
 
@@ -149,7 +149,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             }
 
-            //planet.update(ship);
+            planet.update(ship);
 
         }
 
@@ -167,7 +167,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             }
 
-            //planet.draw(canvas, paint);
+            planet.draw(canvas, paint);
 
             ship.draw(canvas, paint);
 
@@ -216,7 +216,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private Ship ship;
 
-    //private Planet planet;
+    private Planet planet;
 
     private ArrayList<Star> stars;
 
