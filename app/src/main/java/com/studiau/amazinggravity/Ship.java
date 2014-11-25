@@ -39,8 +39,8 @@ public class Ship {
     private float radius, locationX, locationY;
 
     private static final float BASE_RADIUS = 24;
-    
-    private static final float BASE_SPEEDX = 0.001f
+
+    private static final float BASE_SPEEDX = 0.001f;
 
     private static final float BASE_SPEEDY = 0.001f;
 
