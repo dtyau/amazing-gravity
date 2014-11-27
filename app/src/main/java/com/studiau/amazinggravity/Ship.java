@@ -20,6 +20,8 @@ public class Ship {
 
         locationY = BASE_LOCATIONY;
 
+        speedX = BASE_SPEEDX;
+
     }
 
     public void draw(Canvas canvas, Paint paint) {
@@ -27,6 +29,30 @@ public class Ship {
         paint.setColor(Color.WHITE);
 
         canvas.drawCircle(locationX, locationY, radius, paint);
+
+    }
+
+    public void handleActionDownAndMove(float touchEventX) {
+
+        float distanceX = Math.abs( locationX - touchEventX );
+
+        float newSpeedX = BASE_SPEEDX * ( 1 + ( distanceX / GameView.getCanvasWidth() ) );
+
+        if ( touchEventX < locationX ) {
+
+            speedX = newSpeedX;
+
+        } else if ( touchEventX > locationX) {
+
+            speedX = -newSpeedX;
+
+        }
+
+    }
+
+    public void handleActionUp() {
+
+        speedX = BASE_SPEEDX;
 
     }
 
@@ -48,11 +74,17 @@ public class Ship {
 
     }
 
-    private float radius, locationX, locationY;
+    public float getSpeedX() {
+
+        return speedX;
+
+    }
+
+    private float radius, locationX, locationY, speedX;
 
     private static final float BASE_RADIUS = 24;
 
-    private static final float BASE_SPEEDX = 0.001f;
+    private static final float BASE_SPEEDX = 0.004f;
 
     private static final float BASE_SPEEDY = 0.001f;
 
