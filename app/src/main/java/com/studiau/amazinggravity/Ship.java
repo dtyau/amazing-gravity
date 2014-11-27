@@ -127,7 +127,7 @@ public class Ship {
 
     private static final float BASE_SPEEDX = 0f;
 
-    private static final float MAX_ADDITIONAL_SPEEDX = 0.005f;
+    private static final float MAX_ADDITIONAL_SPEEDX = 0.008f;
 
     private static final float BASE_SPEEDY = 0.001f;
 

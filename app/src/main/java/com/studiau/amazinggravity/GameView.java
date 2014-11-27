@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -51,11 +52,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         planet = new Planet();
 
+        planet2 = new Planet();
+
         stars = new ArrayList<Star>();
 
-        for (int i = 0; i < AMOUNT_OF_STARS; i++) {
+        while ( stars.size() < AMOUNT_OF_STARS) {
 
-            stars.add( new Star() );
+            for (int i = 0; i < AMOUNT_OF_STARS; i++) {
+
+                stars.add(new Star());
+
+            }
 
         }
 
@@ -145,11 +152,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             for (int i = 0; i < AMOUNT_OF_STARS; i++) {
 
+                Log.d(TAG, "Ship is null: " + ship.equals(null));
+
                 stars.get(i).update(ship);
 
             }
 
             planet.update(ship);
+
+            planet2.update(ship);
 
             ship.update();
 
@@ -170,6 +181,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             }
 
             planet.draw(canvas, paint);
+
+            planet2.draw(canvas, paint);
 
             ship.draw(canvas, paint);
 
@@ -235,12 +248,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private Ship ship;
 
-    private Planet planet;
+    private Planet planet, planet2;
 
     private ArrayList<Star> stars;
 
     private static float canvasWidth, canvasHeight;
 
     private final int AMOUNT_OF_STARS = 100;
+
+    private final static String TAG = GameView.class.getSimpleName();
 
 }

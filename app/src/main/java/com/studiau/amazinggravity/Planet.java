@@ -104,9 +104,9 @@ public class Planet {
 
     private float mass, radius, locationX, locationY, speedX, speedY;
 
-    private final static int BASE_MASS = 8;
+    private final static int BASE_MASS = 10;
 
-    private final static int MAX_ADDITIONAL_MASS = 7;
+    private final static int MAX_ADDITIONAL_MASS = 4;
 
     private final static float RADIUS_TO_MASS_RATIO = 12;
 
