@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 
 import java.util.Random;
@@ -17,8 +18,6 @@ public class Ship {
 
     public Ship(Context context) {
 
-        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ship);
-
         radius = BASE_RADIUS;
 
         locationX = BASE_LOCATIONX;
@@ -27,12 +26,24 @@ public class Ship {
 
         speedX = BASE_SPEEDX;
 
+        rotation = 0;
+
+        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ship);
+
+        matrix = new Matrix();
+
+        matrix.postTranslate(-bitmap.getWidth()/2, -bitmap.getHeight()/2);
+
+        matrix.postTranslate(locationX, locationY);
+
     }
 
     public void draw(Canvas canvas, Paint paint) {
 
-        canvas.drawBitmap(bitmap, locationX - (bitmap.getWidth() / 2),
-                locationY - (bitmap.getHeight() / 2), paint);
+        canvas.drawBitmap(bitmap, matrix, paint);
+
+        //canvas.drawBitmap(bitmap, locationX - (bitmap.getWidth() / 2),
+        //        locationY - (bitmap.getHeight() / 2), paint);
 
     }
 
@@ -46,11 +57,23 @@ public class Ship {
 
             speedX = newSpeedX;
 
+            rotation = MAX_ROTATION * (distanceX / GameView.getCanvasWidth() );
+
         } else if ( touchEventX > locationX) {
 
             speedX = -newSpeedX;
 
+            rotation = -MAX_ROTATION * (distanceX / GameView.getCanvasWidth() );
+
         }
+
+        matrix.reset();
+
+        matrix.postTranslate(-bitmap.getWidth()/2, -bitmap.getHeight()/2);
+
+        matrix.postRotate(rotation);
+
+        matrix.postTranslate(locationX, locationY);
 
     }
 
@@ -86,7 +109,9 @@ public class Ship {
 
     private Bitmap bitmap;
 
-    private float radius, locationX, locationY, speedX;
+    private Matrix matrix;
+
+    private float radius, locationX, locationY, speedX, rotation;
 
     private static final float BASE_RADIUS = 24;
 
@@ -98,5 +123,6 @@ public class Ship {
 
     private static final float BASE_LOCATIONY = ( GameView.getCanvasHeight() * 0.8f );
 
+    private static final float MAX_ROTATION = 120;
 
 }
