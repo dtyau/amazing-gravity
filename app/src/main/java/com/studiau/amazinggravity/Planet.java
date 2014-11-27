@@ -49,7 +49,7 @@ public class Planet {
                 GameView.getCanvasWidth();
 
         float newSpeedX = (float) ( ( mass / ( BASE_MASS + MAX_ADDITIONAL_MASS ) ) /
-                ( Math.pow( ( distanceX + 1.2), 18 ) ) );
+                ( Math.pow( ( distanceX + 1.3), 18 ) ) );
 
         if ( locationX < ship.getLocationX() ) {
 
@@ -67,7 +67,7 @@ public class Planet {
                 GameView.getCanvasHeight();
 
         float newSpeedY = (float) ( ( mass / ( BASE_MASS + MAX_ADDITIONAL_MASS ) ) /
-                ( Math.pow( ( distanceY + 1.2), 18 ) ) );
+                ( Math.pow( ( distanceY + 1.4), 18 ) ) );
 
         speedY += newSpeedY;
 
@@ -90,11 +90,11 @@ public class Planet {
 
     private float mass, radius, locationX, locationY, speedX, speedY;
 
-    private final static int BASE_MASS = 4;
+    private final static int BASE_MASS = 6;
 
-    private final static int MAX_ADDITIONAL_MASS = 12;
+    private final static int MAX_ADDITIONAL_MASS = 10;
 
-    private final static float RADIUS_TO_MASS_RATIO = 16;
+    private final static float RADIUS_TO_MASS_RATIO = 12;
 
     private final static float BASE_SPEEDX = 0f;
 
