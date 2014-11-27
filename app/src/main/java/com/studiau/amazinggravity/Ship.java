@@ -67,7 +67,7 @@ public class Ship {
 
         float distanceX = Math.abs( locationX - touchEventX );
 
-        float newSpeedX = BASE_SPEEDX * ( 1 + ( distanceX / GameView.getCanvasWidth() ) );
+        float newSpeedX = BASE_SPEEDX + ( MAX_ADDITIONAL_SPEEDX * ( distanceX / GameView.getCanvasWidth() ) );
 
         if ( touchEventX < locationX ) {
 
@@ -125,7 +125,9 @@ public class Ship {
 
     private static final float BASE_RADIUS = 24;
 
-    private static final float BASE_SPEEDX = 0.004f;
+    private static final float BASE_SPEEDX = 0f;
+
+    private static final float MAX_ADDITIONAL_SPEEDX = 0.004f;
 
     private static final float BASE_SPEEDY = 0.001f;
 
@@ -135,6 +137,6 @@ public class Ship {
 
     private static final float MAX_ROTATION = 120;
 
-    private static final float ROTATION_SPEED = 3;
+    private static final float ROTATION_SPEED = 5;
 
 }
