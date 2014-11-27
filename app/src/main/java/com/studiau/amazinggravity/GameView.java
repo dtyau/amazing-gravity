@@ -151,6 +151,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             planet.update(ship);
 
+            ship.update();
+
         }
 
     }

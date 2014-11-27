@@ -4,11 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-
-import java.util.Random;
 
 /**
  * Author: Daniel Au.
@@ -26,44 +23,27 @@ public class Ship {
 
         speedX = BASE_SPEEDX;
 
-        rotation = 0;
+        desiredRotation = 0;
 
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ship);
 
         matrix = new Matrix();
 
-        matrix.postTranslate(-bitmap.getWidth()/2, -bitmap.getHeight()/2);
+        matrix.postTranslate(-bitmap.getWidth() / 2, -bitmap.getHeight() / 2);
 
         matrix.postTranslate(locationX, locationY);
 
     }
 
-    public void draw(Canvas canvas, Paint paint) {
+    public void update() {
 
-        canvas.drawBitmap(bitmap, matrix, paint);
+        if ( desiredRotation > 0 || rotation < desiredRotation ) {
 
-        //canvas.drawBitmap(bitmap, locationX - (bitmap.getWidth() / 2),
-        //        locationY - (bitmap.getHeight() / 2), paint);
+            rotation += ROTATION_SPEED;
 
-    }
+        } else if ( desiredRotation < 0 || rotation > desiredRotation ) {
 
-    public void handleActionDownAndMove(float touchEventX) {
-
-        float distanceX = Math.abs( locationX - touchEventX );
-
-        float newSpeedX = BASE_SPEEDX * ( 1 + ( distanceX / GameView.getCanvasWidth() ) );
-
-        if ( touchEventX < locationX ) {
-
-            speedX = newSpeedX;
-
-            rotation = MAX_ROTATION * (distanceX / GameView.getCanvasWidth() );
-
-        } else if ( touchEventX > locationX) {
-
-            speedX = -newSpeedX;
-
-            rotation = -MAX_ROTATION * (distanceX / GameView.getCanvasWidth() );
+            rotation -= ROTATION_SPEED;
 
         }
 
@@ -77,9 +57,39 @@ public class Ship {
 
     }
 
+    public void draw(Canvas canvas, Paint paint) {
+
+        canvas.drawBitmap(bitmap, matrix, paint);
+
+    }
+
+    public void handleActionDownAndMove(float touchEventX) {
+
+        float distanceX = Math.abs( locationX - touchEventX );
+
+        float newSpeedX = BASE_SPEEDX * ( 1 + ( distanceX / GameView.getCanvasWidth() ) );
+
+        if ( touchEventX < locationX ) {
+
+            speedX = newSpeedX;
+
+            desiredRotation = MAX_ROTATION * (distanceX / GameView.getCanvasWidth() );
+
+        } else if ( touchEventX > locationX) {
+
+            speedX = -newSpeedX;
+
+            desiredRotation = -MAX_ROTATION * (distanceX / GameView.getCanvasWidth() );
+
+        }
+
+    }
+
     public void handleActionUp() {
 
         speedX = BASE_SPEEDX;
+
+        desiredRotation = 0;
 
     }
 
@@ -111,7 +121,7 @@ public class Ship {
 
     private Matrix matrix;
 
-    private float radius, locationX, locationY, speedX, rotation;
+    private float radius, locationX, locationY, speedX, desiredRotation, rotation;
 
     private static final float BASE_RADIUS = 24;
 
@@ -124,5 +134,7 @@ public class Ship {
     private static final float BASE_LOCATIONY = ( GameView.getCanvasHeight() * 0.8f );
 
     private static final float MAX_ROTATION = 120;
+
+    private static final float ROTATION_SPEED = 3;
 
 }
