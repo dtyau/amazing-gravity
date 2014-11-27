@@ -3,6 +3,7 @@ package com.studiau.amazinggravity;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 
 import java.util.Random;
 
@@ -15,6 +16,12 @@ public class Planet {
     public Planet() {
 
         random = new Random();
+
+        reset();
+
+    }
+
+    private void reset() {
 
         mass = BASE_MASS + random.nextInt(MAX_ADDITIONAL_MASS);
 
@@ -32,7 +39,14 @@ public class Planet {
 
     public void update(Ship ship) {
 
-        float distanceX = Math.abs( locationX - ship.getLocationX() );
+        if ( locationY > GameView.getCanvasHeight() + ( 2 * radius ) ) {
+
+            reset();
+
+        }
+
+        float distanceX = Math.abs(locationX - ship.getLocationX()) /
+                GameView.getCanvasWidth();
 
         float newSpeedX = (float) ( ( mass / ( BASE_MASS + MAX_ADDITIONAL_MASS ) ) /
                 ( Math.pow( ( distanceX + 1.2), 18 ) ) );
@@ -47,16 +61,20 @@ public class Planet {
 
         }
 
-        locationX += speedX;
+        locationX += speedX * GameView.getCanvasWidth();
 
-        float distanceY = Math.abs( locationY - ship.getLocationY() );
+        float distanceY = Math.abs( locationY - ship.getLocationY() ) /
+                GameView.getCanvasHeight();
 
         float newSpeedY = (float) ( ( mass / ( BASE_MASS + MAX_ADDITIONAL_MASS ) ) /
                 ( Math.pow( ( distanceY + 1.2), 18 ) ) );
 
         speedY += newSpeedY;
 
-        locationY += speedY;
+        locationY += speedY * GameView.getCanvasHeight();
+
+        Log.d(TAG, "speedX: " + speedX + ", speedY: " + speedY);
+        Log.d(TAG, "locationX: " + locationX + ", locationY: " + locationY);
 
     }
 
@@ -80,6 +98,8 @@ public class Planet {
 
     private final static float BASE_SPEEDX = 0f;
 
-    private final static float BASE_SPEEDY = 0.001f;
+    private final static float BASE_SPEEDY = 0.005f;
+
+    private final static String TAG = Planet.class.getSimpleName();
 
 }
