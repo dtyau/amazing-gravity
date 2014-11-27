@@ -73,9 +73,6 @@ public class Planet {
 
         locationY += speedY * GameView.getCanvasHeight();
 
-        Log.d(TAG, "speedX: " + speedX + ", speedY: " + speedY);
-        Log.d(TAG, "locationX: " + locationX + ", locationY: " + locationY);
-
     }
 
     public void draw(Canvas canvas, Paint paint) {
