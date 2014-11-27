@@ -37,11 +37,11 @@ public class Ship {
 
     public void update() {
 
-        if ( desiredRotation > 0 || rotation < desiredRotation ) {
+        if ( desiredRotation > rotation ) {
 
             rotation += ROTATION_SPEED;
 
-        } else if ( desiredRotation < 0 || rotation > desiredRotation ) {
+        } else if ( desiredRotation < rotation ) {
 
             rotation -= ROTATION_SPEED;
 
@@ -49,11 +49,11 @@ public class Ship {
 
         matrix.reset();
 
-        matrix.postTranslate(-bitmap.getWidth()/2, -bitmap.getHeight()/2);
+        matrix.postTranslate( -bitmap.getWidth() / 2, -bitmap.getHeight() / 2 );
 
-        matrix.postRotate(rotation);
+        matrix.postRotate( rotation );
 
-        matrix.postTranslate(locationX, locationY);
+        matrix.postTranslate( locationX, locationY );
 
     }
 
