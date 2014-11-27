@@ -30,9 +30,33 @@ public class Planet {
 
     }
 
-    public void update() {
+    public void update(Ship ship) {
 
+        float distanceX = Math.abs( locationX - ship.getLocationX() );
 
+        float newSpeedX = (float) ( ( mass / ( BASE_MASS + MAX_ADDITIONAL_MASS ) ) /
+                ( Math.pow( ( distanceX + 1.2), 18 ) ) );
+
+        if ( locationX < ship.getLocationX() ) {
+
+            speedX += newSpeedX;
+
+        } else if ( locationX > ship.getLocationX() ) {
+
+            speedX -= newSpeedX;
+
+        }
+
+        locationX += speedX;
+
+        float distanceY = Math.abs( locationY - ship.getLocationY() );
+
+        float newSpeedY = (float) ( ( mass / ( BASE_MASS + MAX_ADDITIONAL_MASS ) ) /
+                ( Math.pow( ( distanceY + 1.2), 18 ) ) );
+
+        speedY += newSpeedY;
+
+        locationY += speedY;
 
     }
 
