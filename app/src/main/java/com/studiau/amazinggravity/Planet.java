@@ -45,11 +45,32 @@ public class Planet {
 
         }
 
-        float distanceX = Math.abs(locationX - ship.getLocationX()) /
+        updateSpeedAndLocationX(ship);
+
+        updateSpeedAndLocationY(ship);
+
+    }
+
+    public void draw(Canvas canvas, Paint paint) {
+
+        paint.setColor(Color.WHITE);
+
+        canvas.drawCircle(locationX, locationY, radius, paint);
+
+    }
+
+    private void updateSpeedAndLocationX(Ship ship) {
+
+        float distanceX = Math.abs( locationX - ship.getLocationX() ) /
                 GameView.getCanvasWidth();
 
+        float distanceY = 1 - ( Math.abs( locationY - ship.getLocationY() ) /
+                ship.getLocationY() );
+
         float newSpeedX = (float) ( ( mass / ( BASE_MASS + MAX_ADDITIONAL_MASS ) ) /
-                ( Math.pow( ( distanceX + 1.4), 18 ) ) );
+                //( Math.pow( ( distanceX + 1.6), 12 ) ) *
+                ( Math.pow( ( distanceX + 1.7), 10 ) ) *
+                ( distanceY ) );
 
         if ( locationX < ship.getLocationX() ) {
 
@@ -63,6 +84,10 @@ public class Planet {
 
         locationX += ( speedX - ship.getSpeedX() ) * GameView.getCanvasWidth();
 
+    }
+
+    private void updateSpeedAndLocationY(Ship ship) {
+
         float distanceY = Math.abs( locationY - ship.getLocationY() ) /
                 GameView.getCanvasHeight();
 
@@ -75,21 +100,13 @@ public class Planet {
 
     }
 
-    public void draw(Canvas canvas, Paint paint) {
-
-        paint.setColor(Color.WHITE);
-
-        canvas.drawCircle(locationX, locationY, radius, paint);
-
-    }
-
     private Random random;
 
     private float mass, radius, locationX, locationY, speedX, speedY;
 
-    private final static int BASE_MASS = 6;
+    private final static int BASE_MASS = 8;
 
-    private final static int MAX_ADDITIONAL_MASS = 10;
+    private final static int MAX_ADDITIONAL_MASS = 7;
 
     private final static float RADIUS_TO_MASS_RATIO = 12;
 
