@@ -1,5 +1,8 @@
 package com.studiau.amazinggravity;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -12,7 +15,9 @@ import java.util.Random;
 
 public class Ship {
 
-    public Ship() {
+    public Ship(Context context) {
+
+        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ship);
 
         radius = BASE_RADIUS;
 
@@ -26,9 +31,8 @@ public class Ship {
 
     public void draw(Canvas canvas, Paint paint) {
 
-        paint.setColor(Color.WHITE);
-
-        canvas.drawCircle(locationX, locationY, radius, paint);
+        canvas.drawBitmap(bitmap, locationX - (bitmap.getWidth() / 2),
+                locationY - (bitmap.getHeight() / 2), paint);
 
     }
 
@@ -79,6 +83,8 @@ public class Ship {
         return speedX;
 
     }
+
+    private Bitmap bitmap;
 
     private float radius, locationX, locationY, speedX;
 

@@ -47,7 +47,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         startGameThread();
 
-        ship = new Ship();
+        ship = new Ship( getContext() );
 
         planet = new Planet();
 
@@ -184,6 +184,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             case (MotionEvent.ACTION_DOWN) :
 
+                ship.handleActionDownAndMove( event.getX() );
                 ship.handleActionDownAndMove( event.getX() );
 
                 return true;
