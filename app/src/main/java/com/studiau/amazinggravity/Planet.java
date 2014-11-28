@@ -1,5 +1,6 @@
 package com.studiau.amazinggravity;
 
+import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -17,6 +18,8 @@ public class Planet {
 
         random = new Random();
 
+        blurMaskFilter = new BlurMaskFilter(100, BlurMaskFilter.Blur.OUTER);
+
         reset();
 
     }
@@ -29,8 +32,10 @@ public class Planet {
 
         locationX = random.nextFloat() * GameView.getCanvasWidth();
 
-        while ( locationX / GameView.getCanvasWidth() > 0.4 &&
-                locationX / GameView.getCanvasWidth() < 0.6 ) {
+        while ( locationX / GameView.getCanvasWidth() < 0.1 ||
+                locationX / GameView.getCanvasWidth() > 0.4 &&
+                locationX / GameView.getCanvasWidth() < 0.6 ||
+                locationX / GameView.getCanvasWidth() > 0.9 ) {
 
             locationX = random.nextFloat() * GameView.getCanvasWidth();
 
@@ -62,7 +67,11 @@ public class Planet {
 
         paint.setColor(Color.WHITE);
 
+        paint.setMaskFilter(blurMaskFilter);
+
         canvas.drawCircle(locationX, locationY, radius, paint);
+
+        paint.setMaskFilter(null);
 
     }
 
@@ -70,8 +79,6 @@ public class Planet {
 
         float distanceX = Math.abs( locationX - ship.getLocationX() ) /
                 GameView.getCanvasWidth();
-
-        //if ( distanceX > 0.05 ) {
 
             float verticalDampening = (float) ( 1 - ( Math.pow( ( Math.abs( locationY - ship.getLocationY() ) /
                     ( ship.getLocationY() + (radius) ) ), 0.3 ) ) );
@@ -90,8 +97,6 @@ public class Planet {
 
             }
 
-       // }
-
         locationX += ( speedX - ship.getSpeedX() ) * GameView.getCanvasWidth();
 
     }
@@ -101,10 +106,14 @@ public class Planet {
         float distanceY = Math.abs( locationY - ship.getLocationY() ) /
                 GameView.getCanvasHeight();
 
-        float newSpeedY = (float) ( ( mass / ( BASE_MASS + MAX_ADDITIONAL_MASS ) ) /
-                ( Math.pow( ( distanceY + 1.4), 17 ) ) );
+        if ( distanceY > 0.1 ) {
 
-        speedY += newSpeedY;
+            float newSpeedY = (float) ((mass / (BASE_MASS + MAX_ADDITIONAL_MASS)) /
+                    (Math.pow((distanceY + 1.4), 17)));
+
+            speedY += newSpeedY;
+
+        }
 
         locationY += speedY * GameView.getCanvasHeight();
 
@@ -112,17 +121,19 @@ public class Planet {
 
     private Random random;
 
+    private BlurMaskFilter blurMaskFilter;
+
     private float mass, radius, locationX, locationY, speedX, speedY;
 
     private final static int BASE_MASS = 8;
 
-    private final static int MAX_ADDITIONAL_MASS = 6;
+    private final static int MAX_ADDITIONAL_MASS = 5;
 
     private final static float RADIUS_TO_MASS_RATIO = 12;
 
     private final static float BASE_SPEEDX = 0f;
 
-    private final static float BASE_SPEEDY = 0.008f;
+    private final static float BASE_SPEEDY = 0.009f;
 
 
 
