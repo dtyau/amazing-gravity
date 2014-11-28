@@ -133,6 +133,12 @@ public class Ship {
 
     }
 
+    public float getExhaustLocationY() {
+
+        return locationY + ( bitmap.getHeight() / 2 );
+
+    }
+
     public float getSpeedX() {
 
         return speedX;
