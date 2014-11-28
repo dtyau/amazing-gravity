@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.util.Log;
 
 /**
  * Author: Daniel Au.
@@ -37,15 +38,20 @@ public class Ship {
 
     public void update() {
 
-        if ( desiredRotation > rotation ) {
+        if ( rotation < desiredRotation &&
+                ( rotation + ROTATION_SPEED ) <= desiredRotation ) {
 
             rotation += ROTATION_SPEED;
 
-        } else if ( desiredRotation < rotation ) {
+        } else if ( rotation > desiredRotation &&
+                ( rotation - ROTATION_SPEED ) >= desiredRotation ) {
 
             rotation -= ROTATION_SPEED;
 
         }
+
+        Log.d(TAG, "Desired Rotation: " + Float.toString(desiredRotation) +
+                ", Rotation: " + Float.toString(rotation) );
 
         matrix.reset();
 
@@ -65,21 +71,30 @@ public class Ship {
 
     public void handleActionDownAndMove(float touchEventX) {
 
-        float distanceX = Math.abs( locationX - touchEventX );
+        float distanceX = Math.abs( locationX - touchEventX ) /
+                ( GameView.getCanvasWidth() * 0.5f );
 
-        float newSpeedX = BASE_SPEEDX + ( MAX_ADDITIONAL_SPEEDX * ( distanceX / GameView.getCanvasWidth() ) );
+        if ( distanceX > MAX_HORIZONTAL_TOUCH ) {
+
+            distanceX = MAX_HORIZONTAL_TOUCH;
+
+        }
+
+        float modifierX = ( 1 / MAX_HORIZONTAL_TOUCH ) * distanceX;
+
+        float newSpeedX = BASE_SPEEDX + ( MAX_ADDITIONAL_SPEEDX * modifierX );
 
         if ( touchEventX < locationX ) {
 
             speedX = newSpeedX;
 
-            desiredRotation = MAX_ROTATION * (distanceX / GameView.getCanvasWidth() );
+            desiredRotation = MAX_ROTATION * ( modifierX );
 
-        } else if ( touchEventX > locationX) {
+        } else if ( touchEventX > locationX ) {
 
             speedX = -newSpeedX;
 
-            desiredRotation = -MAX_ROTATION * (distanceX / GameView.getCanvasWidth() );
+            desiredRotation = -MAX_ROTATION * ( modifierX );
 
         }
 
@@ -127,7 +142,7 @@ public class Ship {
 
     private static final float BASE_SPEEDX = 0f;
 
-    private static final float MAX_ADDITIONAL_SPEEDX = 0.008f;
+    private static final float MAX_ADDITIONAL_SPEEDX = 0.004f;
 
     private static final float BASE_SPEEDY = 0.001f;
 
@@ -135,8 +150,12 @@ public class Ship {
 
     private static final float BASE_LOCATIONY = ( GameView.getCanvasHeight() * 0.8f );
 
-    private static final float MAX_ROTATION = 120;
+    private static final float MAX_ROTATION = 60;
 
-    private static final float ROTATION_SPEED = 5;
+    private static final float ROTATION_SPEED = 10;
+
+    private static final float MAX_HORIZONTAL_TOUCH = 0.6f;
+
+    private final static String TAG = Ship.class.getSimpleName();
 
 }

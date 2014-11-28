@@ -124,6 +124,6 @@ public class Planet {
 
     private final static float BASE_SPEEDY = 0.008f;
 
-    private final static String TAG = Planet.class.getSimpleName();
+
 
 }
