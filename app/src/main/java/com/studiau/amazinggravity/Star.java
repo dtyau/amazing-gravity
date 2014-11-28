@@ -62,6 +62,8 @@ public class Star {
 
         canvas.drawCircle( locationX, locationY, radius, paint);
 
+        paint.setMaskFilter(null);
+
     }
 
     private Random random;
