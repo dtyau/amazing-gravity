@@ -34,7 +34,7 @@ public class Star {
 
         speedX = ( ( random.nextFloat() - 0.5f ) / 0.5f ) * BASE_SPEEDX;
 
-        speedY = random.nextFloat() * BASE_SPEEDY;
+        speedY = ( radius / ( BASE_RADIUS + MAX_RADIUS ) ) * BASE_SPEEDY;
 
     }
 
@@ -80,9 +80,9 @@ public class Star {
 
     private float radius, locationX, locationY, speedX, speedY;
 
-    private final static int MAX_RADIUS = 4;
+    private final static int MAX_RADIUS = 3;
 
-    private final static int BASE_RADIUS = 1;
+    private final static int BASE_RADIUS = 2;
 
     private final static float BASE_SPEEDX = 0.0001f;
 
