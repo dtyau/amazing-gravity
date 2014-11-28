@@ -283,7 +283,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private final int AMOUNT_OF_EXHAUST = 100;
 
-    private final int AMOUNT_OF_STARS = 100;
+    private final int AMOUNT_OF_STARS = 200;
 
     private final static String TAG = GameView.class.getSimpleName();
 
