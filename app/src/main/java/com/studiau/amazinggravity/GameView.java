@@ -42,12 +42,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         canvasHeight = getHeight();
 
-        gameState = GameState.RUNNING;
-
-        gameThread.setRunning(true);
-
-        startGameThread();
-
         ship = new Ship( getContext() );
 
         planet = new Planet();
@@ -62,9 +56,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                 stars.add(new Star());
 
+                Log.d(TAG, Integer.toString(i));
+
             }
 
         }
+
+        gameState = GameState.RUNNING;
+
+        gameThread.setRunning(true);
+
+        startGameThread();
 
     }
 
@@ -151,8 +153,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         if (gameState == GameState.RUNNING) {
 
             for (int i = 0; i < AMOUNT_OF_STARS; i++) {
-
-                Log.d(TAG, "Ship is null: " + ship.equals(null));
 
                 stars.get(i).update(ship);
 
