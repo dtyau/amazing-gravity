@@ -41,8 +41,8 @@ public class Star {
     public void update(Ship ship) {
 
         if ( locationY > GameView.getCanvasHeight() ||
-                locationX < ( 0 - GameView.getCanvasWidth() * 0.1 ) ||
-                locationX > GameView.getCanvasWidth() * 1.1 ) {
+                locationX < ( 0 - GameView.getCanvasWidth() * 0.05 ) ||
+                locationX > GameView.getCanvasWidth() * 1.05 ) {
 
             reset();
 
