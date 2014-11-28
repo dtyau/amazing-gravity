@@ -18,7 +18,7 @@ public class Planet {
 
         random = new Random();
 
-        blurMaskFilter = new BlurMaskFilter(100, BlurMaskFilter.Blur.OUTER);
+        blurMaskFilter = new BlurMaskFilter(50, BlurMaskFilter.Blur.OUTER);
 
         reset();
 
@@ -65,7 +65,7 @@ public class Planet {
 
     public void draw(Canvas canvas, Paint paint) {
 
-        paint.setColor(Color.WHITE);
+        paint.setColor(Color.parseColor("#90CAF9"));
 
         paint.setMaskFilter(blurMaskFilter);
 

@@ -3,7 +3,9 @@ package com.studiau.amazinggravity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.util.Log;
@@ -16,6 +18,8 @@ public class Ship {
 
     public Ship(Context context) {
 
+        blurMaskFilter = new BlurMaskFilter(40, BlurMaskFilter.Blur.SOLID);
+
         radius = BASE_RADIUS;
 
         locationX = BASE_LOCATIONX;
@@ -26,13 +30,13 @@ public class Ship {
 
         desiredRotation = 0;
 
-        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ship);
+        bitmap = BitmapFactory.decodeResource( context.getResources(), R.drawable.ship );
 
         matrix = new Matrix();
 
-        matrix.postTranslate(-bitmap.getWidth() / 2, -bitmap.getHeight() / 2);
+        matrix.postTranslate( -bitmap.getWidth() / 2, -bitmap.getHeight() / 2 );
 
-        matrix.postTranslate(locationX, locationY);
+        matrix.postTranslate( locationX, locationY );
 
     }
 
@@ -50,9 +54,6 @@ public class Ship {
 
         }
 
-        Log.d(TAG, "Desired Rotation: " + Float.toString(desiredRotation) +
-                ", Rotation: " + Float.toString(rotation) );
-
         matrix.reset();
 
         matrix.postTranslate( -bitmap.getWidth() / 2, -bitmap.getHeight() / 2 );
@@ -65,7 +66,13 @@ public class Ship {
 
     public void draw(Canvas canvas, Paint paint) {
 
-        canvas.drawBitmap(bitmap, matrix, paint);
+        paint.setMaskFilter(blurMaskFilter);
+
+        paint.setColor(Color.WHITE);
+
+        canvas.drawBitmap( bitmap, matrix, paint );
+
+        paint.setMaskFilter(null);
 
     }
 
@@ -131,6 +138,8 @@ public class Ship {
         return speedX;
 
     }
+
+    private BlurMaskFilter blurMaskFilter;
 
     private Bitmap bitmap;
 

@@ -17,7 +17,7 @@ public class Star {
 
         random = new Random();
 
-        blurMaskFilter = new BlurMaskFilter(1, BlurMaskFilter.Blur.NORMAL);
+        blurMaskFilter = new BlurMaskFilter( 2, BlurMaskFilter.Blur.NORMAL );
 
         reset();
 
@@ -25,7 +25,7 @@ public class Star {
 
     private void reset() {
 
-        radius = random.nextInt(MAX_RADIUS) + 1;
+        radius = random.nextInt(MAX_RADIUS) + BASE_RADIUS;
 
         locationX = random.nextFloat() * GameView.getCanvasWidth();
 
@@ -71,6 +71,8 @@ public class Star {
     private float radius, locationX, locationY, speedX, speedY;
 
     private final static int MAX_RADIUS = 3;
+
+    private final static int BASE_RADIUS = 2;
 
     private final static float BASE_SPEEDX = 0.0001f;
 
