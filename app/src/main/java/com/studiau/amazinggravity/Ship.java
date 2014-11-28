@@ -121,6 +121,19 @@ public class Ship {
 
     }
 
+    public float getExhaustLocationX() {
+
+        return locationX - ( ( rotation / MAX_ROTATION ) * ( bitmap.getWidth() / 2 ) );
+
+    }
+
+    public float getExhaustLocationY() {
+
+        return locationY +
+                ( ( 1 - Math.abs( rotation / MAX_ROTATION ) ) * ( bitmap.getHeight() / 2 ) );
+
+    }
+
     public float getLocationX() {
 
         return locationX;
@@ -130,12 +143,6 @@ public class Ship {
     public float getLocationY() {
 
         return locationY;
-
-    }
-
-    public float getExhaustLocationY() {
-
-        return locationY + ( bitmap.getHeight() / 2 );
 
     }
 

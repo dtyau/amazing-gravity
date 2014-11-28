@@ -24,27 +24,31 @@ public class ExhaustParticle {
 
         radius = BASE_RADIUS + random.nextInt(MAX_ADDITIONAL_RADIUS);
 
-        locationX = ship.getLocationX();
+        locationX = ship.getExhaustLocationX();
 
         locationY = ship.getExhaustLocationY();
 
         speedX = ( ( random.nextFloat() - 0.5f ) / 0.5f ) * BASE_SPEEDX;
 
-        speedY = random.nextFloat() * BASE_SPEEDY;
+        speedY = BASE_SPEEDY + ( random.nextFloat() * MAX_ADDITIONAL_SPEEDY );
 
     }
 
     public void update(Ship ship) {
 
-        locationX += ( speedX + ship.getSpeedX() ) * GameView.getCanvasWidth();
+        if ( locationY > GameView.getCanvasHeight() ) {
+
+            reset(ship);
+
+        }
+
+        locationX += ( speedX - ship.getSpeedX() * SPEEDX_MODIFIER ) * GameView.getCanvasWidth();
 
         locationY += speedY * GameView.getCanvasHeight();
 
     }
 
     public void draw(Canvas canvas, Paint paint) {
-
-        paint.setColor(Color.WHITE);
 
         //paint.setMaskFilter(blurMaskFilter);
 
@@ -56,12 +60,16 @@ public class ExhaustParticle {
 
     private float radius, locationX, locationY, speedX, speedY;
 
-    private static final int BASE_RADIUS = 1;
+    private static final int BASE_RADIUS = 2;
 
     private static final int MAX_ADDITIONAL_RADIUS = 2;
 
-    private static final float BASE_SPEEDX = 0.0001f;
+    private static final float BASE_SPEEDX = 0.003f;
 
-    private static final float BASE_SPEEDY = 0.01f;
+    private static final float SPEEDX_MODIFIER = 3;
+
+    private static final float BASE_SPEEDY = 0.005f;
+
+    private static final float MAX_ADDITIONAL_SPEEDY = 0.01f;
 
 }

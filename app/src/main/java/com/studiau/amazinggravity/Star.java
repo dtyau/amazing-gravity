@@ -56,8 +56,6 @@ public class Star {
 
     public void draw(Canvas canvas, Paint paint) {
 
-        paint.setColor(Color.WHITE);
-
         paint.setMaskFilter(blurMaskFilter);
 
         canvas.drawCircle( locationX, locationY, radius, paint);

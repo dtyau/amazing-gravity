@@ -44,19 +44,29 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         ship = new Ship( getContext() );
 
+        exhaustParticles = new ArrayList<ExhaustParticle>();
+
+        while (exhaustParticles.size() < AMOUNT_OF_EXHAUST ) {
+
+            for ( int i = 0; i < AMOUNT_OF_EXHAUST; i++ ) {
+
+                exhaustParticles.add( new ExhaustParticle(ship) );
+
+            }
+
+        }
+
         planet = new Planet();
 
         planet2 = new Planet();
 
         stars = new ArrayList<Star>();
 
-        while ( stars.size() < AMOUNT_OF_STARS) {
+        while ( stars.size() < AMOUNT_OF_STARS ) {
 
-            for (int i = 0; i < AMOUNT_OF_STARS; i++) {
+            for ( int i = 0; i < AMOUNT_OF_STARS; i++ ) {
 
-                stars.add(new Star());
-
-                Log.d(TAG, Integer.toString(i));
+                stars.add( new Star() );
 
             }
 
@@ -164,6 +174,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             ship.update();
 
+            for (int i = 0; i < AMOUNT_OF_EXHAUST; i++) {
+
+                exhaustParticles.get(i).update(ship);
+
+            }
+
         }
 
     }
@@ -173,6 +189,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         if (gameState == GameState.RUNNING) {
 
             canvas.drawColor(Color.BLACK);
+
+            paint.setColor(Color.WHITE); // For stars
 
             for (int i = 0; i < AMOUNT_OF_STARS; i++) {
 
@@ -185,6 +203,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             planet2.draw(canvas, paint);
 
             ship.draw(canvas, paint);
+
+            paint.setColor( Color.parseColor("#FF7043") ); // For exhaust particles
+
+            for (int i = 0; i < AMOUNT_OF_EXHAUST; i++) {
+
+                exhaustParticles.get(i).draw(canvas, paint);
+
+            }
 
         }
 
@@ -199,7 +225,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             case (MotionEvent.ACTION_DOWN) :
 
-                ship.handleActionDownAndMove( event.getX() );
                 ship.handleActionDownAndMove( event.getX() );
 
                 return true;
@@ -248,11 +273,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private Ship ship;
 
+    private ArrayList<ExhaustParticle> exhaustParticles;
+
     private Planet planet, planet2;
 
     private ArrayList<Star> stars;
 
     private static float canvasWidth, canvasHeight;
+
+    private final int AMOUNT_OF_EXHAUST = 100;
 
     private final int AMOUNT_OF_STARS = 100;
 
