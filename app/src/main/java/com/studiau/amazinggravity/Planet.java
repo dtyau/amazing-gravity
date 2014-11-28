@@ -29,11 +29,18 @@ public class Planet {
 
         locationX = random.nextFloat() * GameView.getCanvasWidth();
 
+        while ( locationX / GameView.getCanvasWidth() > 0.4 &&
+                locationX / GameView.getCanvasWidth() < 0.6 ) {
+
+            locationX = random.nextFloat() * GameView.getCanvasWidth();
+
+        }
+
         locationY = -2 * radius;
 
         speedX = BASE_SPEEDX;
 
-        speedY = BASE_SPEEDY;
+        speedY = BASE_SPEEDY * ( mass / ( BASE_MASS + MAX_ADDITIONAL_MASS ) );
 
     }
 
@@ -64,23 +71,26 @@ public class Planet {
         float distanceX = Math.abs( locationX - ship.getLocationX() ) /
                 GameView.getCanvasWidth();
 
-        float distanceY = 1 - ( Math.abs( locationY - ship.getLocationY() ) /
-                ship.getLocationY() );
+        //if ( distanceX > 0.05 ) {
 
-        float newSpeedX = (float) ( ( mass / ( BASE_MASS + MAX_ADDITIONAL_MASS ) ) /
-                //( Math.pow( ( distanceX + 1.6), 12 ) ) *
-                ( Math.pow( ( distanceX + 1.7), 10 ) ) *
-                ( distanceY ) );
+            float verticalDampening = (float) ( 1 - ( Math.pow( ( Math.abs( locationY - ship.getLocationY() ) /
+                    ( ship.getLocationY() + (radius) ) ), 0.3 ) ) );
 
-        if ( locationX < ship.getLocationX() ) {
+            float newSpeedX = (float) ( ( mass / (BASE_MASS + MAX_ADDITIONAL_MASS) ) /
+                    ( Math.pow( ( distanceX + 1.4 ), 17 ) ) *
+                    ( verticalDampening ) );
 
-            speedX += newSpeedX;
+            if (locationX < ship.getLocationX()) {
 
-        } else if ( locationX > ship.getLocationX() ) {
+                speedX += newSpeedX;
 
-            speedX -= newSpeedX;
+            } else if (locationX > ship.getLocationX()) {
 
-        }
+                speedX -= newSpeedX;
+
+            }
+
+       // }
 
         locationX += ( speedX - ship.getSpeedX() ) * GameView.getCanvasWidth();
 
@@ -92,7 +102,7 @@ public class Planet {
                 GameView.getCanvasHeight();
 
         float newSpeedY = (float) ( ( mass / ( BASE_MASS + MAX_ADDITIONAL_MASS ) ) /
-                ( Math.pow( ( distanceY + 1.4), 18 ) ) );
+                ( Math.pow( ( distanceY + 1.4), 17 ) ) );
 
         speedY += newSpeedY;
 
@@ -104,15 +114,15 @@ public class Planet {
 
     private float mass, radius, locationX, locationY, speedX, speedY;
 
-    private final static int BASE_MASS = 10;
+    private final static int BASE_MASS = 8;
 
-    private final static int MAX_ADDITIONAL_MASS = 4;
+    private final static int MAX_ADDITIONAL_MASS = 6;
 
     private final static float RADIUS_TO_MASS_RATIO = 12;
 
     private final static float BASE_SPEEDX = 0f;
 
-    private final static float BASE_SPEEDY = 0.005f;
+    private final static float BASE_SPEEDY = 0.008f;
 
     private final static String TAG = Planet.class.getSimpleName();
 
