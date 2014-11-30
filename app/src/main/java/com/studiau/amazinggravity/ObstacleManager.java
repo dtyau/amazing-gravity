@@ -38,8 +38,6 @@ public class ObstacleManager {
 
         float collectiveSpeedX = getCollectiveSpeedX(ship);
 
-        Log.d(TAG, "collective speedx: " + Float.toString(collectiveSpeedX));
-
         for (int i = 0; i < obstacles.size(); i++) {
 
             obstacles.get(i).update(ship, collectiveSpeedX);
