@@ -38,7 +38,13 @@ public class ObstacleManager {
 
         float collectiveSpeedX = getCollectiveSpeedX(ship);
 
-        for(Obstacle obstacle: obstacles) {
+        for (Obstacle obstacle : obstacles) {
+
+            while (checkLocation(obstacle)) {
+
+                obstacle.reset();
+
+            }
 
             obstacle.update(ship, collectiveSpeedX);
 
@@ -52,7 +58,7 @@ public class ObstacleManager {
 
         paint.setMaskFilter(blurMaskFilter);
 
-        for(Obstacle obstacle: obstacles) {
+        for (Obstacle obstacle : obstacles) {
 
             obstacle.draw(canvas, paint);
 
@@ -66,13 +72,65 @@ public class ObstacleManager {
 
         float collectiveSpeedX = 0f;
 
-        for(Obstacle obstacle: obstacles) {
+        for (Obstacle obstacle : obstacles) {
 
             collectiveSpeedX += obstacle.getNewSpeedX(ship);
 
         }
 
         return collectiveSpeedX;
+
+    }
+
+    private boolean checkLocation(Obstacle obstacle) {
+
+        float radius = obstacle.getRadius();
+
+        float locationX = obstacle.getLocationX();
+
+        float locationY = obstacle.getLocationY();
+
+        if ((locationY + radius) < 0) {
+
+            for (Obstacle obstacle2 : obstacles) {
+
+                float radius2 = obstacle2.getRadius();
+
+                float locationX2 = obstacle2.getLocationX();
+
+                float locationY2 = obstacle2.getLocationY();
+
+                if (((locationX - radius) < (locationX2 + radius2) &&
+                        (locationX - radius) > (locationX2 - radius2)) &&
+
+                        ((locationY - radius) < (locationY2 + radius) &&
+                                (locationY - radius) > (locationY2 - radius)) ||
+
+                        ((locationY + radius) > (locationY2 - radius) &&
+                                (locationY + radius) < (locationY2 + radius))) {
+
+                    return true;
+
+                }
+
+                if (((locationX + radius) > (locationX2 - radius2) &&
+                        (locationX + radius) < (locationX2 + radius2)) &&
+
+                        ((locationY - radius) < (locationY2 + radius) &&
+                                (locationY - radius) > (locationY2 - radius)) ||
+
+                        ((locationY + radius) > (locationY2 - radius) &&
+                                (locationY + radius) < (locationY2 + radius))) {
+
+                    return true;
+
+                }
+
+            }
+
+        }
+
+        return false;
 
     }
 

@@ -166,11 +166,11 @@ public class Ship {
 
     private static final float MAX_ADDITIONAL_SPEEDX = 0.004f;
 
-    private static final float BASE_SPEEDY = 0.001f;
+    private static final float BASE_SPEEDY = 0.0001f;
 
     private static final float BASE_LOCATIONX = ( GameView.getCanvasWidth() * 0.5f );
 
-    private static final float BASE_LOCATIONY = ( GameView.getCanvasHeight() * 0.8f );
+    private static final float BASE_LOCATIONY = ( GameView.getCanvasHeight() * 0.7f );
 
     private static final float MAX_ROTATION = 60;
 

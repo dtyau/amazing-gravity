@@ -20,7 +20,7 @@ public class Obstacle {
 
     }
 
-    private void reset() {
+    public void reset() {
 
         mass = BASE_MASS + random.nextInt(MAX_ADDITIONAL_MASS);
 
@@ -47,7 +47,7 @@ public class Obstacle {
 
     public void update(Ship ship, float collectiveSpeedX) {
 
-        if (locationY > GameView.getCanvasHeight() + (2 * radius)) {
+        if (locationY > (GameView.getCanvasHeight() * 1.3)) {
 
             reset();
 
@@ -117,6 +117,24 @@ public class Obstacle {
 
     }
 
+    public float getRadius() {
+
+        return radius;
+
+    }
+
+    public float getLocationX() {
+
+        return locationX;
+
+    }
+
+    public float getLocationY() {
+
+        return locationY;
+
+    }
+
     private Random random;
 
     private float mass, radius, locationX, locationY, speedX, speedY;
@@ -129,7 +147,7 @@ public class Obstacle {
 
     private final static float BASE_SPEEDX = 0f;
 
-    private final static float BASE_SPEEDY = 0.009f;
+    private final static float BASE_SPEEDY = 0.006f;
 
 
 }
