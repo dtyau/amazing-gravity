@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -56,9 +55,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         }
 
-        planet = new Planet();
+        obstacle = new Obstacle();
 
-        planet2 = new Planet();
+        obstacle2 = new Obstacle();
 
         stars = new ArrayList<Star>();
 
@@ -168,9 +167,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             }
 
-            planet.update(ship);
+            obstacle.update(ship);
 
-            planet2.update(ship);
+            obstacle2.update(ship);
 
             ship.update();
 
@@ -198,9 +197,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             }
 
-            planet.draw(canvas, paint);
+            obstacle.draw(canvas, paint);
 
-            planet2.draw(canvas, paint);
+            obstacle2.draw(canvas, paint);
 
             ship.draw(canvas, paint);
 
@@ -275,7 +274,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private ArrayList<ExhaustParticle> exhaustParticles;
 
-    private Planet planet, planet2;
+    private Obstacle obstacle, obstacle2;
 
     private ArrayList<Star> stars;
 
