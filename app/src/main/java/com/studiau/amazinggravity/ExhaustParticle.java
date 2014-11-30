@@ -50,8 +50,6 @@ public class ExhaustParticle {
 
     public void draw(Canvas canvas, Paint paint) {
 
-        //paint.setMaskFilter(blurMaskFilter);
-
         canvas.drawCircle( locationX, locationY, radius, paint);
 
     }

@@ -265,7 +265,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private GameThread gameThread;
 
-    private GameState gameState;
+    private GameState gamaeState;
 
     private Paint paint;
 
