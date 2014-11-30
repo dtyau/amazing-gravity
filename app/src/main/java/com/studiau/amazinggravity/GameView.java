@@ -55,9 +55,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         }
 
-        obstacle = new Obstacle();
-
-        obstacle2 = new Obstacle();
+        obstacleManager = new ObstacleManager();
 
         stars = new ArrayList<Star>();
 
@@ -167,9 +165,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             }
 
-            obstacle.update(ship);
-
-            obstacle2.update(ship);
+            obstacleManager.update(ship);
 
             ship.update();
 
@@ -197,9 +193,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             }
 
-            obstacle.draw(canvas, paint);
-
-            obstacle2.draw(canvas, paint);
+            obstacleManager.draw(canvas, paint);
 
             ship.draw(canvas, paint);
 
@@ -274,7 +268,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private ArrayList<ExhaustParticle> exhaustParticles;
 
-    private Obstacle obstacle, obstacle2;
+    private ObstacleManager obstacleManager;
 
     private ArrayList<Star> stars;
 

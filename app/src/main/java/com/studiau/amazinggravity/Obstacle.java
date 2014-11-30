@@ -18,8 +18,6 @@ public class Obstacle {
 
         random = new Random();
 
-        blurMaskFilter = new BlurMaskFilter(50, BlurMaskFilter.Blur.OUTER);
-
         reset();
 
     }
@@ -65,13 +63,7 @@ public class Obstacle {
 
     public void draw(Canvas canvas, Paint paint) {
 
-        paint.setColor(Color.parseColor("#90CAF9"));
-
-        paint.setMaskFilter(blurMaskFilter);
-
         canvas.drawCircle(locationX, locationY, radius, paint);
-
-        paint.setMaskFilter(null);
 
     }
 
@@ -120,8 +112,6 @@ public class Obstacle {
     }
 
     private Random random;
-
-    private BlurMaskFilter blurMaskFilter;
 
     private float mass, radius, locationX, locationY, speedX, speedY;
 
