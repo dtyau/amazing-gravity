@@ -80,7 +80,7 @@ public class ObstacleManager {
 
     private ArrayList<Obstacle> obstacles;
 
-    private static final int NUMBER_OF_OBSTACLES = 2;
+    private static final int NUMBER_OF_OBSTACLES = 3;
 
     private final static String TAG = ObstacleManager.class.getSimpleName();
 

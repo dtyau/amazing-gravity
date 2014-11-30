@@ -37,7 +37,7 @@ public class Obstacle {
 
         }
 
-        locationY = -2 * radius;
+        locationY = (-2 * radius) + (random.nextFloat() * -GameView.getCanvasHeight());
 
         speedX = BASE_SPEEDX;
 
@@ -53,9 +53,13 @@ public class Obstacle {
 
         }
 
-        speedX += collectiveSpeedX;
+        if (locationY > 0) {
 
-        locationX += (speedX - ship.getSpeedX()) * GameView.getCanvasWidth();
+            speedX += collectiveSpeedX;
+
+            locationX += (speedX - ship.getSpeedX()) * GameView.getCanvasWidth();
+
+        }
 
         updateSpeedAndLocationY(ship);
 
