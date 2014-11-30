@@ -38,9 +38,9 @@ public class ObstacleManager {
 
         float collectiveSpeedX = getCollectiveSpeedX(ship);
 
-        for (int i = 0; i < obstacles.size(); i++) {
+        for(Obstacle obstacle: obstacles) {
 
-            obstacles.get(i).update(ship, collectiveSpeedX);
+            obstacle.update(ship, collectiveSpeedX);
 
         }
 
@@ -52,9 +52,9 @@ public class ObstacleManager {
 
         paint.setMaskFilter(blurMaskFilter);
 
-        for (int i = 0; i < obstacles.size(); i++) {
+        for(Obstacle obstacle: obstacles) {
 
-            obstacles.get(i).draw(canvas, paint);
+            obstacle.draw(canvas, paint);
 
         }
 
@@ -66,9 +66,9 @@ public class ObstacleManager {
 
         float collectiveSpeedX = 0f;
 
-        for (int i = 0; i < obstacles.size(); i++) {
+        for(Obstacle obstacle: obstacles) {
 
-            collectiveSpeedX += obstacles.get(i).getNewSpeedX(ship);
+            collectiveSpeedX += obstacle.getNewSpeedX(ship);
 
         }
 
