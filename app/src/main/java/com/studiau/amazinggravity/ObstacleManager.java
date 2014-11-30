@@ -4,6 +4,7 @@ import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -37,6 +38,8 @@ public class ObstacleManager {
 
         float collectiveSpeedX = getCollectiveSpeedX(ship);
 
+        Log.d(TAG, "collective speedx: " + Float.toString(collectiveSpeedX));
+
         for (int i = 0; i < obstacles.size(); i++) {
 
             obstacles.get(i).update(ship, collectiveSpeedX);
@@ -47,7 +50,7 @@ public class ObstacleManager {
 
     public void draw(Canvas canvas, Paint paint) {
 
-        paint.setColor(Color.parseColor("#BBDEFB"));
+        paint.setColor(Color.parseColor("#2196F3"));
 
         paint.setMaskFilter(blurMaskFilter);
 
@@ -79,6 +82,8 @@ public class ObstacleManager {
 
     private ArrayList<Obstacle> obstacles;
 
-    private static final int NUMBER_OF_OBSTACLES = 1;
+    private static final int NUMBER_OF_OBSTACLES = 2;
+
+    private final static String TAG = ObstacleManager.class.getSimpleName();
 
 }
