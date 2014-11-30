@@ -1,8 +1,6 @@
 package com.studiau.amazinggravity;
 
-import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.Log;
 
@@ -30,10 +28,10 @@ public class Obstacle {
 
         locationX = random.nextFloat() * GameView.getCanvasWidth();
 
-        while ( locationX / GameView.getCanvasWidth() < 0.1 ||
+        while (locationX / GameView.getCanvasWidth() < 0.1 ||
                 locationX / GameView.getCanvasWidth() > 0.4 &&
-                locationX / GameView.getCanvasWidth() < 0.6 ||
-                locationX / GameView.getCanvasWidth() > 0.9 ) {
+                        locationX / GameView.getCanvasWidth() < 0.6 ||
+                locationX / GameView.getCanvasWidth() > 0.9) {
 
             locationX = random.nextFloat() * GameView.getCanvasWidth();
 
@@ -43,19 +41,19 @@ public class Obstacle {
 
         speedX = BASE_SPEEDX;
 
-        speedY = BASE_SPEEDY * ( mass / ( BASE_MASS + MAX_ADDITIONAL_MASS ) );
+        speedY = BASE_SPEEDY * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS));
 
     }
 
-    public void update(Ship ship) {
+    public void update(Ship ship, float collectiveSpeedX) {
 
-        if ( locationY > GameView.getCanvasHeight() + ( 2 * radius ) ) {
+        if (locationY > GameView.getCanvasHeight() + (2 * radius)) {
 
             reset();
 
         }
 
-        updateSpeedAndLocationX(ship);
+        locationX += (collectiveSpeedX) * GameView.getCanvasWidth();
 
         updateSpeedAndLocationY(ship);
 
@@ -67,38 +65,12 @@ public class Obstacle {
 
     }
 
-    private void updateSpeedAndLocationX(Ship ship) {
-
-        float distanceX = Math.abs( locationX - ship.getLocationX() ) /
-                GameView.getCanvasWidth();
-
-            float verticalDampening = (float) ( 1 - ( Math.pow( ( Math.abs( locationY - ship.getLocationY() ) /
-                    ( ship.getLocationY() + (radius) ) ), 0.3 ) ) );
-
-            float newSpeedX = (float) ( ( mass / (BASE_MASS + MAX_ADDITIONAL_MASS) ) /
-                    ( Math.pow( ( distanceX + 1.4 ), 17 ) ) *
-                    ( verticalDampening ) );
-
-            if (locationX < ship.getLocationX()) {
-
-                speedX += newSpeedX;
-
-            } else if (locationX > ship.getLocationX()) {
-
-                speedX -= newSpeedX;
-
-            }
-
-        locationX += ( speedX - ship.getSpeedX() ) * GameView.getCanvasWidth();
-
-    }
-
     private void updateSpeedAndLocationY(Ship ship) {
 
-        float distanceY = Math.abs( locationY - ship.getLocationY() ) /
+        float distanceY = Math.abs(locationY - ship.getLocationY()) /
                 GameView.getCanvasHeight();
 
-        if ( distanceY > 0.1 ) {
+        if (distanceY > 0.1) {
 
             float newSpeedY = (float) ((mass / (BASE_MASS + MAX_ADDITIONAL_MASS)) /
                     (Math.pow((distanceY + 1.4), 17)));
@@ -108,6 +80,34 @@ public class Obstacle {
         }
 
         locationY += speedY * GameView.getCanvasHeight();
+
+    }
+
+    public float getNewSpeedX(Ship ship) {
+
+        float distanceX = Math.abs(locationX - ship.getLocationX()) /
+                GameView.getCanvasWidth();
+
+        float verticalDampening = (float) (1 - (Math.pow((Math.abs(locationY - ship.getLocationY()) /
+                (ship.getLocationY() + (radius))), 0.3)));
+
+        float newSpeedX = (float) ((mass / (BASE_MASS + MAX_ADDITIONAL_MASS)) /
+                (Math.pow((distanceX + 1.4), 17)) *
+                (verticalDampening));
+
+        if (ship.getLocationX() > locationX) {
+
+            return newSpeedX;
+
+        } else if (ship.getLocationX() < locationX) {
+
+            return -newSpeedX;
+
+        } else {
+
+            return 0f;
+
+        }
 
     }
 
@@ -124,7 +124,6 @@ public class Obstacle {
     private final static float BASE_SPEEDX = 0f;
 
     private final static float BASE_SPEEDY = 0.009f;
-
 
 
 }

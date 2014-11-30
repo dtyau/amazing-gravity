@@ -15,27 +15,31 @@ public class ObstacleManager {
 
     public ObstacleManager() {
 
-        blurMaskFilter = new BlurMaskFilter(50, BlurMaskFilter.Blur.OUTER);
+        blurMaskFilter = new BlurMaskFilter(42, BlurMaskFilter.Blur.OUTER);
 
         obstacles = new ArrayList<Obstacle>();
 
-        addObstacle();
+        for (int i = 0; i < NUMBER_OF_OBSTACLES; i++) {
 
-        addObstacle();
+            addObstacle();
+
+        }
 
     }
 
-    public void addObstacle() {
+    private void addObstacle() {
 
-        obstacles.add( new Obstacle() );
+        obstacles.add(new Obstacle());
 
     }
 
     public void update(Ship ship) {
 
-        for ( int i = 0; i < obstacles.size(); i++ ) {
+        float collectiveSpeedX = getCollectiveSpeedX(ship);
 
-            obstacles.get(i).update(ship);
+        for (int i = 0; i < obstacles.size(); i++) {
+
+            obstacles.get(i).update(ship, collectiveSpeedX);
 
         }
 
@@ -43,11 +47,11 @@ public class ObstacleManager {
 
     public void draw(Canvas canvas, Paint paint) {
 
-        paint.setColor(Color.parseColor("#90CAF9"));
+        paint.setColor(Color.parseColor("#BBDEFB"));
 
         paint.setMaskFilter(blurMaskFilter);
 
-        for ( int i = 0; i < obstacles.size(); i++ ) {
+        for (int i = 0; i < obstacles.size(); i++) {
 
             obstacles.get(i).draw(canvas, paint);
 
@@ -57,8 +61,24 @@ public class ObstacleManager {
 
     }
 
+    private float getCollectiveSpeedX(Ship ship) {
+
+        float collectiveSpeedX = 0f;
+
+        for (int i = 0; i < obstacles.size(); i++) {
+
+            collectiveSpeedX += obstacles.get(i).getNewSpeedX(ship);
+
+        }
+
+        return collectiveSpeedX;
+
+    }
+
     private BlurMaskFilter blurMaskFilter;
 
     private ArrayList<Obstacle> obstacles;
+
+    private static final int NUMBER_OF_OBSTACLES = 1;
 
 }
