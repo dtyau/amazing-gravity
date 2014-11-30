@@ -50,7 +50,7 @@ public class ObstacleManager {
 
     public void draw(Canvas canvas, Paint paint) {
 
-        paint.setColor(Color.parseColor("#2196F3"));
+        paint.setColor(Color.parseColor("#90CAF9"));
 
         paint.setMaskFilter(blurMaskFilter);
 
