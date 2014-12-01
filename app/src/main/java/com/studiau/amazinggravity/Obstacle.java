@@ -47,7 +47,7 @@ public class Obstacle {
 
     public void update(Ship ship, float collectiveSpeedX) {
 
-        if (locationY > (GameView.getCanvasHeight() * 1.3)) {
+        if (locationY > (GameView.getCanvasHeight() * OBSTACLE_KILL_HEIGHT_RATIO)) {
 
             reset();
 
@@ -58,6 +58,18 @@ public class Obstacle {
             speedX += collectiveSpeedX;
 
             locationX += (speedX - ship.getSpeedX()) * GameView.getCanvasWidth();
+
+        }
+
+        if (locationX < ( 0 - (GameView.getCanvasWidth() * OBSTACLE_OFFSCREEN_RATIOX))) {
+
+            locationX = GameView.getCanvasWidth() * (1 + OBSTACLE_OFFSCREEN_RATIOX);
+
+        }
+
+        if (locationX > (GameView.getCanvasWidth() * (1 + OBSTACLE_OFFSCREEN_RATIOX))) {
+
+            locationX = 0 - GameView.getCanvasWidth() * OBSTACLE_OFFSCREEN_RATIOX;
 
         }
 
@@ -148,6 +160,10 @@ public class Obstacle {
     private final static float BASE_SPEEDX = 0f;
 
     private final static float BASE_SPEEDY = 0.006f;
+
+    private final static float OBSTACLE_KILL_HEIGHT_RATIO = 1.3f;
+
+    private final static float OBSTACLE_OFFSCREEN_RATIOX = 1f;
 
 
 }

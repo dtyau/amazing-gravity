@@ -138,7 +138,7 @@ public class ObstacleManager {
 
     private ArrayList<Obstacle> obstacles;
 
-    private static final int NUMBER_OF_OBSTACLES = 3;
+    private static final int NUMBER_OF_OBSTACLES = 11;
 
     private final static String TAG = ObstacleManager.class.getSimpleName();
 
