@@ -53,7 +53,7 @@ public class Obstacle {
 
         }
 
-        if (locationX < ( 0 - (GameView.getCanvasWidth() * OBSTACLE_OFFSCREEN_RATIOX))) {
+        if (locationX < (0 - (GameView.getCanvasWidth() * OBSTACLE_OFFSCREEN_RATIOX))) {
 
             locationX = GameView.getCanvasWidth() * (1 + OBSTACLE_OFFSCREEN_RATIOX);
 
@@ -79,9 +79,13 @@ public class Obstacle {
 
     private void updateLocationX(Ship ship, float collectiveSpeedX) {
 
-        speedX += collectiveSpeedX;
+        if ((locationY + radius) > 0) {
 
-        locationX += (speedX - ship.getSpeedX()) * GameView.getCanvasWidth();
+            speedX += collectiveSpeedX;
+
+            locationX += (speedX - ship.getSpeedX()) * GameView.getCanvasWidth();
+
+        }
 
     }
 
@@ -105,23 +109,27 @@ public class Obstacle {
 
     public float getNewSpeedX(Ship ship) {
 
-        float distanceX = Math.abs(locationX - ship.getLocationX()) /
-                GameView.getCanvasWidth();
+        if ((locationY + radius) > 0) {
 
-        float verticalDampening = (float) (1 - (Math.pow((Math.abs(locationY - ship.getLocationY()) /
-                (ship.getLocationY() + (radius))), 0.3)));
+            float distanceX = Math.abs(locationX - ship.getLocationX()) /
+                    GameView.getCanvasWidth();
 
-        float newSpeedX = (float) ((1 - (0.9f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) /
-                (Math.pow((distanceX + 1.4), 17)) *
-                (verticalDampening));
+            float verticalDampening = (float) (1 - (Math.pow((Math.abs(locationY - ship.getLocationY()) /
+                    (ship.getLocationY() + (radius))), 0.3)));
 
-        if (ship.getLocationX() > locationX) {
+            float newSpeedX = (float) ((1 - (0.9f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) /
+                    (Math.pow((distanceX + 1.4), 17)) *
+                    (verticalDampening));
 
-            return newSpeedX;
+            if (ship.getLocationX() > locationX) {
 
-        } else if (ship.getLocationX() < locationX) {
+                return newSpeedX;
 
-            return -newSpeedX;
+            } else {
+
+                return -newSpeedX;
+
+            }
 
         } else {
 
