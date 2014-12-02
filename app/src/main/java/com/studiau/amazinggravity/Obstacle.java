@@ -55,14 +55,12 @@ public class Obstacle {
 
         if (locationX < (0 - (GameView.getCanvasWidth() * OBSTACLE_OFFSCREEN_RATIOX))) {
 
-            //locationX = GameView.getCanvasWidth() * (1 + OBSTACLE_OFFSCREEN_RATIOX);
             reset();
 
         }
 
         if (locationX > (GameView.getCanvasWidth() * (1 + OBSTACLE_OFFSCREEN_RATIOX))) {
 
-            //locationX = 0 - GameView.getCanvasWidth() * OBSTACLE_OFFSCREEN_RATIOX;
             reset();
 
         }
@@ -81,10 +79,10 @@ public class Obstacle {
 
     private void updateLocationX(Ship ship, float collectiveSpeedX) {
 
-        if ((locationY + radius) > 0) {
+        if ((locationY) > 0) {
 
-            float verticalDampening = (float) (1 - (Math.abs(locationY - ship.getLocationY()) /
-                    ship.getLocationY()));
+            float verticalDampening = (float) Math.pow(
+                    ((Math.abs(locationY - ship.getLocationY()) / ship.getLocationY()) - 1), 4);
 
             speedX += (collectiveSpeedX * verticalDampening);
 
@@ -119,13 +117,10 @@ public class Obstacle {
             float distanceX = Math.abs(locationX - ship.getLocationX()) /
                     GameView.getCanvasWidth();
 
-            /*float newSpeedX = (float) ((1 - (0.9f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) /
-                    (Math.pow((distanceX + 1.4), 17)));*/
-
             float newSpeedX = (float) ((1 - (0.9f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) *
-                    (-distanceX + 0.5) / 200);
+                    ((-Math.pow(distanceX, 4) + 1) / 500));
 
-            if (ship.getLocationX() > locationX) {
+            if (locationX < ship.getLocationX()) {
 
                 return newSpeedX;
 
@@ -165,11 +160,11 @@ public class Obstacle {
 
     private float mass, radius, locationX, locationY, speedX, speedY;
 
-    private final static int BASE_MASS = 8;
+    private final static int BASE_MASS = 6;
 
-    private final static int MAX_ADDITIONAL_MASS = 16;
+    private final static int MAX_ADDITIONAL_MASS = 12;
 
-    private final static float RADIUS_TO_MASS_RATIO = 24;
+    private final static float RADIUS_TO_MASS_RATIO = 18;
 
     private final static float BASE_SPEEDX = 0f;
 
