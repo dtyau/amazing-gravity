@@ -47,18 +47,11 @@ public class Obstacle {
 
     public void update(Ship ship, float collectiveSpeedX) {
 
-        if (locationY > (GameView.getCanvasHeight() * OBSTACLE_KILL_HEIGHT_RATIO)) {
+        if ((locationY - radius) > (GameView.getCanvasHeight() * OBSTACLE_KILL_HEIGHT_RATIO)) {
 
             reset();
 
         }
-
-        /*if (locationX < (0 - (GameView.getCanvasWidth() * OBSTACLE_OFFSCREEN_RATIOX))) {
-            reset();
-        }
-        if (locationX > (GameView.getCanvasWidth() * (1 + OBSTACLE_OFFSCREEN_RATIOX))) {
-            reset();
-        }*/
 
         updateLocationX(ship, collectiveSpeedX);
 
@@ -76,7 +69,10 @@ public class Obstacle {
 
         if ((locationY + radius) > 0) {
 
-            speedX += collectiveSpeedX;
+            float verticalDampening = (float) Math.pow(
+                    ((Math.abs(locationY - ship.getLocationY()) / ship.getLocationY()) - 1), 2);
+
+            speedX += (collectiveSpeedX * verticalDampening);
 
             locationX += (speedX - ship.getSpeedX()) * GameView.getCanvasWidth();
 
@@ -87,7 +83,7 @@ public class Obstacle {
     private void updateSpeedAndLocationY(Ship ship) {
 
         float distanceY = Math.abs(locationY - ship.getLocationY()) /
-                GameView.getCanvasHeight();
+                ship.getLocationY();
 
         float verticalDampening = (float) Math.pow(
                 ((Math.abs(locationY - ship.getLocationY()) / ship.getLocationY()) - 1), 4);
@@ -116,12 +112,8 @@ public class Obstacle {
             float distanceX = Math.abs(locationX - ship.getLocationX()) /
                     GameView.getCanvasWidth();
 
-            float verticalDampening = (float) Math.pow(
-                    ((Math.abs(locationY - ship.getLocationY()) / ship.getLocationY()) - 1), 2);
-
             float newSpeedX = (float) ((1 - (0.9f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) *
-                    (((-1 * (Math.pow(distanceX, 4))) + 1) / 1000)) *
-                    verticalDampening;
+                    (((-1 * (Math.pow(distanceX, 4))) + 1) / 1000));
 
             if (locationX < ship.getLocationX()) {
 
