@@ -83,8 +83,8 @@ public class Obstacle {
 
         if ((locationY + radius) > 0) {
 
-            float verticalDampening = (float) (1 - (Math.pow((Math.abs(locationY - ship.getLocationY()) /
-                    ship.getLocationY()), 0.3)));
+            float verticalDampening = (float) (1 - (Math.abs(locationY - ship.getLocationY()) /
+                    ship.getLocationY()));
 
             speedX += (collectiveSpeedX * verticalDampening);
 
