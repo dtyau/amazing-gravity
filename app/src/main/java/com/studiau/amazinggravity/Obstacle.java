@@ -115,7 +115,7 @@ public class Obstacle {
                     GameView.getCanvasWidth();
 
             float verticalDampening = (float) (1 - (Math.pow((Math.abs(locationY - ship.getLocationY()) /
-                    (ship.getLocationY() + (radius))), 0.3)));
+                    ship.getLocationY()), 0.3)));
 
             float newSpeedX = (float) ((1 - (0.9f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) /
                     (Math.pow((distanceX + 1.4), 17)) *
