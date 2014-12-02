@@ -53,14 +53,6 @@ public class Obstacle {
 
         }
 
-        if (locationY > 0) {
-
-            speedX += collectiveSpeedX;
-
-            locationX += (speedX - ship.getSpeedX()) * GameView.getCanvasWidth();
-
-        }
-
         if (locationX < ( 0 - (GameView.getCanvasWidth() * OBSTACLE_OFFSCREEN_RATIOX))) {
 
             locationX = GameView.getCanvasWidth() * (1 + OBSTACLE_OFFSCREEN_RATIOX);
@@ -73,6 +65,8 @@ public class Obstacle {
 
         }
 
+        updateLocationX(ship, collectiveSpeedX);
+
         updateSpeedAndLocationY(ship);
 
     }
@@ -83,12 +77,20 @@ public class Obstacle {
 
     }
 
+    private void updateLocationX(Ship ship, float collectiveSpeedX) {
+
+        speedX += collectiveSpeedX;
+
+        locationX += (speedX - ship.getSpeedX()) * GameView.getCanvasWidth();
+
+    }
+
     private void updateSpeedAndLocationY(Ship ship) {
 
         float distanceY = Math.abs(locationY - ship.getLocationY()) /
                 GameView.getCanvasHeight();
 
-        if (distanceY > 0) {
+        if (locationY > 0) {
 
             float newSpeedY = (float) ((1 - (0.9f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) /
                     (Math.pow((distanceY + 1.4), 17)));
