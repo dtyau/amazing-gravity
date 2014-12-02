@@ -41,7 +41,7 @@ public class Obstacle {
 
         speedX = BASE_SPEEDX;
 
-        speedY = BASE_SPEEDY * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS));
+        speedY = BASE_SPEEDY * (1 - (0.9f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS))));
 
     }
 
@@ -88,9 +88,9 @@ public class Obstacle {
         float distanceY = Math.abs(locationY - ship.getLocationY()) /
                 GameView.getCanvasHeight();
 
-        if (distanceY > 0.1) {
+        if (distanceY > 0) {
 
-            float newSpeedY = (float) ((mass / (BASE_MASS + MAX_ADDITIONAL_MASS)) /
+            float newSpeedY = (float) ((1 - (0.9f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) /
                     (Math.pow((distanceY + 1.4), 17)));
 
             speedY += newSpeedY;
@@ -109,7 +109,7 @@ public class Obstacle {
         float verticalDampening = (float) (1 - (Math.pow((Math.abs(locationY - ship.getLocationY()) /
                 (ship.getLocationY() + (radius))), 0.3)));
 
-        float newSpeedX = (float) ((mass / (BASE_MASS + MAX_ADDITIONAL_MASS)) /
+        float newSpeedX = (float) ((1 - (0.9f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) /
                 (Math.pow((distanceX + 1.4), 17)) *
                 (verticalDampening));
 
@@ -151,15 +151,15 @@ public class Obstacle {
 
     private float mass, radius, locationX, locationY, speedX, speedY;
 
-    private final static int BASE_MASS = 8;
+    private final static int BASE_MASS = 6;
 
-    private final static int MAX_ADDITIONAL_MASS = 5;
+    private final static int MAX_ADDITIONAL_MASS = 14;
 
-    private final static float RADIUS_TO_MASS_RATIO = 12;
+    private final static float RADIUS_TO_MASS_RATIO = 10;
 
     private final static float BASE_SPEEDX = 0f;
 
-    private final static float BASE_SPEEDY = 0.006f;
+    private final static float BASE_SPEEDY = 0.004f;
 
     private final static float OBSTACLE_KILL_HEIGHT_RATIO = 1.3f;
 
