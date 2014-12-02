@@ -81,10 +81,7 @@ public class Obstacle {
 
         if ((locationY + radius) > 0) {
 
-            float verticalDampening = (float) Math.pow(
-                    ((Math.abs(locationY - ship.getLocationY()) / ship.getLocationY()) - 1), 4);
-
-            speedX += (collectiveSpeedX * verticalDampening);
+            speedX += collectiveSpeedX;
 
             locationX += (speedX - ship.getSpeedX()) * GameView.getCanvasWidth();
 
@@ -97,10 +94,14 @@ public class Obstacle {
         float distanceY = Math.abs(locationY - ship.getLocationY()) /
                 GameView.getCanvasHeight();
 
+        float verticalDampening = (float) Math.pow(
+                ((Math.abs(locationY - ship.getLocationY()) / ship.getLocationY()) - 1), 4);
+
         if ((locationY + radius) > 0) {
 
-            float newSpeedY = (float) ((1 - (0.9f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) /
-                    (Math.pow((distanceY + 1.4), 17)));
+            float newSpeedY = (float) ((1 - (0.9f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) *
+                    ((-Math.pow(distanceY, 4) + 1) / 500)) *
+                    verticalDampening;
 
             speedY += newSpeedY;
 
@@ -112,13 +113,17 @@ public class Obstacle {
 
     public float getNewSpeedX(Ship ship) {
 
-        if ((locationY + radius) > 0) {
+        if ((locationY + radius) < ship.getLocationY()) {
 
             float distanceX = Math.abs(locationX - ship.getLocationX()) /
                     GameView.getCanvasWidth();
 
+            float verticalDampening = (float) Math.pow(
+                    ((Math.abs(locationY - ship.getLocationY()) / ship.getLocationY()) - 1), 2);
+
             float newSpeedX = (float) ((1 - (0.9f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) *
-                    ((-Math.pow(distanceX, 4) + 1) / 500));
+                    ((-Math.pow(distanceX, 4) + 1) / 1000)) *
+                    verticalDampening;
 
             if (locationX < ship.getLocationX()) {
 
@@ -160,15 +165,15 @@ public class Obstacle {
 
     private float mass, radius, locationX, locationY, speedX, speedY;
 
-    private final static int BASE_MASS = 6;
+    private final static int BASE_MASS = 8;
 
-    private final static int MAX_ADDITIONAL_MASS = 12;
+    private final static int MAX_ADDITIONAL_MASS = 10;
 
     private final static float RADIUS_TO_MASS_RATIO = 18;
 
     private final static float BASE_SPEEDX = 0f;
 
-    private final static float BASE_SPEEDY = 0.004f;
+    private final static float BASE_SPEEDY = 0.006f;
 
     private final static float OBSTACLE_KILL_HEIGHT_RATIO = 1.3f;
 
