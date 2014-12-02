@@ -53,7 +53,7 @@ public class Obstacle {
 
         }
 
-        if (locationX < (0 - (GameView.getCanvasWidth() * OBSTACLE_OFFSCREEN_RATIOX))) {
+        /*if (locationX < (0 - (GameView.getCanvasWidth() * OBSTACLE_OFFSCREEN_RATIOX))) {
 
             reset();
 
@@ -63,7 +63,7 @@ public class Obstacle {
 
             reset();
 
-        }
+        }*/
 
         updateLocationX(ship, collectiveSpeedX);
 
@@ -122,7 +122,7 @@ public class Obstacle {
                     ((Math.abs(locationY - ship.getLocationY()) / ship.getLocationY()) - 1), 2);
 
             float newSpeedX = (float) ((1 - (0.9f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) *
-                    ((-Math.pow(distanceX, 4) + 1) / 1000)) *
+                    ((-Math.pow(distanceX, 4) + 1) / 2000)) *
                     verticalDampening;
 
             if (locationX < ship.getLocationX()) {
@@ -175,7 +175,7 @@ public class Obstacle {
 
     private final static float BASE_SPEEDY = 0.006f;
 
-    private final static float OBSTACLE_KILL_HEIGHT_RATIO = 1.3f;
+    private final static float OBSTACLE_KILL_HEIGHT_RATIO = 2f;
 
     private final static float OBSTACLE_OFFSCREEN_RATIOX = 1f;
 
