@@ -79,7 +79,7 @@ public class Obstacle {
 
     private void updateLocationX(Ship ship, float collectiveSpeedX) {
 
-        if ((locationY) > 0) {
+        if ((locationY + radius) > 0) {
 
             float verticalDampening = (float) Math.pow(
                     ((Math.abs(locationY - ship.getLocationY()) / ship.getLocationY()) - 1), 4);
@@ -97,7 +97,7 @@ public class Obstacle {
         float distanceY = Math.abs(locationY - ship.getLocationY()) /
                 GameView.getCanvasHeight();
 
-        if (locationY > 0) {
+        if ((locationY + radius) > 0) {
 
             float newSpeedY = (float) ((1 - (0.9f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) /
                     (Math.pow((distanceY + 1.4), 17)));
