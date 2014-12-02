@@ -55,13 +55,15 @@ public class Obstacle {
 
         if (locationX < (0 - (GameView.getCanvasWidth() * OBSTACLE_OFFSCREEN_RATIOX))) {
 
-            locationX = GameView.getCanvasWidth() * (1 + OBSTACLE_OFFSCREEN_RATIOX);
+            //locationX = GameView.getCanvasWidth() * (1 + OBSTACLE_OFFSCREEN_RATIOX);
+            reset();
 
         }
 
         if (locationX > (GameView.getCanvasWidth() * (1 + OBSTACLE_OFFSCREEN_RATIOX))) {
 
-            locationX = 0 - GameView.getCanvasWidth() * OBSTACLE_OFFSCREEN_RATIOX;
+            //locationX = 0 - GameView.getCanvasWidth() * OBSTACLE_OFFSCREEN_RATIOX;
+            reset();
 
         }
 
@@ -81,7 +83,10 @@ public class Obstacle {
 
         if ((locationY + radius) > 0) {
 
-            speedX += collectiveSpeedX;
+            float verticalDampening = (float) (1 - (Math.pow((Math.abs(locationY - ship.getLocationY()) /
+                    ship.getLocationY()), 0.3)));
+
+            speedX += (collectiveSpeedX * verticalDampening);
 
             locationX += (speedX - ship.getSpeedX()) * GameView.getCanvasWidth();
 
@@ -114,12 +119,11 @@ public class Obstacle {
             float distanceX = Math.abs(locationX - ship.getLocationX()) /
                     GameView.getCanvasWidth();
 
-            float verticalDampening = (float) (1 - (Math.pow((Math.abs(locationY - ship.getLocationY()) /
-                    ship.getLocationY()), 0.3)));
+            /*float newSpeedX = (float) ((1 - (0.9f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) /
+                    (Math.pow((distanceX + 1.4), 17)));*/
 
-            float newSpeedX = (float) ((1 - (0.9f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) /
-                    (Math.pow((distanceX + 1.4), 17)) *
-                    (verticalDampening));
+            float newSpeedX = (float) ((1 - (0.9f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) *
+                    (-distanceX + 0.5) / 200);
 
             if (ship.getLocationX() > locationX) {
 
