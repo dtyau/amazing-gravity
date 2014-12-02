@@ -43,6 +43,8 @@ public class Obstacle {
 
         speedY = BASE_SPEEDY * (1 - (0.9f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS))));
 
+        oldSpeedX = 0;
+
     }
 
     public void update(Ship ship, float collectiveSpeedX) {
@@ -88,7 +90,8 @@ public class Obstacle {
         float verticalDampening = (float) Math.pow(
                 ((Math.abs(locationY - ship.getLocationY()) / ship.getLocationY()) - 1), 4);
 
-        if ((locationY + radius) > 0) {
+        if (((locationY + radius) > 0) &&
+                ((locationY - radius) < GameView.getCanvasHeight())) {
 
             float newSpeedY = (float) ((1 - (0.9f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) *
                     ((-Math.pow(distanceY, 4) + 1) / 500)) *
@@ -117,9 +120,13 @@ public class Obstacle {
 
             if (locationX < ship.getLocationX()) {
 
+                oldSpeedX = newSpeedX;
+
                 return newSpeedX;
 
             } else {
+
+                oldSpeedX = (-1 * newSpeedX);
 
                 return (-1 * newSpeedX);
 
@@ -127,7 +134,7 @@ public class Obstacle {
 
         } else {
 
-            return 0f;
+            return oldSpeedX;
 
         }
 
@@ -153,7 +160,7 @@ public class Obstacle {
 
     private Random random;
 
-    private float mass, radius, locationX, locationY, speedX, speedY;
+    private float mass, radius, locationX, locationY, speedX, speedY, oldSpeedX;
 
     private final static int BASE_MASS = 8;
 
