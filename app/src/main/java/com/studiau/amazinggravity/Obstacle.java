@@ -135,12 +135,11 @@ public class Obstacle {
         } else {
 
             float distanceY = (Math.abs(locationY - ship.getLocationY()) /
-                    ship.getLocationY());
+                    ((GameView.getCanvasHeight() * OBSTACLE_KILL_HEIGHT_RATIO) - ship.getLocationY()));
 
             if (distanceY <= 1) {
 
-                float verticalDampening = (float) ((Math.pow((distanceY - 1), 2) *
-                        0.9) + 0.1);
+                float verticalDampening = (float) Math.pow((distanceY - 1), 2);
 
                 oldSpeedX -= oldSpeedX * verticalDampening;
 
