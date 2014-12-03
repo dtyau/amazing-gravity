@@ -113,7 +113,7 @@ public class Obstacle {
                 ((locationX - radius) < GameView.getCanvasWidth())) {
 
             float distanceX = Math.abs(locationX - ship.getLocationX()) /
-                    GameView.getCanvasWidth();
+                    ship.getLocationX();
 
             float newSpeedX = (float) ((1 - (0.9f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) *
                     (((-1 * (Math.pow(distanceX, 4))) + 1) / 2000));
@@ -188,7 +188,7 @@ public class Obstacle {
 
     private final static float BASE_SPEEDY = 0.006f;
 
-    private final static float OBSTACLE_KILL_HEIGHT_RATIO = 1.8f;
+    private final static float OBSTACLE_KILL_HEIGHT_RATIO = 1.6f;
 
     private final static float OBSTACLE_OFFSCREEN_RATIOX = 1f;
 
