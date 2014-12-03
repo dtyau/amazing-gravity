@@ -14,7 +14,8 @@ import java.util.ArrayList;
 
 public class ObstacleManager {
 
-    public ObstacleManager(Ship ship) {
+    public ObstacleManager(float gameViewCanvasWidth, float gameViewCanvasHeight,
+                           float shipLocationX, float shipLocationY) {
 
         blurMaskFilter = new BlurMaskFilter(42, BlurMaskFilter.Blur.OUTER);
 
@@ -22,21 +23,23 @@ public class ObstacleManager {
 
         for (int i = 0; i < NUMBER_OF_OBSTACLES; i++) {
 
-            addObstacle(ship);
+            addObstacle(gameViewCanvasWidth, gameViewCanvasHeight, shipLocationX, shipLocationY);
 
         }
 
     }
 
-    private void addObstacle(Ship ship) {
+    private void addObstacle(float gameViewCanvasWidth, float gameViewCanvasHeight,
+                             float shipLocationX, float shipLocationY) {
 
-        obstacles.add(new Obstacle(ship));
+        obstacles.add(new Obstacle(gameViewCanvasWidth, gameViewCanvasHeight,
+                shipLocationX, shipLocationY));
 
     }
 
     public void update(Ship ship) {
 
-        float collectiveSpeedX = getCollectiveSpeedX(ship);
+        float collectiveSpeedX = getCollectiveSpeedX();
 
         for (Obstacle obstacle : obstacles) {
 
@@ -68,13 +71,13 @@ public class ObstacleManager {
 
     }
 
-    private float getCollectiveSpeedX(Ship ship) {
+    private float getCollectiveSpeedX() {
 
         float collectiveSpeedX = 0f;
 
         for (Obstacle obstacle : obstacles) {
 
-            collectiveSpeedX += obstacle.getNewSpeedX(ship);
+            collectiveSpeedX += obstacle.getNewSpeedX();
 
         }
 

@@ -55,7 +55,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         }
 
-        obstacleManager = new ObstacleManager(ship);
+        obstacleManager = new ObstacleManager(canvasWidth, canvasHeight,
+                ship.getLocationX(), ship.getLocationY());
 
         stars = new ArrayList<Star>();
 
