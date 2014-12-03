@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class ObstacleManager {
 
-    public ObstacleManager() {
+    public ObstacleManager(Ship ship) {
 
         blurMaskFilter = new BlurMaskFilter(42, BlurMaskFilter.Blur.OUTER);
 
@@ -22,15 +22,15 @@ public class ObstacleManager {
 
         for (int i = 0; i < NUMBER_OF_OBSTACLES; i++) {
 
-            addObstacle();
+            addObstacle(ship);
 
         }
 
     }
 
-    private void addObstacle() {
+    private void addObstacle(Ship ship) {
 
-        obstacles.add(new Obstacle());
+        obstacles.add(new Obstacle(ship));
 
     }
 

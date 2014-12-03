@@ -12,9 +12,13 @@ import java.util.Random;
 
 public class Obstacle {
 
-    public Obstacle() {
+    public Obstacle(Ship ship) {
 
         random = new Random();
+
+        shipLocationX = ship.getLocationX();
+
+        shipLocationY = ship.getLocationY();
 
         reset();
 
@@ -72,7 +76,7 @@ public class Obstacle {
         if ((locationY + radius) > 0) {
 
             float verticalDampening = (float) ((Math.pow(
-                    ((Math.abs(locationY - ship.getLocationY()) / ship.getLocationY()) - 1), 2) *
+                    ((Math.abs(locationY - shipLocationY) / shipLocationY) - 1), 2) *
                     0.9) + 0.1);
 
             speedX += (collectiveSpeedX * verticalDampening);
@@ -85,8 +89,8 @@ public class Obstacle {
 
     private void updateSpeedAndLocationY(Ship ship) {
 
-        float distanceY = Math.abs(locationY - ship.getLocationY()) /
-                ship.getLocationY();
+        float distanceY = Math.abs(locationY - shipLocationY) /
+                shipLocationY;
 
         float verticalDampening = (float) Math.pow((distanceY - 1), 4);
 
@@ -112,13 +116,13 @@ public class Obstacle {
                 ((locationX + radius) > 0) &&
                 ((locationX - radius) < GameView.getCanvasWidth())) {
 
-            float distanceX = Math.abs(locationX - ship.getLocationX()) /
-                    ship.getLocationX();
+            float distanceX = Math.abs(locationX - shipLocationX) /
+                    shipLocationX;
 
             float newSpeedX = (float) ((1 - (0.9f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) *
                     (((-1 * (Math.pow(distanceX, 4))) + 1) / 2000));
 
-            if (locationX < ship.getLocationX()) {
+            if (locationX < shipLocationX) {
 
                 oldSpeedX = newSpeedX;
 
@@ -134,8 +138,8 @@ public class Obstacle {
 
         } else {
 
-            float distanceY = (Math.abs(locationY - ship.getLocationY()) /
-                    ((GameView.getCanvasHeight() * OBSTACLE_KILL_HEIGHT_RATIO) - ship.getLocationY()));
+            float distanceY = (Math.abs(locationY - shipLocationY) /
+                    ((GameView.getCanvasHeight() * OBSTACLE_KILL_HEIGHT_RATIO) - shipLocationY));
 
             if (distanceY <= 1) {
 
@@ -175,7 +179,7 @@ public class Obstacle {
 
     private Random random;
 
-    private float mass, radius, locationX, locationY, speedX, speedY, oldSpeedX;
+    private float shipLocationX, shipLocationY, mass, radius, locationX, locationY, speedX, speedY, oldSpeedX;
 
     private final static int BASE_MASS = 8;
 
