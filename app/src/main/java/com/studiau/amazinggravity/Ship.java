@@ -18,7 +18,7 @@ public class Ship {
 
     public Ship(Context context) {
 
-        blurMaskFilter = new BlurMaskFilter(40, BlurMaskFilter.Blur.SOLID);
+        blurMaskFilter = new BlurMaskFilter(12, BlurMaskFilter.Blur.SOLID);
 
         radius = BASE_RADIUS;
 
@@ -68,7 +68,7 @@ public class Ship {
 
         paint.setMaskFilter(blurMaskFilter);
 
-        paint.setColor(Color.WHITE);
+        //paint.setColor(Color.WHITE);
 
         canvas.drawBitmap( bitmap, matrix, paint );
 
