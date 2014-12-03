@@ -71,8 +71,9 @@ public class Obstacle {
 
         if ((locationY + radius) > 0) {
 
-            float verticalDampening = (float) Math.pow(
-                    ((Math.abs(locationY - ship.getLocationY()) / ship.getLocationY()) - 1), 2);
+            float verticalDampening = (float) ((Math.pow(
+                    ((Math.abs(locationY - ship.getLocationY()) / ship.getLocationY()) - 1), 2) *
+                    0.9) + 0.1);
 
             speedX += (collectiveSpeedX * verticalDampening);
 
@@ -87,15 +88,18 @@ public class Obstacle {
         float distanceY = Math.abs(locationY - ship.getLocationY()) /
                 ship.getLocationY();
 
-        float verticalDampening = (float) Math.pow(
-                ((Math.abs(locationY - ship.getLocationY()) / ship.getLocationY()) - 1), 4);
+        float verticalDampening = (float) Math.pow((distanceY - 1), 4);
 
-        if (((locationY + radius) > 0) &&
-                ((locationY - radius) < GameView.getCanvasHeight())) {
+        if (((locationY) > 0) &&
+                ((locationY) < GameView.getCanvasHeight())) {
+
+            /*float newSpeedY = (float) ((1 - (0.9f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) *
+                    ((-Math.pow(distanceY, 4) + 1) / 500)) *
+                    verticalDampening;*/
 
             float newSpeedY = (float) ((1 - (0.9f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) *
-                    ((-Math.pow(distanceY, 4) + 1) / 500)) *
-                    verticalDampening;
+                    (((-1 * (Math.pow(distanceY, 4))) + 1) / 2000))
+                    * verticalDampening;
 
             speedY += newSpeedY;
 
@@ -134,7 +138,23 @@ public class Obstacle {
 
         } else {
 
-            return oldSpeedX;
+            float distanceY = (Math.abs(locationY - ship.getLocationY()) /
+                    ship.getLocationY());
+
+            if (distanceY <= 1) {
+
+                float verticalDampening = (float) ((Math.pow((distanceY - 1), 2) *
+                        0.9) + 0.1);
+
+                oldSpeedX -= oldSpeedX * verticalDampening;
+
+                return oldSpeedX;
+
+            } else {
+
+                return oldSpeedX;
+
+            }
 
         }
 
@@ -172,7 +192,7 @@ public class Obstacle {
 
     private final static float BASE_SPEEDY = 0.006f;
 
-    private final static float OBSTACLE_KILL_HEIGHT_RATIO = 2f;
+    private final static float OBSTACLE_KILL_HEIGHT_RATIO = 1.4f;
 
     private final static float OBSTACLE_OFFSCREEN_RATIOX = 1f;
 
