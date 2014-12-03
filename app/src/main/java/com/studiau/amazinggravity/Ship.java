@@ -18,7 +18,7 @@ public class Ship {
 
     public Ship(Context context) {
 
-        blurMaskFilter = new BlurMaskFilter(12, BlurMaskFilter.Blur.SOLID);
+        blurMaskFilter = new BlurMaskFilter(10, BlurMaskFilter.Blur.SOLID);
 
         radius = BASE_RADIUS;
 
