@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -29,8 +30,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         paused = false;
 
-        createPaint();
-
         setFocusable(true);
 
     }
@@ -41,6 +40,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         canvasWidth = getWidth();
 
         canvasHeight = getHeight();
+
+        createPaint();
 
         ship = new Ship(getContext(), canvasWidth, canvasHeight);
 
@@ -159,7 +160,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         paint.setTypeface(Typeface.MONOSPACE);
 
-        paint.setTextSize(FONT_SIZE);
+        paint.setTextSize(canvasWidth / RELATIVE_FONT_SIZE);
 
     }
 
@@ -201,7 +202,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             }
 
-            paint.setColor(Color.parseColor("#FFC107")); // For obstacles
+            paint.setColor(Color.parseColor("#FFEB3B")); // For obstacles
 
             obstacleManager.draw(canvas, paint);
 
@@ -286,7 +287,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private final int AMOUNT_OF_STARS = 200;
 
-    private final float FONT_SIZE = 24;
+    private final float RELATIVE_FONT_SIZE = 16;
 
     private final static String TAG = GameView.class.getSimpleName();
 

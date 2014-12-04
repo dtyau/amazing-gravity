@@ -21,6 +21,8 @@ public class ScoreManager {
 
     public void draw(Canvas canvas, Paint paint) {
 
+        paint.setTextAlign(Paint.Align.RIGHT);
+
         canvas.drawText(Integer.toString(score), scorePositionX, scorePositionY, paint);
 
     }
@@ -47,7 +49,7 @@ public class ScoreManager {
 
     private float scorePositionX, scorePositionY;
 
-    private final static float SCORE_POSITION_X = 0.9f;
+    private final static float SCORE_POSITION_X = 0.95f;
 
     private final static float SCORE_POSITION_Y = 0.05f;
 
