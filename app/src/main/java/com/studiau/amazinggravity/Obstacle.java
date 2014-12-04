@@ -189,7 +189,7 @@ public class Obstacle {
     private float gameViewCanvasWidth, gameViewCanvasHeight, shipLocationX, shipLocationY,
             mass, radius, locationX, locationY, speedX, speedY, oldSpeedX;
 
-    private final static int BASE_MASS = 6;
+    private final static int BASE_MASS = 6;  // was 8
 
     private final static int MAX_ADDITIONAL_MASS = 8;
 
