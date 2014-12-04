@@ -19,25 +19,29 @@ public class ObstacleManager {
 
         blurMaskFilter = new BlurMaskFilter(42, BlurMaskFilter.Blur.OUTER);
 
+        this.gameViewCanvasWidth = gameViewCanvasWidth;
+
+        this.gameViewCanvasHeight = gameViewCanvasHeight;
+
+        this.shipLocationX = shipLocationX;
+
+        this.shipLocationY = shipLocationY;
+
         obstacles = new ArrayList<Obstacle>();
 
-        for (int i = 0; i < NUMBER_OF_OBSTACLES; i++) {
+        //for (int i = 0; i < NUMBER_OF_OBSTACLES; i++) {
 
-            addObstacle(gameViewCanvasWidth, gameViewCanvasHeight, shipLocationX, shipLocationY);
+            addObstacle();
 
-        }
+        //}
 
-    }
-
-    private void addObstacle(float gameViewCanvasWidth, float gameViewCanvasHeight,
-                             float shipLocationX, float shipLocationY) {
-
-        obstacles.add(new Obstacle(gameViewCanvasWidth, gameViewCanvasHeight,
-                shipLocationX, shipLocationY));
+        addObstacleCounter = OBSTACLE_INCREMENT;
 
     }
 
     public void update(Ship ship) {
+
+        checkScore();
 
         float collectiveSpeedX = getCollectiveSpeedX();
 
@@ -66,6 +70,25 @@ public class ObstacleManager {
         }
 
         paint.setMaskFilter(null);
+
+    }
+
+    private void addObstacle() {
+
+        obstacles.add(new Obstacle(gameViewCanvasWidth, gameViewCanvasHeight,
+                shipLocationX, shipLocationY));
+
+    }
+
+    private void checkScore() {
+
+        if (ScoreManager.getScore() >= addObstacleCounter) {
+
+            addObstacle();
+
+            addObstacleCounter += OBSTACLE_INCREMENT * obstacles.size();
+
+        }
 
     }
 
@@ -139,7 +162,13 @@ public class ObstacleManager {
 
     private ArrayList<Obstacle> obstacles;
 
-    private static final int NUMBER_OF_OBSTACLES = 5;
+    private float gameViewCanvasWidth, gameViewCanvasHeight, shipLocationX, shipLocationY;
+
+    private int addObstacleCounter;
+
+    private final int OBSTACLE_INCREMENT = 5;
+
+    private final int NUMBER_OF_OBSTACLES = 5;
 
     private final static String TAG = ObstacleManager.class.getSimpleName();
 
