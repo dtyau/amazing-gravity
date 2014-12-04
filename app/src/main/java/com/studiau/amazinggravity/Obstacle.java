@@ -272,9 +272,9 @@ public class Obstacle {
 
     private final static int BASE_MASS = 8;
 
-    private final static int MAX_ADDITIONAL_MASS = 10;
+    private final static int MAX_ADDITIONAL_MASS = 8;
 
-    private final static float RADIUS_TO_MASS_RATIO = 15;
+    private final static float RADIUS_TO_MASS_RATIO = 16;
 
     private final static float BASE_SPEEDX = 0f;
 
