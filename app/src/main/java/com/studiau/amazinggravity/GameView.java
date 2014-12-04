@@ -238,31 +238,55 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         int actionType = event.getActionMasked();
 
-        switch (actionType) {
+        if (gameState == GameState.RUNNING) {
 
-            case (MotionEvent.ACTION_DOWN):
+            switch (actionType) {
 
-                ship.handleActionDownAndMove(event.getX());
+                case (MotionEvent.ACTION_DOWN):
 
-                return true;
+                    ship.handleActionDownAndMove(event.getX());
 
-            case (MotionEvent.ACTION_MOVE):
+                    return true;
 
-                ship.handleActionDownAndMove(event.getX());
+                case (MotionEvent.ACTION_MOVE):
 
-                return true;
+                    ship.handleActionDownAndMove(event.getX());
 
-            case (MotionEvent.ACTION_UP):
+                    return true;
 
-                ship.handleActionUp();
+                case (MotionEvent.ACTION_UP):
 
-                return true;
+                    ship.handleActionUp();
 
-            default:
+                    return true;
 
-                return super.onTouchEvent(event);
+                default:
+
+                    return super.onTouchEvent(event);
+
+            }
+
+        } else {
+
+            if (actionType == MotionEvent.ACTION_DOWN) {
+
+                reset();
+
+            }
+
+            return super.onTouchEvent(event);
 
         }
+
+    }
+
+    private void reset() {
+
+        obstacleManager.reset();
+
+        scoreManager.reset();
+
+        gameState = GameState.RUNNING;
 
     }
 

@@ -18,6 +18,8 @@ public class ObstacleManager {
                            float shipLocationX, float shipLocationY,
                            float shipWidth, float shipHeight) {
 
+        addObstacleCounter = OBSTACLE_INCREMENT;
+
         blurMaskFilter = new BlurMaskFilter(42, BlurMaskFilter.Blur.OUTER);
 
         this.gameViewCanvasWidth = gameViewCanvasWidth;
@@ -32,15 +34,7 @@ public class ObstacleManager {
 
         this.shipHeight = shipHeight;
 
-        obstacles = new ArrayList<Obstacle>();
-
-        //for (int i = 0; i < NUMBER_OF_OBSTACLES; i++) {
-
-            addObstacle();
-
-        //}
-
-        addObstacleCounter = OBSTACLE_INCREMENT;
+        reset();
 
     }
 
@@ -75,6 +69,16 @@ public class ObstacleManager {
         }
 
         paint.setMaskFilter(null);
+
+    }
+
+    public void reset() {
+
+        obstacles = null;
+
+        obstacles = new ArrayList<Obstacle>();
+
+        addObstacle();
 
     }
 

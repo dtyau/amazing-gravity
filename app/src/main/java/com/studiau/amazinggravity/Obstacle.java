@@ -278,7 +278,7 @@ public class Obstacle {
 
     private final static float BASE_SPEEDX = 0f;
 
-    private final static float BASE_SPEEDY = 0.006f;
+    private final static float BASE_SPEEDY = 0.008f;
 
     private final static float OBSTACLE_KILL_HEIGHT_RATIO = 1.6f;
 
