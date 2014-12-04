@@ -55,7 +55,7 @@ public class Obstacle {
 
         speedX = BASE_SPEEDX;
 
-        speedY = BASE_SPEEDY * (1 - (0.9f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS))));
+        speedY = BASE_SPEEDY * (1 - (0.99f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS))));
 
         oldSpeedX = 0;
 
@@ -184,7 +184,7 @@ public class Obstacle {
         if (((locationY) > 0) &&
                 ((locationY) < gameViewCanvasHeight)) {
 
-            float newSpeedY = (float) ((1 - (0.9f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) *
+            float newSpeedY = (float) ((1 - (0.99f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) *
                     (((-1 * (Math.pow(distanceY, 4))) + 1) / 1000))
                     * verticalDampening;
 
@@ -274,7 +274,7 @@ public class Obstacle {
 
     private final static int MAX_ADDITIONAL_MASS = 8;
 
-    private final static float RADIUS_TO_MASS_RATIO = 16;
+    private final static float RADIUS_TO_MASS_RATIO = 14;
 
     private final static float BASE_SPEEDX = 0f;
 
