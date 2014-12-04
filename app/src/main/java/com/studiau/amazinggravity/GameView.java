@@ -58,7 +58,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         }
 
         obstacleManager = new ObstacleManager(canvasWidth, canvasHeight,
-                ship.getLocationX(), ship.getLocationY());
+                ship.getLocationX(), ship.getLocationY(),
+                ship.getWidth(), ship.getHeight());
 
         stars = new ArrayList<Star>();
 
@@ -166,13 +167,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     public void update() {
 
+        for (int i = 0; i < AMOUNT_OF_STARS; i++) {
+
+            stars.get(i).update(ship);
+
+        }
+
         if (gameState == GameState.RUNNING) {
-
-            for (int i = 0; i < AMOUNT_OF_STARS; i++) {
-
-                stars.get(i).update(ship);
-
-            }
 
             obstacleManager.update(ship);
 
@@ -190,17 +191,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     public void render(Canvas canvas) {
 
+        canvas.drawColor(Color.BLACK);
+
+        paint.setColor(Color.WHITE); // For stars
+
+        for (int i = 0; i < AMOUNT_OF_STARS; i++) {
+
+            stars.get(i).draw(canvas, paint);
+
+        }
+
         if (gameState == GameState.RUNNING) {
-
-            canvas.drawColor(Color.BLACK);
-
-            paint.setColor(Color.WHITE); // For stars
-
-            for (int i = 0; i < AMOUNT_OF_STARS; i++) {
-
-                stars.get(i).draw(canvas, paint);
-
-            }
 
             paint.setColor(Color.parseColor("#FFEB3B")); // For obstacles
 
@@ -215,6 +216,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 exhaustParticles.get(i).draw(canvas, paint);
 
             }
+
+            paint.setColor(Color.WHITE); // For score
+
+            scoreManager.draw(canvas, paint);
+
+        }
+
+        if (gameState == GameState.GAMEOVER) {
 
             paint.setColor(Color.WHITE); // For score
 
@@ -257,6 +266,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
+    public static void setGameState(GameState newGameState) {
+
+        gameState = newGameState;
+
+    }
+
     enum GameState {
 
         RUNNING, GAMEOVER
@@ -264,8 +279,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     private GameThread gameThread;
-
-    private GameState gameState;
 
     private Paint paint;
 
@@ -280,6 +293,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private ArrayList<Star> stars;
 
     private ScoreManager scoreManager;
+
+    private static GameState gameState;
 
     private float canvasWidth, canvasHeight;
 

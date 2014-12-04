@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.util.Log;
@@ -30,25 +29,25 @@ public class Ship {
 
         desiredRotation = 0;
 
-        bitmap = BitmapFactory.decodeResource( context.getResources(), R.drawable.ship );
+        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ship);
 
         matrix = new Matrix();
 
-        matrix.postTranslate( -bitmap.getWidth() / 2, -bitmap.getHeight() / 2 );
+        matrix.postTranslate(-bitmap.getWidth() / 2, -bitmap.getHeight() / 2);
 
-        matrix.postTranslate( locationX, locationY );
+        matrix.postTranslate(locationX, locationY);
 
     }
 
     public void update() {
 
-        if ( rotation < desiredRotation &&
-                ( rotation + ROTATION_SPEED ) <= desiredRotation ) {
+        if (rotation < desiredRotation &&
+                (rotation + ROTATION_SPEED) <= desiredRotation) {
 
             rotation += ROTATION_SPEED;
 
-        } else if ( rotation > desiredRotation &&
-                ( rotation - ROTATION_SPEED ) >= desiredRotation ) {
+        } else if (rotation > desiredRotation &&
+                (rotation - ROTATION_SPEED) >= desiredRotation) {
 
             rotation -= ROTATION_SPEED;
 
@@ -56,11 +55,11 @@ public class Ship {
 
         matrix.reset();
 
-        matrix.postTranslate( -bitmap.getWidth() / 2, -bitmap.getHeight() / 2 );
+        matrix.postTranslate(-bitmap.getWidth() / 2, -bitmap.getHeight() / 2);
 
-        matrix.postRotate( rotation );
+        matrix.postRotate(rotation);
 
-        matrix.postTranslate( locationX, locationY );
+        matrix.postTranslate(locationX, locationY);
 
     }
 
@@ -68,7 +67,7 @@ public class Ship {
 
         paint.setMaskFilter(blurMaskFilter);
 
-        canvas.drawBitmap( bitmap, matrix, paint );
+        canvas.drawBitmap(bitmap, matrix, paint);
 
         paint.setMaskFilter(null);
 
@@ -76,30 +75,30 @@ public class Ship {
 
     public void handleActionDownAndMove(float touchEventX) {
 
-        float distanceX = Math.abs( locationX - touchEventX ) /
+        float distanceX = Math.abs(locationX - touchEventX) /
                 locationX;
 
-        if ( distanceX > MAX_HORIZONTAL_TOUCH ) {
+        if (distanceX > MAX_HORIZONTAL_TOUCH) {
 
             distanceX = MAX_HORIZONTAL_TOUCH;
 
         }
 
-        float modifierX = ( 1 / MAX_HORIZONTAL_TOUCH ) * distanceX;
+        float modifierX = (1 / MAX_HORIZONTAL_TOUCH) * distanceX;
 
-        float newSpeedX = BASE_SPEEDX + ( MAX_ADDITIONAL_SPEEDX * modifierX );
+        float newSpeedX = BASE_SPEEDX + (MAX_ADDITIONAL_SPEEDX * modifierX);
 
-        if ( touchEventX < locationX ) {
+        if (touchEventX < locationX) {
 
             speedX = newSpeedX;
 
-            desiredRotation = MAX_ROTATION * ( modifierX );
+            desiredRotation = MAX_ROTATION * (modifierX);
 
-        } else if ( touchEventX > locationX ) {
+        } else if (touchEventX > locationX) {
 
             speedX = -newSpeedX;
 
-            desiredRotation = -MAX_ROTATION * ( modifierX );
+            desiredRotation = -MAX_ROTATION * (modifierX);
 
         }
 
@@ -121,14 +120,14 @@ public class Ship {
 
     public float getExhaustLocationX() {
 
-        return locationX - ( ( rotation / MAX_ROTATION ) * ( bitmap.getWidth() / 2 ) );
+        return locationX - ((rotation / MAX_ROTATION) * (bitmap.getWidth() / 2));
 
     }
 
     public float getExhaustLocationY() {
 
         return locationY +
-                ( ( 1 - Math.abs( rotation / MAX_ROTATION ) ) * ( bitmap.getHeight() / 2 ) );
+                ((1 - Math.abs(rotation / MAX_ROTATION)) * (bitmap.getHeight() / 2));
 
     }
 
@@ -147,6 +146,24 @@ public class Ship {
     public float getSpeedX() {
 
         return speedX;
+
+    }
+
+    public float getAngle() {
+
+        return rotation;
+
+    }
+
+    public float getWidth() {
+
+        return bitmap.getWidth();
+
+    }
+
+    public float getHeight() {
+
+        return bitmap.getHeight();
 
     }
 

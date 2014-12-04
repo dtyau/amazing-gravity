@@ -13,7 +13,8 @@ import java.util.Random;
 public class Obstacle {
 
     public Obstacle(float gameViewCanvasWidth, float gameViewCanvasHeight,
-                    float shipLocationX, float shipLocationY) {
+                    float shipLocationX, float shipLocationY,
+                    float shipWidth, float shipHeight) {
 
         random = new Random();
 
@@ -24,6 +25,10 @@ public class Obstacle {
         this.shipLocationX = shipLocationX;
 
         this.shipLocationY = shipLocationY;
+
+        this.shipWidth = shipWidth;
+
+        this.shipHeight = shipHeight;
 
         reset();
 
@@ -70,11 +75,86 @@ public class Obstacle {
 
         updateSpeedAndLocationY();
 
+        if (checkCollision(ship)) {
+
+            GameView.setGameState(GameView.GameState.GAMEOVER);
+
+        }
+
     }
 
     public void draw(Canvas canvas, Paint paint) {
 
         canvas.drawCircle(locationX, locationY, radius, paint);
+
+    }
+
+    private boolean checkCollision(Ship ship) {
+
+        float shipAngle = (float) Math.toRadians(ship.getAngle());
+
+        // Rotate the circle's center points back (change point of reference)
+        float unrotatedLocationX = (float) (Math.cos(shipAngle) * (locationX - shipLocationX) -
+                Math.sin(shipAngle) * (locationY - shipLocationY) + shipLocationX);
+
+        float unrotatedLocationY = (float) (Math.sin(shipAngle) * (locationX - shipLocationX) +
+                Math.cos(shipAngle) * (locationY - shipLocationY) + shipLocationY);
+
+        // Closest point in the rectangle to the center of circle rotated backwards (unrotated)
+        float closestX, closestY;
+
+        // Find the unrotated closest X point from center of circle rotated backwards (unrotated)
+        if (unrotatedLocationX < (shipLocationX - (shipWidth / 2))) {
+
+            closestX = shipLocationX - (shipWidth / 2);
+
+        } else if (unrotatedLocationX > (shipLocationX + (shipWidth / 2))) {
+
+            closestX = shipLocationX + (shipWidth / 2);
+
+        } else {
+
+            closestX = unrotatedLocationX;
+
+        }
+
+        // Find the unrotated closest Y point from center of circle rotated backwards (unrotated)
+        if (unrotatedLocationY < (shipLocationY - (shipHeight / 2))) {
+
+            closestY = shipLocationY - (shipHeight / 2);
+
+        } else if (unrotatedLocationY > (shipLocationY + (shipHeight / 2))) {
+
+            closestY = shipLocationY + (shipHeight / 2);
+
+        } else {
+
+            closestY = unrotatedLocationY;
+
+        }
+
+        float distance = pythagorizeDistance(unrotatedLocationX, unrotatedLocationY, closestX, closestY);
+
+        if (distance < radius) {
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+
+    }
+
+    private float pythagorizeDistance(float fromX, float fromY,
+                                      float toX, float toY) {
+
+        float a = Math.abs(fromX - toX);
+
+        float b = Math.abs(fromY - toY);
+
+        return (float) Math.sqrt((a * a) + (b * b));
 
     }
 
@@ -186,7 +266,8 @@ public class Obstacle {
 
     private Random random;
 
-    private float gameViewCanvasWidth, gameViewCanvasHeight, shipLocationX, shipLocationY,
+    private float gameViewCanvasWidth, gameViewCanvasHeight,
+            shipLocationX, shipLocationY, shipWidth, shipHeight,
             mass, radius, locationX, locationY, speedX, speedY, oldSpeedX;
 
     private final static int BASE_MASS = 8;
