@@ -22,31 +22,29 @@ public class ScoreManager {
 
     public void draw(Canvas canvas, Paint paint) {
 
-        paint.setTypeface(Typeface.MONOSPACE);
-
         canvas.drawText(Integer.toString(score), scorePositionX, scorePositionY, paint);
 
     }
 
-    public void incrementScore() {
+    public static void incrementScore() {
 
         score += 1;
 
     }
 
-    public void reset() {
+    public static void reset() {
 
         score = 0;
 
     }
 
-    public int getScore() {
+    public static int getScore() {
 
         return score;
 
     }
 
-    private int score;
+    private static int score;
 
     private float scorePositionX, scorePositionY;
 

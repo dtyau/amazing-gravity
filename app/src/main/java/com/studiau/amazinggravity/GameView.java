@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -69,6 +70,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             }
 
         }
+
+        scoreManager = new ScoreManager(canvasWidth, canvasHeight);
 
         gameState = GameState.RUNNING;
 
@@ -154,6 +157,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         paint.setAntiAlias(true);
 
+        paint.setTypeface(Typeface.MONOSPACE);
+
     }
 
     public void update() {
@@ -194,6 +199,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             }
 
+            paint.setColor(Color.parseColor("#FFC107")); // For obstacles
+
             obstacleManager.draw(canvas, paint);
 
             ship.draw(canvas, paint);
@@ -205,6 +212,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 exhaustParticles.get(i).draw(canvas, paint);
 
             }
+
+            paint.setColor(Color.WHITE); // For score
+
+            scoreManager.draw(canvas, paint);
 
         }
 
@@ -272,6 +283,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private ObstacleManager obstacleManager;
 
     private ArrayList<Star> stars;
+
+    private ScoreManager scoreManager;
 
     private static float canvasWidth, canvasHeight;
 

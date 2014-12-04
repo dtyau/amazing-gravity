@@ -62,6 +62,8 @@ public class Obstacle {
 
             reset();
 
+            ScoreManager.incrementScore();
+
         }
 
         updateLocationX(ship, collectiveSpeedX);
