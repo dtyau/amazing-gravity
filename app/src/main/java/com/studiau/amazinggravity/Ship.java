@@ -16,15 +16,15 @@ import android.util.Log;
 
 public class Ship {
 
-    public Ship(Context context) {
+    public Ship(Context context, float canvasWidth, float canvasHeight) {
 
         blurMaskFilter = new BlurMaskFilter(10, BlurMaskFilter.Blur.SOLID);
 
         radius = BASE_RADIUS;
 
-        locationX = BASE_LOCATIONX;
+        locationX = canvasWidth * BASE_LOCATIONX;
 
-        locationY = BASE_LOCATIONY;
+        locationY = canvasHeight * BASE_LOCATIONY;
 
         speedX = BASE_SPEEDX;
 
@@ -68,8 +68,6 @@ public class Ship {
 
         paint.setMaskFilter(blurMaskFilter);
 
-        //paint.setColor(Color.WHITE);
-
         canvas.drawBitmap( bitmap, matrix, paint );
 
         paint.setMaskFilter(null);
@@ -79,7 +77,7 @@ public class Ship {
     public void handleActionDownAndMove(float touchEventX) {
 
         float distanceX = Math.abs( locationX - touchEventX ) /
-                ( GameView.getCanvasWidth() * 0.5f );
+                locationX;
 
         if ( distanceX > MAX_HORIZONTAL_TOUCH ) {
 
@@ -168,9 +166,9 @@ public class Ship {
 
     private static final float BASE_SPEEDY = 0.0001f;
 
-    private static final float BASE_LOCATIONX = ( GameView.getCanvasWidth() * 0.5f );
+    private static final float BASE_LOCATIONX = 0.5f;
 
-    private static final float BASE_LOCATIONY = ( GameView.getCanvasHeight() * 0.7f );
+    private static final float BASE_LOCATIONY = 0.7f;
 
     private static final float MAX_ROTATION = 60;
 

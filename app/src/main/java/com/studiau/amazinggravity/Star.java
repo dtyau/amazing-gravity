@@ -13,11 +13,15 @@ import java.util.Random;
 
 public class Star {
 
-    public Star() {
+    public Star(float canvasWidth, float canvasHeight) {
 
         random = new Random();
 
-        blurMaskFilter = new BlurMaskFilter( 2, BlurMaskFilter.Blur.NORMAL );
+        blurMaskFilter = new BlurMaskFilter(2, BlurMaskFilter.Blur.NORMAL);
+
+        gameViewCanvasWidth = canvasWidth;
+
+        gameViewCanvasHeight = canvasHeight;
 
         reset();
 
@@ -27,40 +31,40 @@ public class Star {
 
         radius = random.nextInt(MAX_RADIUS) + BASE_RADIUS;
 
-        locationX = random.nextFloat() * GameView.getCanvasWidth();
+        locationX = random.nextFloat() * gameViewCanvasWidth;
 
-        locationY = ( random.nextFloat() * GameView.getCanvasHeight() ) -
-                ( LOCATIONY_SHIFT * GameView.getCanvasHeight() );
+        locationY = (random.nextFloat() * gameViewCanvasHeight) -
+                (LOCATIONY_SHIFT * gameViewCanvasHeight);
 
-        speedX = ( ( random.nextFloat() - 0.5f ) / 0.5f ) * BASE_SPEEDX;
+        speedX = ((random.nextFloat() - 0.5f) / 0.5f) * BASE_SPEEDX;
 
-        speedY = ( radius / ( BASE_RADIUS + MAX_RADIUS ) ) * BASE_SPEEDY;
+        speedY = (radius / (BASE_RADIUS + MAX_RADIUS)) * BASE_SPEEDY;
 
     }
 
     public void update(Ship ship) {
 
-        if ( locationY > GameView.getCanvasHeight() ) {
+        if (locationY > gameViewCanvasHeight) {
 
             reset();
 
         }
 
-        if ( locationX < 0 ) {
+        if (locationX < 0) {
 
-            locationX = GameView.getCanvasWidth();
+            locationX = gameViewCanvasWidth;
 
-        } else if ( locationX > GameView.getCanvasWidth() ) {
+        } else if (locationX > gameViewCanvasWidth) {
 
             locationX = 0;
 
         } else {
 
-            locationX -= (speedX + (ship.getSpeedX() * SHIP_SPEEDX_DAMPENER) * GameView.getCanvasWidth());
+            locationX -= (speedX + (ship.getSpeedX() * SHIP_SPEEDX_DAMPENER) * gameViewCanvasWidth);
 
         }
 
-        locationY += ( speedY + ship.getBaseSpeedY() ) * GameView.getCanvasHeight();
+        locationY += (speedY + ship.getBaseSpeedY()) * gameViewCanvasHeight;
 
     }
 
@@ -68,7 +72,7 @@ public class Star {
 
         paint.setMaskFilter(blurMaskFilter);
 
-        canvas.drawCircle( locationX, locationY, radius, paint);
+        canvas.drawCircle(locationX, locationY, radius, paint);
 
         paint.setMaskFilter(null);
 
@@ -78,7 +82,7 @@ public class Star {
 
     private BlurMaskFilter blurMaskFilter;
 
-    private float radius, locationX, locationY, speedX, speedY;
+    private float gameViewCanvasWidth, gameViewCanvasHeight, radius, locationX, locationY, speedX, speedY;
 
     private final static int MAX_RADIUS = 3;
 

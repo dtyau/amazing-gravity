@@ -42,15 +42,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         canvasHeight = getHeight();
 
-        ship = new Ship( getContext() );
+        ship = new Ship(getContext(), canvasWidth, canvasHeight);
 
         exhaustParticles = new ArrayList<ExhaustParticle>();
 
-        while (exhaustParticles.size() < AMOUNT_OF_EXHAUST ) {
+        while (exhaustParticles.size() < AMOUNT_OF_EXHAUST) {
 
-            for ( int i = 0; i < AMOUNT_OF_EXHAUST; i++ ) {
+            for (int i = 0; i < AMOUNT_OF_EXHAUST; i++) {
 
-                exhaustParticles.add( new ExhaustParticle(ship) );
+                exhaustParticles.add(new ExhaustParticle(ship, canvasWidth, canvasHeight));
 
             }
 
@@ -61,11 +61,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         stars = new ArrayList<Star>();
 
-        while ( stars.size() < AMOUNT_OF_STARS ) {
+        while (stars.size() < AMOUNT_OF_STARS) {
 
-            for ( int i = 0; i < AMOUNT_OF_STARS; i++ ) {
+            for (int i = 0; i < AMOUNT_OF_STARS; i++) {
 
-                stars.add( new Star() );
+                stars.add(new Star(canvasWidth, canvasHeight));
 
             }
 
@@ -159,6 +159,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         paint.setTypeface(Typeface.MONOSPACE);
 
+        paint.setTextSize(FONT_SIZE);
+
     }
 
     public void update() {
@@ -205,7 +207,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             ship.draw(canvas, paint);
 
-            paint.setColor( Color.parseColor("#FF7043") ); // For exhaust particles
+            paint.setColor(Color.parseColor("#FF7043")); // For exhaust particles
 
             for (int i = 0; i < AMOUNT_OF_EXHAUST; i++) {
 
@@ -226,40 +228,32 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         int actionType = event.getActionMasked();
 
-        switch ( actionType ) {
+        switch (actionType) {
 
-            case (MotionEvent.ACTION_DOWN) :
+            case (MotionEvent.ACTION_DOWN):
 
-                ship.handleActionDownAndMove( event.getX() );
-
-                return true;
-
-            case (MotionEvent.ACTION_MOVE) :
-
-                ship.handleActionDownAndMove( event.getX() );
+                ship.handleActionDownAndMove(event.getX());
 
                 return true;
 
-            case (MotionEvent.ACTION_UP) :
+            case (MotionEvent.ACTION_MOVE):
+
+                ship.handleActionDownAndMove(event.getX());
+
+                return true;
+
+            case (MotionEvent.ACTION_UP):
 
                 ship.handleActionUp();
 
                 return true;
 
-            default :
+            default:
 
                 return super.onTouchEvent(event);
 
         }
 
-    }
-
-    public static float getCanvasWidth() {
-        return canvasWidth;
-    }
-
-    public static float getCanvasHeight() {
-        return canvasHeight;
     }
 
     enum GameState {
@@ -286,11 +280,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private ScoreManager scoreManager;
 
-    private static float canvasWidth, canvasHeight;
+    private float canvasWidth, canvasHeight;
 
     private final int AMOUNT_OF_EXHAUST = 100;
 
     private final int AMOUNT_OF_STARS = 200;
+
+    private final float FONT_SIZE = 24;
 
     private final static String TAG = GameView.class.getSimpleName();
 

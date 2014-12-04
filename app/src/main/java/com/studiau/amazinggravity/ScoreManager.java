@@ -2,7 +2,6 @@ package com.studiau.amazinggravity;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 
 /**
  * Author: Daniel Au.
