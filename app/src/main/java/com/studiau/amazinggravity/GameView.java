@@ -249,7 +249,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             scoreManager.draw(canvas, paint);
 
-            paint.setColor(Color.YELLOW); // For explosion
+            paint.setColor(Color.parseColor("#FF5722")); // For explosion
 
             for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) {
 
