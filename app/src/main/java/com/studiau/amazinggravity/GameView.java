@@ -282,6 +282,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private void reset() {
 
+        ship.reset();
+
         obstacleManager.reset();
 
         scoreManager.reset();

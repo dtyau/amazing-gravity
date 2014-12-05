@@ -19,14 +19,6 @@ public class Ship {
 
         blurMaskFilter = new BlurMaskFilter(10, BlurMaskFilter.Blur.SOLID);
 
-        locationX = canvasWidth * BASE_LOCATIONX;
-
-        locationY = canvasHeight * BASE_LOCATIONY;
-
-        speedX = BASE_SPEEDX;
-
-        desiredRotation = 0;
-
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ship);
 
         matrix = new Matrix();
@@ -34,6 +26,12 @@ public class Ship {
         matrix.postTranslate(-bitmap.getWidth() / 2, -bitmap.getHeight() / 2);
 
         matrix.postTranslate(locationX, locationY);
+
+        locationX = canvasWidth * BASE_LOCATIONX;
+
+        locationY = canvasHeight * BASE_LOCATIONY;
+
+        reset();
 
     }
 
@@ -103,6 +101,14 @@ public class Ship {
     }
 
     public void handleActionUp() {
+
+        speedX = BASE_SPEEDX;
+
+        desiredRotation = 0;
+
+    }
+
+    public void reset() {
 
         speedX = BASE_SPEEDX;
 
