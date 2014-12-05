@@ -1,6 +1,7 @@
 package com.studiau.amazinggravity;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 
 import java.util.Random;
@@ -39,6 +40,8 @@ public class ExplosionParticle {
 
         speedZ = random.nextInt(3);
 
+        colour = getRandomColour();
+
         alpha = 255;
 
         updateCounter = 0;
@@ -56,19 +59,19 @@ public class ExplosionParticle {
 
             locationY += speedY * gameViewCanvasHeight;
 
-            if (radius > 2 && updateCounter > RADIUS_CHANGE_COUNTER) {
+            if (radius > RADIUS_CHANGE && updateCounter > RADIUS_CHANGE_COUNTER) {
 
                 switch (speedZ) {
 
                     case 0:
 
-                        radius--;
+                        radius = radius + RADIUS_CHANGE;
 
                         break;
 
                     case 1:
 
-                        radius++;
+                        radius = radius - RADIUS_CHANGE;
 
                         break;
 
@@ -82,9 +85,9 @@ public class ExplosionParticle {
 
             }
 
-            if (alpha > 0) {
+            if (alpha >= ALPHA_FADE) {
 
-                alpha = alpha - 3;
+                alpha = alpha - ALPHA_FADE;
 
             }
 
@@ -96,11 +99,47 @@ public class ExplosionParticle {
 
     public void draw(Canvas canvas, Paint paint) {
 
+        paint.setColor(Color.parseColor(colour));
+
         paint.setAlpha(alpha);
 
         canvas.drawCircle(locationX, locationY, radius, paint);
 
         paint.setAlpha(255);
+
+    }
+
+    private String getRandomColour() {
+
+        int randomColourInteger = random.nextInt(NUMBER_OF_COLOURS);
+
+        switch(randomColourInteger) {
+
+            default:
+
+                return "#F44336"; // red is default
+
+            case 0:
+
+                return "#F44336"; // red
+
+            case 1:
+
+                return "#FFEB3B"; // yellow
+
+            case 2:
+
+                return "#FFC107"; // amber
+
+            case 3:
+
+                return "#FF9800"; // orange
+
+            case 4:
+
+                return "#FF5722"; // deep orange
+
+        }
 
     }
 
@@ -110,14 +149,22 @@ public class ExplosionParticle {
 
     private int speedZ, updateCounter, alpha;
 
+    private String colour;
+
     private final int BASE_RADIUS = 2;
 
-    private final int MAX_ADDITIONAL_RADIUS = 18;
+    private final int MAX_ADDITIONAL_RADIUS = 12;
+
+    private final int RADIUS_CHANGE = 6;
 
     private final int RADIUS_CHANGE_COUNTER = 10;
 
-    private final float BASE_SPEEDX = 0.016f;
+    private final int ALPHA_FADE = 6;
 
-    private final float BASE_SPEEDY = 0.016f;
+    private final int NUMBER_OF_COLOURS = 4;
+
+    private final float BASE_SPEEDX = 0.02f;
+
+    private final float BASE_SPEEDY = 0.02f;
 
 }
