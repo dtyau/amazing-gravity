@@ -23,7 +23,7 @@ public class ExplosionParticle {
 
     }
 
-    private void reset(Ship ship) {
+    public void reset(Ship ship) {
 
         radius = BASE_RADIUS + random.nextInt(MAX_ADDITIONAL_RADIUS);
 
@@ -35,18 +35,30 @@ public class ExplosionParticle {
 
         speedY = ((random.nextFloat() - 0.5f) / 0.5f) * BASE_SPEEDY;
 
+        updateCounter = 0;
+
     }
 
     public void update() {
 
-        if (locationX > 0 &&
-                locationX < gameViewCanvasWidth &&
-                locationY > 0 &&
-                locationY < gameViewCanvasHeight) {
+        if (locationX > (-0.1 * gameViewCanvasWidth) &&
+                locationX < (1.1 * gameViewCanvasWidth) &&
+                locationY > (-0.1 * gameViewCanvasHeight) &&
+                locationY < (1.1 * gameViewCanvasHeight)) {
 
             locationX += speedX * gameViewCanvasWidth;
 
             locationY += speedY * gameViewCanvasHeight;
+
+            if (radius > 1 && updateCounter > RADIUS_DECREMENT_COUNTER) {
+
+                radius--;
+
+                updateCounter = 0;
+
+            }
+
+            updateCounter++;
 
         }
 
@@ -62,9 +74,13 @@ public class ExplosionParticle {
 
     private float gameViewCanvasWidth, gameViewCanvasHeight, radius, locationX, locationY, speedX, speedY;
 
-    private static final int BASE_RADIUS = 2;
+    private int updateCounter;
 
-    private static final int MAX_ADDITIONAL_RADIUS = 8;
+    private final int BASE_RADIUS = 2;
+
+    private final int MAX_ADDITIONAL_RADIUS = 12;
+
+    private final int RADIUS_DECREMENT_COUNTER = 10;
 
     private static final float BASE_SPEEDX = 0.01f;
 

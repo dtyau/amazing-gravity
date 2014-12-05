@@ -24,7 +24,7 @@ public class ExhaustParticle {
 
     }
 
-    private void reset(Ship ship) {
+    public void reset(Ship ship) {
 
         radius = BASE_RADIUS + random.nextInt(MAX_ADDITIONAL_RADIUS);
 

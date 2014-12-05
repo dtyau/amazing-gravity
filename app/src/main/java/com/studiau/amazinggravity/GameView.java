@@ -316,6 +316,18 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         scoreManager.reset();
 
+        for (int i = 0; i < AMOUNT_OF_EXHAUST; i++) {
+
+            exhaustParticles.get(i).reset(ship);
+
+        }
+
+        for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) {
+
+            explosionParticles.get(i).reset(ship);
+
+        }
+
         gameState = GameState.RUNNING;
 
     }
