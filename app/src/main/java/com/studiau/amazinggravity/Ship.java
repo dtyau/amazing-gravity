@@ -19,8 +19,6 @@ public class Ship {
 
         blurMaskFilter = new BlurMaskFilter(10, BlurMaskFilter.Blur.SOLID);
 
-        radius = BASE_RADIUS;
-
         locationX = canvasWidth * BASE_LOCATIONX;
 
         locationY = canvasHeight * BASE_LOCATIONY;
@@ -173,9 +171,7 @@ public class Ship {
 
     private Matrix matrix;
 
-    private float radius, locationX, locationY, speedX, desiredRotation, rotation;
-
-    private static final float BASE_RADIUS = 24;
+    private float locationX, locationY, speedX, desiredRotation, rotation;
 
     private static final float BASE_SPEEDX = 0f;
 
