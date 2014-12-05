@@ -38,7 +38,7 @@ public class ExplosionParticle {
 
         speedY = (float) (Math.cos(angle) * random.nextFloat() * BASE_SPEEDY);
 
-        speedZ = random.nextInt(3);
+        speedZ = random.nextInt(2);
 
         colour = getRandomColour();
 
@@ -50,10 +50,7 @@ public class ExplosionParticle {
 
     public void update() {
 
-        if (locationX > (-0.1 * gameViewCanvasWidth) &&
-                locationX < (1.1 * gameViewCanvasWidth) &&
-                locationY > (-0.1 * gameViewCanvasHeight) &&
-                locationY < (1.1 * gameViewCanvasHeight)) {
+        if (alpha >= ALPHA_FADE) {
 
             locationX += speedX * gameViewCanvasHeight;
 
@@ -85,11 +82,7 @@ public class ExplosionParticle {
 
             }
 
-            if (alpha >= ALPHA_FADE) {
-
-                alpha = alpha - ALPHA_FADE;
-
-            }
+            alpha = alpha - ALPHA_FADE;
 
             updateCounter++;
 
@@ -99,13 +92,17 @@ public class ExplosionParticle {
 
     public void draw(Canvas canvas, Paint paint) {
 
-        paint.setColor(Color.parseColor(colour));
+        if (alpha > ALPHA_FADE) {
 
-        paint.setAlpha(alpha);
+            paint.setColor(Color.parseColor(colour));
 
-        canvas.drawCircle(locationX, locationY, radius, paint);
+            paint.setAlpha(alpha);
 
-        paint.setAlpha(255);
+            canvas.drawCircle(locationX, locationY, radius, paint);
+
+            paint.setAlpha(255);
+
+        }
 
     }
 
@@ -113,7 +110,7 @@ public class ExplosionParticle {
 
         int randomColourInteger = random.nextInt(NUMBER_OF_COLOURS);
 
-        switch(randomColourInteger) {
+        switch (randomColourInteger) {
 
             default:
 
@@ -153,9 +150,9 @@ public class ExplosionParticle {
 
     private final int BASE_RADIUS = 2;
 
-    private final int MAX_ADDITIONAL_RADIUS = 12;
+    private final int MAX_ADDITIONAL_RADIUS = 10;
 
-    private final int RADIUS_CHANGE = 6;
+    private final int RADIUS_CHANGE = 3;
 
     private final int RADIUS_CHANGE_COUNTER = 10;
 

@@ -368,7 +368,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private final int AMOUNT_OF_EXHAUST = 100;
 
-    private final int AMOUNT_OF_EXPLOSION = 300;
+    private final int AMOUNT_OF_EXPLOSION = 500;
 
     private final int AMOUNT_OF_STARS = 200;
 
