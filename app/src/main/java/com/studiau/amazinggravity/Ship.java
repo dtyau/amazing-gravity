@@ -112,6 +112,8 @@ public class Ship {
 
         speedX = BASE_SPEEDX;
 
+        rotation = 0;
+
         desiredRotation = 0;
 
     }
