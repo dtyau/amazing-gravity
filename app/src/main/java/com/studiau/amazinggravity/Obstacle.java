@@ -48,7 +48,7 @@ public class Obstacle {
 
         }
 
-        locationX += (ship.getAngle() / ship.getMaxRotation()) * gameViewCanvasWidth;
+        locationX += (ship.getAngle() / ship.getMaxRotation()) * 0.5 * gameViewCanvasWidth;
 
         locationY = (-2 * radius) + (random.nextFloat() * -gameViewCanvasHeight);
 
