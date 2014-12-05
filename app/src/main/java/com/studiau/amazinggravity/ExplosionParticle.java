@@ -39,6 +39,8 @@ public class ExplosionParticle {
 
         speedZ = random.nextInt(3);
 
+        alpha = 255;
+
         updateCounter = 0;
 
     }
@@ -54,7 +56,7 @@ public class ExplosionParticle {
 
             locationY += speedY * gameViewCanvasHeight;
 
-            if (radius > 2 && updateCounter > RADIUS_DECREMENT_COUNTER) {
+            if (radius > 2 && updateCounter > RADIUS_CHANGE_COUNTER) {
 
                 switch (speedZ) {
 
@@ -80,6 +82,12 @@ public class ExplosionParticle {
 
             }
 
+            if (alpha > 0) {
+
+                alpha = alpha - 3;
+
+            }
+
             updateCounter++;
 
         }
@@ -88,7 +96,11 @@ public class ExplosionParticle {
 
     public void draw(Canvas canvas, Paint paint) {
 
+        paint.setAlpha(alpha);
+
         canvas.drawCircle(locationX, locationY, radius, paint);
+
+        paint.setAlpha(255);
 
     }
 
@@ -96,16 +108,16 @@ public class ExplosionParticle {
 
     private float gameViewCanvasWidth, gameViewCanvasHeight, radius, locationX, locationY, speedX, speedY, angle;
 
-    private int speedZ, updateCounter;
+    private int speedZ, updateCounter, alpha;
 
     private final int BASE_RADIUS = 2;
 
-    private final int MAX_ADDITIONAL_RADIUS = 8;
+    private final int MAX_ADDITIONAL_RADIUS = 18;
 
-    private final int RADIUS_DECREMENT_COUNTER = 10;
+    private final int RADIUS_CHANGE_COUNTER = 10;
 
-    private static final float BASE_SPEEDX = 0.008f;
+    private final float BASE_SPEEDX = 0.016f;
 
-    private static final float BASE_SPEEDY = 0.008f;
+    private final float BASE_SPEEDY = 0.016f;
 
 }
