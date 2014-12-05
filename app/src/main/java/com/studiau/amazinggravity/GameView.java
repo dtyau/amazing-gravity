@@ -69,9 +69,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         }
 
-        obstacleManager = new ObstacleManager(canvasWidth, canvasHeight,
-                ship.getLocationX(), ship.getLocationY(),
-                ship.getWidth(), ship.getHeight());
+        obstacleManager = new ObstacleManager(canvasWidth, canvasHeight, ship);
 
         stars = new ArrayList<Star>();
 
@@ -298,7 +296,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             if (actionType == MotionEvent.ACTION_DOWN) {
 
-                reset();
+                reset(ship);
 
             }
 
@@ -308,11 +306,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
-    private void reset() {
+    private void reset(Ship ship) {
 
         ship.reset();
 
-        obstacleManager.reset();
+        obstacleManager.reset(ship);
 
         scoreManager.reset();
 

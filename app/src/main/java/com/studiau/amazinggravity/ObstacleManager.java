@@ -14,9 +14,7 @@ import java.util.ArrayList;
 
 public class ObstacleManager {
 
-    public ObstacleManager(float gameViewCanvasWidth, float gameViewCanvasHeight,
-                           float shipLocationX, float shipLocationY,
-                           float shipWidth, float shipHeight) {
+    public ObstacleManager(float gameViewCanvasWidth, float gameViewCanvasHeight, Ship ship) {
 
         addObstacleCounter = OBSTACLE_INCREMENT;
 
@@ -26,21 +24,13 @@ public class ObstacleManager {
 
         this.gameViewCanvasHeight = gameViewCanvasHeight;
 
-        this.shipLocationX = shipLocationX;
-
-        this.shipLocationY = shipLocationY;
-
-        this.shipWidth = shipWidth;
-
-        this.shipHeight = shipHeight;
-
-        reset();
+        reset(ship);
 
     }
 
     public void update(Ship ship) {
 
-        checkScore();
+        checkScore(ship);
 
         float collectiveSpeedX = getCollectiveSpeedX();
 
@@ -48,7 +38,7 @@ public class ObstacleManager {
 
             while (checkLocation(obstacle)) {
 
-                obstacle.reset();
+                obstacle.reset(ship);
 
             }
 
@@ -72,7 +62,7 @@ public class ObstacleManager {
 
     }
 
-    public void reset() {
+    public void reset(Ship ship) {
 
         obstacles = null;
 
@@ -80,22 +70,21 @@ public class ObstacleManager {
 
         addObstacleCounter = OBSTACLE_INCREMENT;
 
-        addObstacle();
+        addObstacle(ship);
 
     }
 
-    private void addObstacle() {
+    private void addObstacle(Ship ship) {
 
-        obstacles.add(new Obstacle(gameViewCanvasWidth, gameViewCanvasHeight,
-                shipLocationX, shipLocationY, shipWidth, shipHeight));
+        obstacles.add(new Obstacle(gameViewCanvasWidth, gameViewCanvasHeight, ship));
 
     }
 
-    private void checkScore() {
+    private void checkScore(Ship ship) {
 
         if (ScoreManager.getScore() >= addObstacleCounter) {
 
-            addObstacle();
+            addObstacle(ship);
 
             addObstacleCounter += OBSTACLE_INCREMENT * obstacles.size();
 
@@ -173,7 +162,7 @@ public class ObstacleManager {
 
     private ArrayList<Obstacle> obstacles;
 
-    private float gameViewCanvasWidth, gameViewCanvasHeight, shipLocationX, shipLocationY, shipWidth, shipHeight;
+    private float gameViewCanvasWidth, gameViewCanvasHeight;
 
     private int addObstacleCounter;
 

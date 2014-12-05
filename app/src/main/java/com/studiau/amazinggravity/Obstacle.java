@@ -11,9 +11,7 @@ import java.util.Random;
 
 public class Obstacle {
 
-    public Obstacle(float gameViewCanvasWidth, float gameViewCanvasHeight,
-                    float shipLocationX, float shipLocationY,
-                    float shipWidth, float shipHeight) {
+    public Obstacle(float gameViewCanvasWidth, float gameViewCanvasHeight, Ship ship) {
 
         random = new Random();
 
@@ -21,19 +19,19 @@ public class Obstacle {
 
         this.gameViewCanvasHeight = gameViewCanvasHeight;
 
-        this.shipLocationX = shipLocationX;
+        shipLocationX = ship.getLocationX();
 
-        this.shipLocationY = shipLocationY;
+        shipLocationY = ship.getLocationY();
 
-        this.shipWidth = shipWidth;
+        shipWidth = ship.getWidth();
 
-        this.shipHeight = shipHeight;
+        shipHeight = ship.getHeight();
 
-        reset();
+        reset(ship);
 
     }
 
-    public void reset() {
+    public void reset(Ship ship) {
 
         mass = BASE_MASS + random.nextInt(MAX_ADDITIONAL_MASS);
 
@@ -50,6 +48,8 @@ public class Obstacle {
 
         }
 
+        locationX += (ship.getAngle() / ship.getMaxRotation()) * gameViewCanvasWidth;
+
         locationY = (-2 * radius) + (random.nextFloat() * -gameViewCanvasHeight);
 
         speedX = BASE_SPEEDX;
@@ -64,7 +64,7 @@ public class Obstacle {
 
         if ((locationY - radius) > (gameViewCanvasHeight * OBSTACLE_KILL_HEIGHT_RATIO)) {
 
-            reset();
+            reset(ship);
 
             ScoreManager.incrementScore();
 

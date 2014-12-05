@@ -33,7 +33,7 @@ public class ScoreManager {
 
     }
 
-    public static void reset() {
+    public void reset() {
 
         score = 0;
 

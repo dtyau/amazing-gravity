@@ -161,6 +161,12 @@ public class Ship {
 
     }
 
+    public float getMaxRotation() {
+
+        return MAX_ROTATION;
+
+    }
+
     public float getWidth() {
 
         return bitmap.getWidth();
