@@ -2,7 +2,6 @@ package com.studiau.amazinggravity;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.Log;
 
 import java.util.Random;
 
@@ -55,7 +54,7 @@ public class Obstacle {
 
         speedX = BASE_SPEEDX;
 
-        speedY = BASE_SPEEDY * (1 - (0.99f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS))));
+        speedY = BASE_SPEEDY * (1 - (MASS_TO_SPEEDY_MODIFIER * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS))));
 
         oldSpeedX = 0;
 
@@ -184,7 +183,7 @@ public class Obstacle {
         if (((locationY) > 0) &&
                 ((locationY) < gameViewCanvasHeight)) {
 
-            float newSpeedY = (float) ((1 - (0.99f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) *
+            float newSpeedY = (float) ((1 - (MASS_TO_SPEEDY_MODIFIER * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) *
                     (((-1 * (Math.pow(distanceY, 4))) + 1) / 1000))
                     * verticalDampening;
 
@@ -278,11 +277,11 @@ public class Obstacle {
 
     private final static float BASE_SPEEDX = 0f;
 
-    private final static float BASE_SPEEDY = 0.008f;
+    private final static float BASE_SPEEDY = 0.01f;
 
     private final static float OBSTACLE_KILL_HEIGHT_RATIO = 1.6f;
 
-    private final static float OBSTACLE_OFFSCREEN_RATIOX = 1f;
+    private final static float MASS_TO_SPEEDY_MODIFIER = 0.8f;
 
 
 }
