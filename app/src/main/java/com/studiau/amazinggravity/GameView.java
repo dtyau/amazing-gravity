@@ -57,6 +57,18 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         }
 
+        explosionParticles = new ArrayList<ExplosionParticle>();
+
+        while (explosionParticles.size() < AMOUNT_OF_EXPLOSION) {
+
+            for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) {
+
+                explosionParticles.add(new ExplosionParticle(ship, canvasWidth, canvasHeight));
+
+            }
+
+        }
+
         obstacleManager = new ObstacleManager(canvasWidth, canvasHeight,
                 ship.getLocationX(), ship.getLocationY(),
                 ship.getWidth(), ship.getHeight());
@@ -185,6 +197,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             }
 
+        } else if (gameState == GameState.GAMEOVER) {
+
+            for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) {
+
+                explosionParticles.get(i).update();
+
+            }
+
         }
 
     }
@@ -228,6 +248,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             paint.setColor(Color.WHITE); // For score
 
             scoreManager.draw(canvas, paint);
+
+            paint.setColor(Color.YELLOW); // For explosion
+
+            for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) {
+
+                explosionParticles.get(i).draw(canvas, paint);
+
+            }
 
         }
 
@@ -314,6 +342,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private ArrayList<ExhaustParticle> exhaustParticles;
 
+    private ArrayList<ExplosionParticle> explosionParticles;
+
     private ObstacleManager obstacleManager;
 
     private ArrayList<Star> stars;
@@ -325,6 +355,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private float canvasWidth, canvasHeight;
 
     private final int AMOUNT_OF_EXHAUST = 100;
+
+    private final int AMOUNT_OF_EXPLOSION = 300;
 
     private final int AMOUNT_OF_STARS = 200;
 
