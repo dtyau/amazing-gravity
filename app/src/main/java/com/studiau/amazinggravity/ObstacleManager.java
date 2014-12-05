@@ -177,9 +177,7 @@ public class ObstacleManager {
 
     private int addObstacleCounter;
 
-    private final int OBSTACLE_INCREMENT = 5;
-
-    private final int NUMBER_OF_OBSTACLES = 5;
+    private final int OBSTACLE_INCREMENT = 3;
 
     private final static String TAG = ObstacleManager.class.getSimpleName();
 
