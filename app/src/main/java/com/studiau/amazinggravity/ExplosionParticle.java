@@ -31,9 +31,11 @@ public class ExplosionParticle {
 
         locationY = ship.getLocationY();
 
-        speedX = ((random.nextFloat() - 0.5f) / 0.5f) * BASE_SPEEDX;
+        angle = (float) Math.toRadians(random.nextInt(359));
 
-        speedY = ((random.nextFloat() - 0.5f) / 0.5f) * BASE_SPEEDY;
+        speedX = (float) (Math.sin(angle) * random.nextFloat() * BASE_SPEEDX);
+
+        speedY = (float) (Math.cos(angle) * random.nextFloat() * BASE_SPEEDY);
 
         updateCounter = 0;
 
@@ -46,7 +48,7 @@ public class ExplosionParticle {
                 locationY > (-0.1 * gameViewCanvasHeight) &&
                 locationY < (1.1 * gameViewCanvasHeight)) {
 
-            locationX += speedX * gameViewCanvasWidth;
+            locationX += speedX * gameViewCanvasHeight;
 
             locationY += speedY * gameViewCanvasHeight;
 
@@ -72,7 +74,7 @@ public class ExplosionParticle {
 
     private Random random;
 
-    private float gameViewCanvasWidth, gameViewCanvasHeight, radius, locationX, locationY, speedX, speedY;
+    private float gameViewCanvasWidth, gameViewCanvasHeight, radius, locationX, locationY, speedX, speedY, angle;
 
     private int updateCounter;
 
