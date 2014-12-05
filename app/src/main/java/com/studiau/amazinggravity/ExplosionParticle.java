@@ -37,6 +37,8 @@ public class ExplosionParticle {
 
         speedY = (float) (Math.cos(angle) * random.nextFloat() * BASE_SPEEDY);
 
+        speedZ = random.nextInt(3);
+
         updateCounter = 0;
 
     }
@@ -52,9 +54,27 @@ public class ExplosionParticle {
 
             locationY += speedY * gameViewCanvasHeight;
 
-            if (radius > 1 && updateCounter > RADIUS_DECREMENT_COUNTER) {
+            if (radius > 2 && updateCounter > RADIUS_DECREMENT_COUNTER) {
 
-                radius--;
+                switch (speedZ) {
+
+                    case 0:
+
+                        radius--;
+
+                        break;
+
+                    case 1:
+
+                        radius++;
+
+                        break;
+
+                    default:
+
+                        break;
+
+                }
 
                 updateCounter = 0;
 
@@ -76,7 +96,7 @@ public class ExplosionParticle {
 
     private float gameViewCanvasWidth, gameViewCanvasHeight, radius, locationX, locationY, speedX, speedY, angle;
 
-    private int updateCounter;
+    private int speedZ, updateCounter;
 
     private final int BASE_RADIUS = 2;
 
@@ -84,8 +104,8 @@ public class ExplosionParticle {
 
     private final int RADIUS_DECREMENT_COUNTER = 10;
 
-    private static final float BASE_SPEEDX = 0.01f;
+    private static final float BASE_SPEEDX = 0.008f;
 
-    private static final float BASE_SPEEDY = 0.01f;
+    private static final float BASE_SPEEDY = 0.008f;
 
 }
