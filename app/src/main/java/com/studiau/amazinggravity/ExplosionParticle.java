@@ -78,7 +78,7 @@ public class ExplosionParticle {
 
     private final int BASE_RADIUS = 2;
 
-    private final int MAX_ADDITIONAL_RADIUS = 12;
+    private final int MAX_ADDITIONAL_RADIUS = 8;
 
     private final int RADIUS_DECREMENT_COUNTER = 10;
 
