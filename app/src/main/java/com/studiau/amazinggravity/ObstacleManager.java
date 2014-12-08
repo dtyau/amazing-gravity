@@ -176,11 +176,23 @@ public class ObstacleManager {
 
             case 2:
 
-                return "#";
+                return "#4CAF50"; // green
 
             case 3:
 
-                return "#";
+                return "#03A9F4"; // light blue
+
+            case 4:
+
+                return "#F44336"; // red
+
+            case 5:
+
+                return "#009688"; // teal
+
+            case 6:
+
+                return "#673AB7"; // deep purple
 
         }
 
