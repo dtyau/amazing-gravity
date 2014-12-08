@@ -195,7 +195,7 @@ public class Ship {
 
     private static final float BASE_LOCATIONX = 0.5f;
 
-    private static final float BASE_LOCATIONY = 0.7f;
+    private static final float BASE_LOCATIONY = 0.75f;
 
     private static final float MAX_ROTATION = 60;
 
