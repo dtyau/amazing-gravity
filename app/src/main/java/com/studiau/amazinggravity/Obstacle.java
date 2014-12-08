@@ -229,7 +229,7 @@ public class Obstacle {
 
             if (distanceY <= 1) {
 
-                float verticalDampening = (float) Math.pow((distanceY - 1), 2);
+                float verticalDampening = (float) ( 1 - Math.pow((distanceY - 1), 2) );
 
                 oldSpeedX -= oldSpeedX * verticalDampening;
 
