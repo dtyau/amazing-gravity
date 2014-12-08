@@ -94,6 +94,6 @@ public class Star {
 
     private final static float LOCATIONY_SHIFT = 0.3f;
 
-    private final static float SHIP_SPEEDX_DAMPENER = 0.4f;
+    private final static float SHIP_SPEEDX_DAMPENER = 0.3f;
 
 }
