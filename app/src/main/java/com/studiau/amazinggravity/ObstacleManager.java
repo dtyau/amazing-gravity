@@ -52,6 +52,8 @@ public class ObstacleManager {
 
         paint.setMaskFilter(blurMaskFilter);
 
+        paint.setColor(Color.parseColor(getObstacleColour()));
+
         for (Obstacle obstacle : obstacles) {
 
             obstacle.draw(canvas, paint);
@@ -155,6 +157,32 @@ public class ObstacleManager {
         }
 
         return false;
+
+    }
+
+    private String getObstacleColour() {
+
+        int numberOfObstacles = obstacles.size();
+
+        switch (numberOfObstacles) {
+
+            default:
+
+                return "#FFEB3B"; // default is yellow
+
+            case 1:
+
+                return "#FFEB3B"; // yellow
+
+            case 2:
+
+                return "#";
+
+            case 3:
+
+                return "#";
+
+        }
 
     }
 

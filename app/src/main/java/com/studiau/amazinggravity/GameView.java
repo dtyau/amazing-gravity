@@ -221,7 +221,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         if (gameState == GameState.RUNNING) {
 
-            paint.setColor(Color.parseColor("#FFEB3B")); // For obstacles
+            //paint.setColor(Color.parseColor("#FFEB3B")); // For obstacles
 
             obstacleManager.draw(canvas, paint);
 
