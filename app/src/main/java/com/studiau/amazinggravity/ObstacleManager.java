@@ -30,12 +30,7 @@ public class ObstacleManager {
 
     public void update(Ship ship) {
 
-        //checkScore(ship);
-        if (isCanvasEmpty()) {
-
-            addObstacle(ship);
-
-        }
+        checkScore(ship);
 
         float collectiveSpeedX = getCollectiveSpeedX();
 
@@ -84,22 +79,6 @@ public class ObstacleManager {
     private void addObstacle(Ship ship) {
 
         obstacles.add(new Obstacle(gameViewCanvasWidth, gameViewCanvasHeight, ship));
-
-    }
-
-    private Boolean isCanvasEmpty() {
-
-        for (Obstacle obstacle : obstacles) {
-
-            if ((obstacle.getLocationY() + obstacle.getRadius()) > (gameViewCanvasHeight * 0.75)) {
-
-                return false;
-
-            }
-
-        }
-
-        return true;
 
     }
 
