@@ -76,11 +76,11 @@ public class Obstacle {
 
         updateSpeedAndLocationY();
 
-        if (checkCollision(ship)) {
+        /*if (checkCollision(ship)) {
 
             GameView.setGameState(GameView.GameState.GAMEOVER);
 
-        }
+        }*/
 
     }
 
