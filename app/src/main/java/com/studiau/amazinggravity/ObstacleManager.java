@@ -99,7 +99,7 @@ public class ObstacleManager {
 
     private float gameViewCanvasWidth, gameViewCanvasHeight;
 
-    public static final int NUMBER_OF_OBSTACLES = 3;
+    public static final int NUMBER_OF_OBSTACLES = 4;
 
     public static final float OBSTACLE_KILL_HEIGHT_RATIO = 1.6f;
 

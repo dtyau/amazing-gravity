@@ -41,15 +41,16 @@ public class Obstacle {
         locationX = random.nextFloat() * gameViewCanvasWidth;
 
         while (locationX / gameViewCanvasWidth < 0.1 ||
-                locationX / gameViewCanvasWidth > 0.4 &&
-                        locationX / gameViewCanvasWidth < 0.6 ||
+                locationX / gameViewCanvasWidth > 0.45 &&
+                        locationX / gameViewCanvasWidth < 0.55 ||
                 locationX / gameViewCanvasWidth > 0.9) {
 
             locationX = random.nextFloat() * gameViewCanvasWidth;
 
         }
 
-        locationX += (ship.getAngle() / ship.getMaxRotation()) * 0.5 * gameViewCanvasWidth;
+        locationX += (ship.getAngle() / ship.getMaxRotation()) *
+                MAX_HORIZONTAL_LOCATION_SHIFT * gameViewCanvasWidth;
 
         locationY = -(gameViewCanvasHeight * OBSTACLE_KILL_HEIGHT_RATIO) / (NUMBER_OF_OBSTACLES - 1);
 
@@ -322,13 +323,15 @@ public class Obstacle {
 
     private final int MAX_ADDITIONAL_MASS = 8;
 
-    private final float RADIUS_TO_MASS_RATIO = 14;
+    private final float RADIUS_TO_MASS_RATIO = 10;
 
     private final float MAX_RADIUS = (BASE_MASS + MAX_ADDITIONAL_MASS) * RADIUS_TO_MASS_RATIO;
 
     private final float BASE_SPEEDX = 0f;
 
     private final float BASE_SPEEDY = 0.01f;
+
+    private final float MAX_HORIZONTAL_LOCATION_SHIFT = 0.3f;
 
     private final int NUMBER_OF_OBSTACLES = ObstacleManager.NUMBER_OF_OBSTACLES;
 

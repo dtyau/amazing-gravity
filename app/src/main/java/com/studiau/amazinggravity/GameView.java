@@ -123,6 +123,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     public void onPause() {
 
+        reset(ship);
+
         if (gameThread.isAlive()) {
 
             gameThread.setRunning(false);
@@ -148,6 +150,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             paused = false;
 
         }
+        
     }
 
     private void startGameThread() {
@@ -307,11 +310,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private void reset(Ship ship) {
 
+        scoreManager.reset();
+
         ship.reset();
 
         obstacleManager.reset(ship);
-
-        scoreManager.reset();
 
         for (int i = 0; i < AMOUNT_OF_EXHAUST; i++) {
 
