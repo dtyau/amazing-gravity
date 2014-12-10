@@ -99,9 +99,9 @@ public class ObstacleManager {
 
     private float gameViewCanvasWidth, gameViewCanvasHeight;
 
-    public static final int NUMBER_OF_OBSTACLES = 4;
+    public static final int NUMBER_OF_OBSTACLES = 5;
 
-    public static final float OBSTACLE_KILL_HEIGHT_RATIO = 1.6f;
+    public static final float OBSTACLE_KILL_HEIGHT_RATIO = 2f;
 
     private final static String TAG = ObstacleManager.class.getSimpleName();
 

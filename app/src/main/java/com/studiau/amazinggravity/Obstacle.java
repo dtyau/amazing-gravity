@@ -41,8 +41,8 @@ public class Obstacle {
         locationX = random.nextFloat() * gameViewCanvasWidth;
 
         while (locationX / gameViewCanvasWidth < 0.1 ||
-                locationX / gameViewCanvasWidth > 0.45 &&
-                        locationX / gameViewCanvasWidth < 0.55 ||
+                locationX / gameViewCanvasWidth > 0.4 &&
+                        locationX / gameViewCanvasWidth < 0.6 ||
                 locationX / gameViewCanvasWidth > 0.9) {
 
             locationX = random.nextFloat() * gameViewCanvasWidth;
@@ -90,11 +90,11 @@ public class Obstacle {
 
         updateLocationY();
 
-        /*if (checkCollision(ship)) {
+        if (checkCollision(ship)) {
 
             GameView.setGameState(GameView.GameState.GAMEOVER);
 
-        }*/
+        }
 
     }
 
@@ -203,31 +203,31 @@ public class Obstacle {
 
             default:
 
-                return "#FFEB3B"; // default is yellow
+                return "#FFF176"; // default is yellow
 
             case 0:
 
-                return "#FFEB3B"; // yellow
+                return "#FFF176"; // yellow
 
             case 1:
 
-                return "#4CAF50"; // green
+                return "#81C784"; // green
 
             case 2:
 
-                return "#03A9F4"; // light blue
+                return "#4FC3F7"; // light blue
 
             case 3:
 
-                return "#F44336"; // red
+                return "#E57373"; // red
 
             case 4:
 
-                return "#009688"; // teal
+                return "#4DB6AC"; // teal
 
             case 5:
 
-                return "#673AB7"; // deep purple
+                return "#9575CD"; // deep purple
 
         }
 
@@ -319,9 +319,9 @@ public class Obstacle {
 
     private final int COLOUR_CHANGE_SCORE_INCREMENT = 5;
 
-    private final int BASE_MASS = 8;
+    private final int BASE_MASS = 10;
 
-    private final int MAX_ADDITIONAL_MASS = 8;
+    private final int MAX_ADDITIONAL_MASS = 6;
 
     private final float RADIUS_TO_MASS_RATIO = 10;
 
@@ -329,7 +329,7 @@ public class Obstacle {
 
     private final float BASE_SPEEDX = 0f;
 
-    private final float BASE_SPEEDY = 0.01f;
+    private final float BASE_SPEEDY = 0.006f;
 
     private final float MAX_HORIZONTAL_LOCATION_SHIFT = 0.3f;
 
