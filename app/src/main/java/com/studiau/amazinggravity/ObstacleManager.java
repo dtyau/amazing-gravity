@@ -31,6 +31,12 @@ public class ObstacleManager {
 
         checkScore(ship);
 
+        if (isCanvasPortionEmpty()) {
+
+            activateObstacle = true;
+
+        }
+
         float collectiveSpeedX = getCollectiveSpeedX();
 
         for (Obstacle obstacle : obstacles) {
@@ -41,9 +47,15 @@ public class ObstacleManager {
 
             }*/
 
-            if (!isCanvasPortionOccupied(obstacle)) {
+            if (activateObstacle) {
 
-                obstacle.setActive(true);
+                if (!obstacle.isActive()) {
+
+                    obstacle.setActive(true);
+
+                    activateObstacle = false;
+
+                }
 
             }
 
@@ -75,6 +87,8 @@ public class ObstacleManager {
 
     public void reset(Ship ship) {
 
+        activateObstacle = false;
+
         obstacles = null;
 
         obstacles = new ArrayList<>();
@@ -91,28 +105,24 @@ public class ObstacleManager {
 
     }
 
-    private boolean isCanvasPortionOccupied(Obstacle currentObstacle) {
+    private boolean isCanvasPortionEmpty() {
 
         for (Obstacle obstacle : obstacles) {
 
-            if (obstacle != currentObstacle) {
+            float obstacleBottomEdge = obstacle.getLocationY() + obstacle.getRadius();
 
-                float obstacleBottomEdge = obstacle.getLocationY() + obstacle.getRadius();
+            float obstacleTopEdge = obstacle.getLocationY() - obstacle.getRadius();
 
-                float obstacleTopEdge = obstacle.getLocationY() - obstacle.getRadius();
+            if (obstacleBottomEdge > 0 &&
+                    obstacleTopEdge < (gameViewCanvasHeight / obstacles.size())) {
 
-                if (obstacleBottomEdge > 0 &&
-                        obstacleTopEdge < (gameViewCanvasHeight / obstacles.size())) {
-
-                    return true;
-
-                }
+                return false;
 
             }
 
         }
 
-        return false;
+        return true;
 
     }
 
@@ -235,6 +245,8 @@ public class ObstacleManager {
     private BlurMaskFilter blurMaskFilter;
 
     private ArrayList<Obstacle> obstacles;
+
+    private boolean activateObstacle;
 
     private float gameViewCanvasWidth, gameViewCanvasHeight;
 
