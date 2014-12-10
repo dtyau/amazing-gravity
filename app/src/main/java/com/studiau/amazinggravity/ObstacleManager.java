@@ -43,6 +43,12 @@ public class ObstacleManager {
 
             if (!isCanvasPortionOccupied(obstacle)) {
 
+                obstacle.setActive(true);
+
+            }
+
+            if (obstacle.isActive()) {
+
                 obstacle.update(ship, collectiveSpeedX);
 
             }
@@ -85,7 +91,7 @@ public class ObstacleManager {
 
     }
 
-    private Boolean isCanvasPortionOccupied(Obstacle currentObstacle) {
+    private boolean isCanvasPortionOccupied(Obstacle currentObstacle) {
 
         for (Obstacle obstacle : obstacles) {
 
