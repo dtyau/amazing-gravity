@@ -30,23 +30,16 @@ public class ObstacleManager {
 
     public void update(Ship ship) {
 
-        checkScore(ship);
+        //checkScore(ship);
+        if (isCanvasEmpty()) {
+
+            addObstacle(ship);
+
+        }
 
         float collectiveSpeedX = getCollectiveSpeedX();
 
         for (Obstacle obstacle : obstacles) {
-
-            if (obstacle.getLocationY() - obstacle.getRadius() > gameViewCanvasHeight) {
-
-                obstacles.remove(obstacle);
-
-            }
-
-            if (isCanvasEmpty()) {
-
-                addObstacle(ship);
-
-            }
 
             while (checkLocation(obstacle)) {
 
@@ -98,7 +91,7 @@ public class ObstacleManager {
 
         for (Obstacle obstacle : obstacles) {
 
-            if ((obstacle.getLocationY() + obstacle.getRadius()) > (gameViewCanvasHeight * 0.5)) {
+            if ((obstacle.getLocationY() + obstacle.getRadius()) > (gameViewCanvasHeight * 0.75)) {
 
                 return false;
 
