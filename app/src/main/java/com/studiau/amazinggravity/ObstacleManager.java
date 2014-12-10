@@ -42,7 +42,7 @@ public class ObstacleManager {
 
             }*/
 
-            if(isCanvasEmpty(obstacles.size())) {
+            if (isCanvasEmpty()) {
 
                 obstacle.update(ship, collectiveSpeedX);
 
@@ -86,12 +86,14 @@ public class ObstacleManager {
 
     }
 
-    private Boolean isCanvasEmpty(int currentNumberOfObstacles) {
+    private Boolean isCanvasEmpty() {
 
         for (Obstacle obstacle : obstacles) {
 
-            if((obstacle.getLocationY() + obstacle.getRadius()) <
-                    (gameViewCanvasHeight / currentNumberOfObstacles)) {
+            float obstacleBottomEdge = obstacle.getLocationY() + obstacle.getRadius();
+
+            if (obstacleBottomEdge > 0 &&
+                    obstacleBottomEdge < (gameViewCanvasHeight / obstacles.size())) {
 
                 return false;
 
