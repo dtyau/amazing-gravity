@@ -1,6 +1,7 @@
 package com.studiau.amazinggravity;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 
 import java.util.Random;
@@ -50,31 +51,43 @@ public class Obstacle {
 
         locationX += (ship.getAngle() / ship.getMaxRotation()) * 0.5 * gameViewCanvasWidth;
 
-        //locationY = (-2 * radius) + (random.nextFloat() * -gameViewCanvasHeight);
-        locationY = (-2 * radius);
+        locationY = -(gameViewCanvasHeight * OBSTACLE_KILL_HEIGHT_RATIO) / (NUMBER_OF_OBSTACLES - 1);
 
         speedX = BASE_SPEEDX;
 
-        //speedY = BASE_SPEEDY * (1 - (MASS_TO_SPEEDY_MODIFIER * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS))));
         speedY = BASE_SPEEDY;
 
         oldSpeedX = 0;
+
+        colour = setObstacleColour();
+
+        scored = false;
 
     }
 
     public void update(Ship ship, float collectiveSpeedX) {
 
-        if ((locationY - radius) > (gameViewCanvasHeight * OBSTACLE_KILL_HEIGHT_RATIO)) {
+        if ((locationY - radius) > gameViewCanvasHeight) {
+
+            if (!scored) {
+
+                ScoreManager.incrementScore();
+
+            }
+
+            scored = true;
+
+        }
+
+        if ((locationY) > (gameViewCanvasHeight * OBSTACLE_KILL_HEIGHT_RATIO)) {
 
             reset(ship);
-
-            ScoreManager.incrementScore();
 
         }
 
         updateLocationX(ship, collectiveSpeedX);
 
-        updateSpeedAndLocationY();
+        updateLocationY();
 
         /*if (checkCollision(ship)) {
 
@@ -85,6 +98,8 @@ public class Obstacle {
     }
 
     public void draw(Canvas canvas, Paint paint) {
+
+        paint.setColor(Color.parseColor(colour));
 
         canvas.drawCircle(locationX, locationY, radius, paint);
 
@@ -136,15 +151,7 @@ public class Obstacle {
 
         float distance = pythagorizeDistance(unrotatedLocationX, unrotatedLocationY, closestX, closestY);
 
-        if (distance < radius) {
-
-            return true;
-
-        } else {
-
-            return false;
-
-        }
+        return (distance < radius);
 
     }
 
@@ -175,25 +182,59 @@ public class Obstacle {
 
     }
 
-    private void updateSpeedAndLocationY() {
-
-        /*float distanceY = Math.abs(locationY - shipLocationY) /
-                shipLocationY;
-
-        float verticalDampening = (float) Math.pow((distanceY - 1), 4);
-
-        if (((locationY) > 0) &&
-                ((locationY) < gameViewCanvasHeight)) {
-
-            float newSpeedY = (float) ((1 - (MASS_TO_SPEEDY_MODIFIER * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) *
-                    (((-1 * (Math.pow(distanceY, 4))) + 1) / 1000))
-                    * verticalDampening;
-
-            speedY += newSpeedY;
-
-        }*/
+    private void updateLocationY() {
 
         locationY += speedY * gameViewCanvasHeight;
+
+    }
+
+    private String setObstacleColour() {
+
+        int scoreTier = ScoreManager.getScore() / COLOUR_CHANGE_SCORE_INCREMENT;
+
+        if (scoreTier > 5) {
+
+            scoreTier %= 6;
+
+        }
+
+        switch (scoreTier) {
+
+            default:
+
+                return "#FFEB3B"; // default is yellow
+
+            case 0:
+
+                return "#FFEB3B"; // yellow
+
+            case 1:
+
+                return "#4CAF50"; // green
+
+            case 2:
+
+                return "#03A9F4"; // light blue
+
+            case 3:
+
+                return "#F44336"; // red
+
+            case 4:
+
+                return "#009688"; // teal
+
+            case 5:
+
+                return "#673AB7"; // deep purple
+
+        }
+
+    }
+
+    public void setBottomEdgeToLocationYWithMaxRadius(float desiredLocationY) {
+
+        locationY = desiredLocationY - MAX_RADIUS;
 
     }
 
@@ -265,45 +306,32 @@ public class Obstacle {
 
     }
 
-    public void setBottomEdgeToLocationY(float desiredLocationY) {
-
-        locationY = desiredLocationY - radius;
-
-    }
-
-    public void setActive(boolean newState) {
-
-        active = newState;
-
-    }
-
-    public boolean isActive() {
-
-        return active;
-
-    }
-
     private Random random;
-
-    private boolean active;
 
     private float gameViewCanvasWidth, gameViewCanvasHeight,
             shipLocationX, shipLocationY, shipWidth, shipHeight,
             mass, radius, locationX, locationY, speedX, speedY, oldSpeedX;
 
-    private final static int BASE_MASS = 8;
+    private boolean scored;
 
-    private final static int MAX_ADDITIONAL_MASS = 8;
+    private String colour;
 
-    private final static float RADIUS_TO_MASS_RATIO = 14;
+    private final int COLOUR_CHANGE_SCORE_INCREMENT = 5;
 
-    private final static float BASE_SPEEDX = 0f;
+    private final int BASE_MASS = 8;
 
-    private final static float BASE_SPEEDY = 0.01f;
+    private final int MAX_ADDITIONAL_MASS = 8;
 
-    private final static float OBSTACLE_KILL_HEIGHT_RATIO = 1.6f;
+    private final float RADIUS_TO_MASS_RATIO = 14;
 
-    private final static float MASS_TO_SPEEDY_MODIFIER = 0.8f;
+    private final float MAX_RADIUS = (BASE_MASS + MAX_ADDITIONAL_MASS) * RADIUS_TO_MASS_RATIO;
 
+    private final float BASE_SPEEDX = 0f;
+
+    private final float BASE_SPEEDY = 0.01f;
+
+    private final int NUMBER_OF_OBSTACLES = ObstacleManager.NUMBER_OF_OBSTACLES;
+
+    private final float OBSTACLE_KILL_HEIGHT_RATIO = ObstacleManager.OBSTACLE_KILL_HEIGHT_RATIO;
 
 }
