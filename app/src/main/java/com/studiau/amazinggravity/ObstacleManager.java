@@ -4,7 +4,6 @@ import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -42,7 +41,7 @@ public class ObstacleManager {
 
             }*/
 
-            if (isCanvasEmpty()) {
+            if (!isCanvasPortionOccupied(obstacle)) {
 
                 obstacle.update(ship, collectiveSpeedX);
 
@@ -86,22 +85,28 @@ public class ObstacleManager {
 
     }
 
-    private Boolean isCanvasEmpty() {
+    private Boolean isCanvasPortionOccupied(Obstacle currentObstacle) {
 
         for (Obstacle obstacle : obstacles) {
 
-            float obstacleBottomEdge = obstacle.getLocationY() + obstacle.getRadius();
+            if (obstacle != currentObstacle) {
 
-            if (obstacleBottomEdge > 0 &&
-                    obstacleBottomEdge < (gameViewCanvasHeight / obstacles.size())) {
+                float obstacleBottomEdge = obstacle.getLocationY() + obstacle.getRadius();
 
-                return false;
+                float obstacleTopEdge = obstacle.getLocationY() - obstacle.getRadius();
+
+                if (obstacleBottomEdge > 0 &&
+                        obstacleTopEdge < (gameViewCanvasHeight / obstacles.size())) {
+
+                    return true;
+
+                }
 
             }
 
         }
 
-        return true;
+        return false;
 
     }
 
