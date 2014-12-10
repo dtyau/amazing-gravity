@@ -36,6 +36,18 @@ public class ObstacleManager {
 
         for (Obstacle obstacle : obstacles) {
 
+            if (obstacle.getLocationY() - obstacle.getRadius() > gameViewCanvasHeight) {
+
+                obstacles.remove(obstacle);
+
+            }
+
+            if (isCanvasEmpty()) {
+
+                addObstacle(ship);
+
+            }
+
             while (checkLocation(obstacle)) {
 
                 obstacle.reset(ship);
@@ -79,6 +91,22 @@ public class ObstacleManager {
     private void addObstacle(Ship ship) {
 
         obstacles.add(new Obstacle(gameViewCanvasWidth, gameViewCanvasHeight, ship));
+
+    }
+
+    private Boolean isCanvasEmpty() {
+
+        for (Obstacle obstacle : obstacles) {
+
+            if ((obstacle.getLocationY() + obstacle.getRadius()) > (gameViewCanvasHeight * 0.5)) {
+
+                return false;
+
+            }
+
+        }
+
+        return true;
 
     }
 
