@@ -364,7 +364,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private float canvasWidth, canvasHeight;
 
-    private final int AMOUNT_OF_EXHAUST = 50;
+    private final int AMOUNT_OF_EXHAUST = 42;
 
     private final int AMOUNT_OF_EXPLOSION = 300;
 
