@@ -33,8 +33,6 @@ public class Obstacle {
 
     public void reset(Ship ship) {
 
-        active = false;
-
         mass = BASE_MASS + random.nextInt(MAX_ADDITIONAL_MASS);
 
         radius = mass * RADIUS_TO_MASS_RATIO;
@@ -264,6 +262,12 @@ public class Obstacle {
     public float getLocationY() {
 
         return locationY;
+
+    }
+
+    public void setBottomEdgeToLocationY(float desiredLocationY) {
+
+        locationY = desiredLocationY - radius;
 
     }
 

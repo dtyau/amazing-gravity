@@ -30,13 +30,7 @@ public class ObstacleManager {
 
     public void update(Ship ship) {
 
-        checkScore(ship);
-
-        if (isCumulativeDistanceEnough()) {
-
-            activateObstacle = true;
-
-        }
+        //checkScore(ship);
 
         float collectiveSpeedX = getCollectiveSpeedX();
 
@@ -48,23 +42,7 @@ public class ObstacleManager {
 
             }*/
 
-            if (activateObstacle) {
-
-                if (!obstacle.isActive()) {
-
-                    obstacle.setActive(true);
-
-                    activateObstacle = false;
-
-                }
-
-            }
-
-            if (obstacle.isActive()) {
-
-                obstacle.update(ship, collectiveSpeedX);
-
-            }
+            obstacle.update(ship, collectiveSpeedX);
 
         }
 
@@ -88,61 +66,31 @@ public class ObstacleManager {
 
     public void reset(Ship ship) {
 
-        activateObstacle = false;
+        //activateObstacle = false;
 
         obstacles = null;
 
         obstacles = new ArrayList<>();
 
-        addObstacleCounter = OBSTACLE_INCREMENT;
+        //addObstacleCounter = OBSTACLE_INCREMENT;
 
-        addObstacle(ship);
+        float locationY = 0;
+
+        for (int i = 0; i < NUMBER_OF_OBSTACLES; i++) {
+
+            addObstacle(ship);
+
+            obstacles.get(i).setBottomEdgeToLocationY(locationY);
+
+            locationY -= (gameViewCanvasHeight / NUMBER_OF_OBSTACLES);
+
+        }
 
     }
 
     private void addObstacle(Ship ship) {
 
         obstacles.add(new Obstacle(gameViewCanvasWidth, gameViewCanvasHeight, ship));
-
-    }
-
-    private boolean isCumulativeDistanceEnough() {
-
-        boolean enough = false;
-
-        int numberOfActive = 0;
-
-        float cumulativeDistanceY = 0;
-
-        for (Obstacle obstacle : obstacles) {
-
-            cumulativeDistanceY += obstacle.getLocationY();
-
-            if (obstacle.isActive()) {
-
-                numberOfActive++;
-
-            }
-
-        }
-
-        if (numberOfActive == 0) {
-
-            enough = true;
-
-        } else if (numberOfActive > 0 &&
-                numberOfActive <= obstacles.size()) {
-
-            // needs fixing
-            if (cumulativeDistanceY > ((gameViewCanvasHeight / obstacles.size()) * (numberOfActive))) {
-
-                enough = true;
-
-            }
-
-        }
-
-        return enough;
 
     }
 
@@ -273,6 +221,8 @@ public class ObstacleManager {
     private int addObstacleCounter;
 
     private final int OBSTACLE_INCREMENT = 3;
+
+    private final int NUMBER_OF_OBSTACLES = 4;
 
     private final static String TAG = ObstacleManager.class.getSimpleName();
 
