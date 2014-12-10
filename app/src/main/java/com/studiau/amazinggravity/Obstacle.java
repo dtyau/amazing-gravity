@@ -54,7 +54,8 @@ public class Obstacle {
 
         speedX = BASE_SPEEDX;
 
-        speedY = BASE_SPEEDY * (1 - (MASS_TO_SPEEDY_MODIFIER * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS))));
+        //speedY = BASE_SPEEDY * (1 - (MASS_TO_SPEEDY_MODIFIER * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS))));
+        speedY = BASE_SPEEDY;
 
         oldSpeedX = 0;
 
@@ -175,7 +176,7 @@ public class Obstacle {
 
     private void updateSpeedAndLocationY() {
 
-        float distanceY = Math.abs(locationY - shipLocationY) /
+        /*float distanceY = Math.abs(locationY - shipLocationY) /
                 shipLocationY;
 
         float verticalDampening = (float) Math.pow((distanceY - 1), 4);
@@ -189,7 +190,7 @@ public class Obstacle {
 
             speedY += newSpeedY;
 
-        }
+        }*/
 
         locationY += speedY * gameViewCanvasHeight;
 

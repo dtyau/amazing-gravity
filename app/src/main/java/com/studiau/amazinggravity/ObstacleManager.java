@@ -68,7 +68,7 @@ public class ObstacleManager {
 
         obstacles = null;
 
-        obstacles = new ArrayList<Obstacle>();
+        obstacles = new ArrayList<>();
 
         addObstacleCounter = OBSTACLE_INCREMENT;
 
