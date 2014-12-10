@@ -36,13 +36,17 @@ public class ObstacleManager {
 
         for (Obstacle obstacle : obstacles) {
 
-            while (checkLocation(obstacle)) {
+            /*while (checkLocation(obstacle)) {
 
                 obstacle.reset(ship);
 
-            }
+            }*/
 
-            obstacle.update(ship, collectiveSpeedX);
+            if(isCanvasEmpty(obstacles.size())) {
+
+                obstacle.update(ship, collectiveSpeedX);
+
+            }
 
         }
 
@@ -79,6 +83,23 @@ public class ObstacleManager {
     private void addObstacle(Ship ship) {
 
         obstacles.add(new Obstacle(gameViewCanvasWidth, gameViewCanvasHeight, ship));
+
+    }
+
+    private Boolean isCanvasEmpty(int currentNumberOfObstacles) {
+
+        for (Obstacle obstacle : obstacles) {
+
+            if((obstacle.getLocationY() + obstacle.getRadius()) <
+                    (gameViewCanvasHeight / currentNumberOfObstacles)) {
+
+                return false;
+
+            }
+
+        }
+
+        return true;
 
     }
 
