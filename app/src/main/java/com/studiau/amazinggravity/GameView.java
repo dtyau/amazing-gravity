@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -45,7 +44,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         ship = new Ship(getContext(), canvasWidth, canvasHeight);
 
-        exhaustParticles = new ArrayList<ExhaustParticle>();
+        exhaustParticles = new ArrayList<>();
 
         while (exhaustParticles.size() < AMOUNT_OF_EXHAUST) {
 
@@ -57,7 +56,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         }
 
-        explosionParticles = new ArrayList<ExplosionParticle>();
+        explosionParticles = new ArrayList<>();
 
         while (explosionParticles.size() < AMOUNT_OF_EXPLOSION) {
 
@@ -71,7 +70,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         obstacleManager = new ObstacleManager(canvasWidth, canvasHeight, ship);
 
-        stars = new ArrayList<Star>();
+        stars = new ArrayList<>();
 
         while (stars.size() < AMOUNT_OF_STARS) {
 
