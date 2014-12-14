@@ -9,21 +9,39 @@ import android.graphics.Paint;
 
 public class ScoreManager {
 
-    public ScoreManager(float canvasWidth, float canvasHeight) {
+    public ScoreManager(float canvasWidth, float canvasHeight, int sharedPreferencesBestScore) {
 
-        scorePositionX = canvasWidth * SCORE_POSITION_X;
+        scorePlayPositionX = canvasWidth * SCORE_PLAY_POSITION_X;
 
-        scorePositionY = canvasHeight * SCORE_POSITION_Y;
+        scorePlayPositionY = canvasHeight * SCORE_PLAY_POSITION_Y;
 
-        score = 0;
+        scoreOverPositionX = canvasWidth * SCORE_OVER_POSITION_X;
+
+        scoreOverPositionY = canvasHeight * SCORE_OVER_POSITION_Y;
+
+        bestScoreOverPositionX = canvasWidth * BEST_SCORE_OVER_POSITION_X;
+
+        bestScore = sharedPreferencesBestScore;
+
+        reset();
 
     }
 
-    public void draw(Canvas canvas, Paint paint) {
+    public void drawWhenPlay(Canvas canvas, Paint paint) {
 
         paint.setTextAlign(Paint.Align.RIGHT);
 
-        canvas.drawText(Integer.toString(score), scorePositionX, scorePositionY, paint);
+        canvas.drawText(Integer.toString(score), scorePlayPositionX, scorePlayPositionY, paint);
+
+    }
+
+    public void drawWhenOver(Canvas canvas, Paint paint) {
+
+        paint.setTextAlign(Paint.Align.CENTER);
+
+        canvas.drawText(Integer.toString(score), scoreOverPositionX, scoreOverPositionY, paint);
+
+        canvas.drawText(Integer.toString(bestScore), bestScoreOverPositionX, scoreOverPositionY, paint);
 
     }
 
@@ -39,18 +57,37 @@ public class ScoreManager {
 
     }
 
+    public boolean isNewBest() {
+
+        if(score > bestScore) {
+
+            bestScore = score;
+
+        }
+
+        return (score > bestScore);
+
+    }
+
     public static int getScore() {
 
         return score;
 
     }
 
-    private static int score;
+    private static int score, bestScore;
 
-    private float scorePositionX, scorePositionY;
+    private float scorePlayPositionX, scorePlayPositionY, scoreOverPositionX, scoreOverPositionY,
+            bestScoreOverPositionX;
 
-    private final static float SCORE_POSITION_X = 0.95f;
+    private final static float SCORE_PLAY_POSITION_X = 0.95f;
 
-    private final static float SCORE_POSITION_Y = 0.05f;
+    private final static float SCORE_PLAY_POSITION_Y = 0.05f;
+
+    private final static float SCORE_OVER_POSITION_X = 0.33f;
+
+    private final static float SCORE_OVER_POSITION_Y = 0.4f;
+
+    private final static float BEST_SCORE_OVER_POSITION_X = 0.66f;
 
 }

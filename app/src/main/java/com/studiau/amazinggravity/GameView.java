@@ -1,10 +1,12 @@
 package com.studiau.amazinggravity;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.preference.PreferenceManager;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -41,6 +43,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         canvasHeight = getHeight();
 
         createPaint();
+
+        scoreManager = new ScoreManager(canvasWidth, canvasHeight, getBestScoreFromPreferences());
 
         ship = new Ship(getContext(), canvasWidth, canvasHeight);
 
@@ -81,8 +85,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             }
 
         }
-
-        scoreManager = new ScoreManager(canvasWidth, canvasHeight);
 
         gameState = GameState.RUNNING;
 
@@ -199,6 +201,18 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         } else if (gameState == GameState.GAMEOVER) {
 
+            if(!gameOverProcessed) {
+
+                if(scoreManager.isNewBest()) {
+
+                    setBestScoreInPreferences();
+
+                }
+
+                gameOverProcessed = true;
+
+            }
+
             for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) {
 
                 explosionParticles.get(i).update();
@@ -239,23 +253,21 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             paint.setColor(Color.WHITE); // For score
 
-            scoreManager.draw(canvas, paint);
+            scoreManager.drawWhenPlay(canvas, paint);
 
         }
 
         if (gameState == GameState.GAMEOVER) {
 
-            paint.setColor(Color.WHITE); // For score
-
-            scoreManager.draw(canvas, paint);
-
-            paint.setColor(Color.parseColor("#FF5722")); // For explosion
-
-            for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) {
+            for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) { // For explosion
 
                 explosionParticles.get(i).draw(canvas, paint);
 
             }
+
+            paint.setColor(Color.WHITE); // For score
+
+            scoreManager.drawWhenOver(canvas, paint);
 
         }
 
@@ -310,6 +322,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private void reset(Ship ship) {
 
+        gameOverProcessed = false;
+
         scoreManager.reset();
 
         ship.reset();
@@ -338,6 +352,28 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
+    public int getBestScoreFromPreferences() {
+
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(getContext());
+
+        return sharedPreferences.getInt(SHARED_PREFERENCES_BEST_SCORE_KEY, 0);
+
+    }
+
+    private void setBestScoreInPreferences() {
+
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(getContext());
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putInt(SHARED_PREFERENCES_BEST_SCORE_KEY, ScoreManager.getScore());
+
+        editor.apply();
+
+    }
+
     enum GameState {
 
         RUNNING, GAMEOVER
@@ -348,7 +384,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private Paint paint;
 
-    private Boolean started, paused;
+    private Boolean started, paused, gameOverProcessed;
 
     private Ship ship;
 
@@ -373,6 +409,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private final int AMOUNT_OF_STARS = 100;
 
     private final float RELATIVE_FONT_SIZE = 16;
+
+    private final String SHARED_PREFERENCES_BEST_SCORE_KEY = "398BCKXSDF97ZKJDWF03NKJDF9U3P8";
 
     private final static String TAG = GameView.class.getSimpleName();
 
