@@ -33,8 +33,7 @@ public class Star {
 
         locationX = random.nextFloat() * gameViewCanvasWidth;
 
-        locationY = (random.nextFloat() * gameViewCanvasHeight) -
-                (LOCATIONY_SHIFT * gameViewCanvasHeight);
+        locationY = random.nextFloat() * gameViewCanvasHeight;
 
         speedX = ((random.nextFloat() - 0.5f) / 0.5f) * BASE_SPEEDX;
 
@@ -91,8 +90,6 @@ public class Star {
     private final static float BASE_SPEEDX = 0.0001f;
 
     private final static float BASE_SPEEDY = 0.001f;
-
-    private final static float LOCATIONY_SHIFT = 0.3f;
 
     private final static float SHIP_SPEEDX_DAMPENER = 0.3f;
 

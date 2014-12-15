@@ -23,6 +23,10 @@ public class ScoreManager {
 
         textScoreOverPositionY = canvasHeight * TEXT_OVER_POSITION_Y;
 
+        textGameOverPositionX = canvasWidth * TEXT_GAME_OVER_POSITION_X;
+
+        textGameOverPositionY = canvasHeight * TEXT_GAME_OVER_POSITION_Y;
+
         bestScore = sharedPreferencesBestScore;
 
         reset();
@@ -52,6 +56,8 @@ public class ScoreManager {
     public void drawWhenOver(Canvas canvas, Paint paint) {
 
         paint.setTextAlign(Paint.Align.CENTER);
+
+        canvas.drawText("Game Over", textGameOverPositionX, textGameOverPositionY, paint);
 
         canvas.drawText("score", scoreOverPositionX, textScoreOverPositionY, paint);
 
@@ -90,11 +96,16 @@ public class ScoreManager {
     }
 
     private float scorePlayPositionX, scorePlayPositionY, scoreOverPositionX, scoreOverPositionY,
-            bestScoreOverPositionX, textScoreOverPositionY;
+            bestScoreOverPositionX, textScoreOverPositionY, textGameOverPositionX,
+            textGameOverPositionY;
 
     private boolean newBest;
 
     private static int score, bestScore;
+
+    private final static float TEXT_GAME_OVER_POSITION_X = 0.5f;
+
+    private final static float TEXT_GAME_OVER_POSITION_Y = 0.2f;
 
     private final static float SCORE_PLAY_POSITION_X = 0.95f;
 
@@ -106,6 +117,6 @@ public class ScoreManager {
 
     private final static float BEST_SCORE_OVER_POSITION_X = 0.7f;
 
-    private final static float TEXT_OVER_POSITION_Y = 0.4f;
+    private final static float TEXT_OVER_POSITION_Y = 0.45f;
 
 }

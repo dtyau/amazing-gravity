@@ -2,6 +2,8 @@ package com.studiau.amazinggravity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -180,6 +182,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         paint.setTextSize(canvasWidth / RELATIVE_FONT_SIZE);
 
+        bitmap_replay = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.replay);
+
+        bitmap_replayLocationX = 0.5f * canvasWidth;
+
+        bitmap_replayLocationY = 0.7f * canvasHeight;
+
     }
 
     public void update() {
@@ -272,6 +280,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             scoreManager.drawWhenOver(canvas, paint);
 
+            canvas.drawBitmap(bitmap_replay, (bitmap_replayLocationX) - (bitmap_replay.getWidth() / 2),
+                    (bitmap_replayLocationY) - (bitmap_replay.getHeight() / 2), paint);
+
         }
 
     }
@@ -313,7 +324,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             if (actionType == MotionEvent.ACTION_DOWN) {
 
-                reset(ship);
+                Log.d(TAG, Float.toString(bitmap_replayLocationX));
+
+                if((event.getX() > (bitmap_replayLocationX - (bitmap_replay.getWidth() / 2))) &&
+                event.getX() < (bitmap_replayLocationX + (bitmap_replay.getWidth() / 2)) &&
+                        event.getY() > bitmap_replayLocationY - (bitmap_replay.getHeight() / 2) &&
+                        event.getY() < bitmap_replayLocationY + (bitmap_replay.getHeight() / 2)) {
+
+                    reset(ship);
+
+                }
 
             }
 
@@ -400,6 +420,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private ArrayList<Star> stars;
 
     private ScoreManager scoreManager;
+
+    private Bitmap bitmap_replay;
+
+    private float bitmap_replayLocationX, bitmap_replayLocationY;
 
     private static GameState gameState;
 
