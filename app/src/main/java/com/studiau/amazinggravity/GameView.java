@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -30,6 +31,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         started = false;
 
         paused = false;
+
+        gameOverProcessed = false;
 
         setFocusable(true);
 
@@ -203,6 +206,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             if(!gameOverProcessed) {
 
+                scoreManager.update();
+
                 if(scoreManager.isNewBest()) {
 
                     setBestScoreInPreferences();
@@ -236,8 +241,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         }
 
         if (gameState == GameState.RUNNING) {
-
-            //paint.setColor(Color.parseColor("#FFEB3B")); // For obstacles
 
             obstacleManager.draw(canvas, paint);
 
@@ -408,7 +411,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private final int AMOUNT_OF_STARS = 100;
 
-    private final float RELATIVE_FONT_SIZE = 16;
+    private final float RELATIVE_FONT_SIZE = 14;
 
     private final String SHARED_PREFERENCES_BEST_SCORE_KEY = "398BCKXSDF97ZKJDWF03NKJDF9U3P8";
 

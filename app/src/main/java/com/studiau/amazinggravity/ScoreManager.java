@@ -21,9 +21,23 @@ public class ScoreManager {
 
         bestScoreOverPositionX = canvasWidth * BEST_SCORE_OVER_POSITION_X;
 
+        textScoreOverPositionY = canvasHeight * TEXT_OVER_POSITION_Y;
+
         bestScore = sharedPreferencesBestScore;
 
         reset();
+
+    }
+
+    public void update() {
+
+        if (score > bestScore) {
+
+            newBest = true;
+
+            bestScore = score;
+
+        }
 
     }
 
@@ -39,6 +53,10 @@ public class ScoreManager {
 
         paint.setTextAlign(Paint.Align.CENTER);
 
+        canvas.drawText("score", scoreOverPositionX, textScoreOverPositionY, paint);
+
+        canvas.drawText("best", bestScoreOverPositionX, textScoreOverPositionY, paint);
+
         canvas.drawText(Integer.toString(score), scoreOverPositionX, scoreOverPositionY, paint);
 
         canvas.drawText(Integer.toString(bestScore), bestScoreOverPositionX, scoreOverPositionY, paint);
@@ -53,19 +71,15 @@ public class ScoreManager {
 
     public void reset() {
 
+        newBest = false;
+
         score = 0;
 
     }
 
     public boolean isNewBest() {
 
-        if(score > bestScore) {
-
-            bestScore = score;
-
-        }
-
-        return (score > bestScore);
+        return newBest;
 
     }
 
@@ -75,19 +89,23 @@ public class ScoreManager {
 
     }
 
-    private static int score, bestScore;
-
     private float scorePlayPositionX, scorePlayPositionY, scoreOverPositionX, scoreOverPositionY,
-            bestScoreOverPositionX;
+            bestScoreOverPositionX, textScoreOverPositionY;
+
+    private boolean newBest;
+
+    private static int score, bestScore;
 
     private final static float SCORE_PLAY_POSITION_X = 0.95f;
 
     private final static float SCORE_PLAY_POSITION_Y = 0.05f;
 
-    private final static float SCORE_OVER_POSITION_X = 0.33f;
+    private final static float SCORE_OVER_POSITION_X = 0.3f;
 
-    private final static float SCORE_OVER_POSITION_Y = 0.4f;
+    private final static float SCORE_OVER_POSITION_Y = 0.5f;
 
-    private final static float BEST_SCORE_OVER_POSITION_X = 0.66f;
+    private final static float BEST_SCORE_OVER_POSITION_X = 0.7f;
+
+    private final static float TEXT_OVER_POSITION_Y = 0.4f;
 
 }
