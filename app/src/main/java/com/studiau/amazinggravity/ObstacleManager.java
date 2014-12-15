@@ -61,8 +61,6 @@ public class ObstacleManager {
 
         for (int i = 0; i < NUMBER_OF_OBSTACLES; i++) {
 
-            Log.d(TAG, "locationY: " + locationY);
-
             addObstacle(ship);
 
             obstacles.get(i).setBottomEdgeToLocationYWithMaxRadius(locationY);
