@@ -10,7 +10,7 @@ import android.graphics.Paint;
 import android.util.Log;
 
 /**
- * Author: Daniel Au.
+ * Author: Daniel Au
  */
 
 public class Ship {

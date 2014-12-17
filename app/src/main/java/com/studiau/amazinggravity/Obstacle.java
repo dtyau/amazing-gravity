@@ -7,7 +7,7 @@ import android.graphics.Paint;
 import java.util.Random;
 
 /**
- * Author: Daniel Au.
+ * Author: Daniel Au
  */
 
 public class Obstacle {

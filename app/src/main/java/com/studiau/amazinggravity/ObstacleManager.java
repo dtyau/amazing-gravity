@@ -8,7 +8,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 /**
- * Author: Daniel Au.
+ * Author: Daniel Au
  */
 
 public class ObstacleManager {
