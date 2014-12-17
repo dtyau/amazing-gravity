@@ -178,9 +178,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         paint.setAntiAlias(true);
 
-        paint.setTypeface(Typeface.MONOSPACE);
+        Typeface typeFace = Typeface.createFromAsset(getContext().getAssets(),
+                "Walkway_SemiBold.ttf");
 
-        paint.setTextSize(canvasWidth / RELATIVE_FONT_SIZE);
+        paint.setTypeface(typeFace);
 
         bitmap_replay = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.replay);
 
@@ -435,9 +436,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private final int AMOUNT_OF_STARS = 100;
 
-    private final float RELATIVE_FONT_SIZE = 14;
+    private final float RELATIVE_FONT_SIZE = 12;
 
-    private final String SHARED_PREFERENCES_BEST_SCORE_KEY = "398BCKXSDF97ZKJDWF03NKJDF9U3P8";
+    private final String SHARED_PREFERENCES_BEST_SCORE_KEY = "398BC";
 
     private final static String TAG = GameView.class.getSimpleName();
 

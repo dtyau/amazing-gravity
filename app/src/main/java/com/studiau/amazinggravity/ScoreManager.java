@@ -11,6 +11,8 @@ public class ScoreManager {
 
     public ScoreManager(float canvasWidth, float canvasHeight, int sharedPreferencesBestScore) {
 
+        this.canvasWidth = canvasWidth;
+
         scorePlayPositionX = canvasWidth * SCORE_PLAY_POSITION_X;
 
         scorePlayPositionY = canvasHeight * SCORE_PLAY_POSITION_Y;
@@ -47,6 +49,8 @@ public class ScoreManager {
 
     public void drawWhenPlay(Canvas canvas, Paint paint) {
 
+        paint.setTextSize(canvasWidth / RELATIVE_FONT_SIZE);
+
         paint.setTextAlign(Paint.Align.RIGHT);
 
         canvas.drawText(Integer.toString(score), scorePlayPositionX, scorePlayPositionY, paint);
@@ -57,7 +61,11 @@ public class ScoreManager {
 
         paint.setTextAlign(Paint.Align.CENTER);
 
+        paint.setTextSize(canvasWidth / RELATIVE_FONT_SIZE_GAME_OVER);
+
         canvas.drawText("Game Over", textGameOverPositionX, textGameOverPositionY, paint);
+
+        paint.setTextSize(canvasWidth / RELATIVE_FONT_SIZE);
 
         canvas.drawText("score", scoreOverPositionX, textScoreOverPositionY, paint);
 
@@ -95,7 +103,7 @@ public class ScoreManager {
 
     }
 
-    private float scorePlayPositionX, scorePlayPositionY, scoreOverPositionX, scoreOverPositionY,
+    private float canvasWidth, scorePlayPositionX, scorePlayPositionY, scoreOverPositionX, scoreOverPositionY,
             bestScoreOverPositionX, textScoreOverPositionY, textGameOverPositionX,
             textGameOverPositionY;
 
@@ -113,10 +121,14 @@ public class ScoreManager {
 
     private final static float SCORE_OVER_POSITION_X = 0.3f;
 
-    private final static float SCORE_OVER_POSITION_Y = 0.5f;
+    private final static float SCORE_OVER_POSITION_Y = 0.50f;
 
     private final static float BEST_SCORE_OVER_POSITION_X = 0.7f;
 
-    private final static float TEXT_OVER_POSITION_Y = 0.45f;
+    private final static float TEXT_OVER_POSITION_Y = 0.44f;
+
+    private final float RELATIVE_FONT_SIZE = 12;
+
+    private final float RELATIVE_FONT_SIZE_GAME_OVER = 8;
 
 }

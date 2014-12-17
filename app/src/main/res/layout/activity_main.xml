@@ -2,62 +2,78 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="#FFFFFF"
     tools:context=".MainActivity">
 
     <ImageButton
         android:id="@+id/imagebutton_sound"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        android:paddingLeft="16dp"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@null"
+        android:onClick="toggleSoundEnabled" />
 
     <ImageButton
         android:id="@+id/imagebutton_vibration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        android:paddingLeft="16dp"
-        android:layout_below="@+id/imagebutton_sound"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imagebutton_sound"
+        android:background="@null"
+        android:onClick="toggleVibrationEnabled"
+        android:paddingTop="6dp" />
 
     <com.studiau.amazinggravity.CustomTextView
         android:id="@+id/textview_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/textview_title2"
         android:layout_centerHorizontal="true"
+        android:text="Interstellar"
         android:textAlignment="center"
-        android:textSize="42dp"
-        android:textStyle="bold"
-        android:text="Interstellar"/>
+        android:textSize="60dp"
+        android:textStyle="bold" />
 
     <com.studiau.amazinggravity.CustomTextView
         android:id="@+id/textview_title2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/button_play"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/textview_title"
+        android:paddingBottom="42dp"
+        android:text="Gravity"
         android:textAlignment="center"
-        android:textSize="42dp"
-        android:textStyle="bold"
-        android:text="Gravity"/>
+        android:textSize="60dp"
+        android:textStyle="bold" />
 
     <ImageButton
         android:id="@+id/button_play"
-        android:src="@drawable/black"
-        android:background="@null"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:onClick="play"/>
+        android:background="@null"
+        android:onClick="play"
+        android:src="@drawable/black" />
+
+    <com.studiau.amazinggravity.CustomTextView
+        android:id="@+id/textview_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="60dp"
+        android:layout_below="@+id/button_play"
+        android:layout_centerHorizontal="true"
+        android:textSize="32dp"
+        android:text="rate"
+        android:textAlignment="center"
+        android:onClick="rateMyGame"
+        android:clickable="true" />
 
 </RelativeLayout>
