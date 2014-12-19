@@ -13,8 +13,8 @@
         android:id="@+id/imagebutton_sound"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:background="@null"
         android:onClick="toggleSoundEnabled" />
@@ -23,8 +23,8 @@
         android:id="@+id/imagebutton_vibration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/imagebutton_sound"
         android:background="@null"
         android:onClick="toggleVibrationEnabled"
@@ -55,32 +55,31 @@
         android:id="@+id/imagebutton_play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="42dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:background="@null"
         android:onClick="play"
+        android:paddingTop="42dp"
         android:src="@drawable/play" />
 
     <ImageButton
         android:id="@+id/imagebutton_rate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="42dp"
         android:layout_below="@+id/imagebutton_play"
         android:layout_centerHorizontal="true"
         android:background="@null"
         android:onClick="rateMyGame"
-
-        android:src="@drawable/rate"/>
+        android:paddingTop="42dp"
+        android:src="@drawable/rate" />
 
     <com.studiau.amazinggravity.CustomTextView
         android:id="@+id/text_copyright"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:text="StudiAu 2014"
+        android:layout_centerHorizontal="true"
+        android:text="©2014 StudiAu"
         android:textAlignment="center"
         android:textSize="12dp" />
 
