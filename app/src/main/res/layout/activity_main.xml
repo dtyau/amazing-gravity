@@ -69,7 +69,7 @@
         android:layout_below="@+id/imagebutton_play"
         android:layout_centerHorizontal="true"
         android:background="@null"
-        android:onClick="rateMyGame"
+        android:onClick="rateGame"
         android:paddingTop="42dp"
         android:src="@drawable/rate" />
 

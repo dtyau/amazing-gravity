@@ -177,7 +177,7 @@ public class MainActivity extends Activity {
 
     }
 
-    public void rateMyGame(View view) {
+    public void rateGame(View view) {
 
         Uri uri = Uri.parse("market://details?id=" + getBaseContext().getPackageName());
 

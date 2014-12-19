@@ -191,11 +191,11 @@ public class Obstacle {
 
     private String setObstacleColour() {
 
-        int scoreTier = ScoreManager.getScore() / COLOUR_CHANGE_SCORE_INCREMENT;
+        int scoreTier = (ScoreManager.getScore() + 3) / COLOUR_CHANGE_SCORE_INCREMENT;
 
-        if (scoreTier > 5) {
+        if (scoreTier > COLOUR_CHANGE_SCORE_INCREMENT) {
 
-            scoreTier %= 6;
+            scoreTier %= (COLOUR_CHANGE_SCORE_INCREMENT + 1);
 
         }
 

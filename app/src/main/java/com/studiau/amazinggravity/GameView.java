@@ -135,8 +135,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     public void onPause() {
 
-        reset(ship);
-
         if (gameThread.isAlive()) {
 
             gameThread.setRunning(false);
@@ -353,6 +351,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                     reset(ship);
 
+                } else if((event.getX() > (bitmap_rateLocationX - (bitmap_rate.getWidth() / 2))) &&
+                        event.getX() < (bitmap_rateLocationX + (bitmap_rate.getWidth() / 2)) &&
+                        event.getY() > bitmap_replayLocationY - (bitmap_rate.getHeight() / 2) &&
+                        event.getY() < bitmap_replayLocationY + (bitmap_rate.getHeight() / 2)) {
+
+                    rateGame();
+
                 }
 
             }
@@ -417,7 +422,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
-    private void rateMyGame() {
+    private void rateGame() {
 
         Uri uri = Uri.parse("market://details?id=" + getContext().getPackageName());
 
