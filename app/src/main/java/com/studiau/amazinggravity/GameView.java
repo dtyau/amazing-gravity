@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.preference.PreferenceManager;
@@ -438,7 +439,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private final float RELATIVE_FONT_SIZE = 12;
 
-    private final String SHARED_PREFERENCES_BEST_SCORE_KEY = "398BC";
+    private final String SHARED_PREFERENCES_BEST_SCORE_KEY = "8V3JT";
 
     private final static String TAG = GameView.class.getSimpleName();
 

@@ -107,11 +107,11 @@ public class MainActivity extends Activity {
 
         if(soundEnabled) {
 
-            setImage(R.id.imagebutton_sound, R.drawable.black);
+            setImage(R.id.imagebutton_sound, R.drawable.volume);
 
         } else {
 
-            setImage(R.id.imagebutton_sound, R.drawable.black);
+            setImage(R.id.imagebutton_sound, R.drawable.volume_off);
 
         }
 
@@ -121,11 +121,11 @@ public class MainActivity extends Activity {
 
         if(vibrationEnabled) {
 
-            setImage(R.id.imagebutton_vibration, R.drawable.black);
+            setImage(R.id.imagebutton_vibration, R.drawable.vibration);
 
         } else {
 
-            setImage(R.id.imagebutton_vibration, R.drawable.black);
+            setImage(R.id.imagebutton_vibration, R.drawable.vibration_off);
 
         }
 
