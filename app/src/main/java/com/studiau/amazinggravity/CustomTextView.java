@@ -28,7 +28,7 @@ public class CustomTextView extends TextView {
     }
 
     private void setFont() {
-        Typeface font = Typeface.createFromAsset(getContext().getAssets(), "Walkway_SemiBold.ttf");
+        Typeface font = Typeface.createFromAsset(getContext().getAssets(), "Walkway_Bold.ttf");
         setTypeface(font, Typeface.NORMAL);
         setTextColor(Color.WHITE);
     }

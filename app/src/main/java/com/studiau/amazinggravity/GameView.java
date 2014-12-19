@@ -1,6 +1,8 @@
 package com.studiau.amazinggravity;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,11 +11,13 @@ import android.graphics.Color;
 import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -180,7 +184,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         paint.setAntiAlias(true);
 
         Typeface typeFace = Typeface.createFromAsset(getContext().getAssets(),
-                "Walkway_SemiBold.ttf");
+                "Walkway_UltraBold.ttf");
 
         paint.setTypeface(typeFace);
 
@@ -189,6 +193,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         bitmap_replayLocationX = 0.5f * canvasWidth;
 
         bitmap_replayLocationY = 0.7f * canvasHeight;
+
+        bitmap_rate = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.rate);
+
+        bitmap_rateLocationX = 0.2f * canvasWidth;
+
+        bitmap_leaderboard = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.leaderboard);
+
+        bitmap_leaderboardLocationX = 0.8f * canvasWidth;
 
     }
 
@@ -284,6 +296,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             canvas.drawBitmap(bitmap_replay, (bitmap_replayLocationX) - (bitmap_replay.getWidth() / 2),
                     (bitmap_replayLocationY) - (bitmap_replay.getHeight() / 2), paint);
+
+            canvas.drawBitmap(bitmap_rate, (bitmap_rateLocationX) - (bitmap_rate.getWidth() / 2),
+                    (bitmap_replayLocationY) - (bitmap_rate.getHeight() / 2), paint);
+
+            canvas.drawBitmap(bitmap_leaderboard, (bitmap_leaderboardLocationX) - (bitmap_leaderboard.getWidth() / 2),
+                    (bitmap_replayLocationY) - (bitmap_leaderboard.getHeight() / 2), paint);
 
         }
 
@@ -399,6 +417,26 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
+    private void rateMyGame() {
+
+        Uri uri = Uri.parse("market://details?id=" + getContext().getPackageName());
+
+        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+
+        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+
+        try {
+
+            getContext().startActivity(goToMarket);
+
+        } catch (ActivityNotFoundException e) {
+
+            getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + getContext().getPackageName())));
+
+        }
+
+    }
+
     enum GameState {
 
         RUNNING, GAMEOVER
@@ -423,9 +461,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private ScoreManager scoreManager;
 
-    private Bitmap bitmap_replay;
+    private Bitmap bitmap_replay, bitmap_rate, bitmap_leaderboard;
 
-    private float bitmap_replayLocationX, bitmap_replayLocationY;
+    private float bitmap_replayLocationX, bitmap_replayLocationY, bitmap_rateLocationX,
+            bitmap_leaderboardLocationX;
 
     private static GameState gameState;
 
