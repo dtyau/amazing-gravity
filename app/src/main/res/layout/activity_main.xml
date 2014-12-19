@@ -13,8 +13,8 @@
         android:id="@+id/imagebutton_sound"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:background="@null"
         android:onClick="toggleSoundEnabled" />
@@ -23,8 +23,8 @@
         android:id="@+id/imagebutton_vibration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_below="@+id/imagebutton_sound"
         android:background="@null"
         android:onClick="toggleVibrationEnabled"
@@ -38,42 +38,50 @@
         android:layout_centerHorizontal="true"
         android:text="Interstellar"
         android:textAlignment="center"
-        android:textSize="60dp"
-        android:textStyle="bold" />
+        android:textSize="60dp" />
 
     <com.studiau.amazinggravity.CustomTextView
         android:id="@+id/textview_title2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button_play"
+        android:layout_above="@+id/imagebutton_play"
         android:layout_centerHorizontal="true"
         android:paddingBottom="42dp"
         android:text="Gravity"
         android:textAlignment="center"
-        android:textSize="60dp"
-        android:textStyle="bold" />
+        android:textSize="60dp" />
 
     <ImageButton
-        android:id="@+id/button_play"
+        android:id="@+id/imagebutton_play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="42dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:background="@null"
         android:onClick="play"
-        android:src="@drawable/black" />
+        android:src="@drawable/play" />
 
-    <com.studiau.amazinggravity.CustomTextView
-        android:id="@+id/textview_rate"
+    <ImageButton
+        android:id="@+id/imagebutton_rate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="60dp"
-        android:layout_below="@+id/button_play"
+        android:paddingTop="42dp"
+        android:layout_below="@+id/imagebutton_play"
         android:layout_centerHorizontal="true"
-        android:textSize="32dp"
-        android:text="rate"
-        android:textAlignment="center"
+        android:background="@null"
         android:onClick="rateMyGame"
-        android:clickable="true" />
+
+        android:src="@drawable/rate"/>
+
+    <com.studiau.amazinggravity.CustomTextView
+        android:id="@+id/text_copyright"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:text="StudiAu 2014"
+        android:textAlignment="center"
+        android:textSize="12dp" />
 
 </RelativeLayout>
