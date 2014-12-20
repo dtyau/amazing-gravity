@@ -25,10 +25,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:layout_below="@+id/imagebutton_sound"
         android:background="@null"
         android:onClick="toggleVibrationEnabled"
         android:paddingTop="6dp" />
-    <!--android:layout_below="@+id/imagebutton_sound"-->
 
     <com.studiau.amazinggravity.CustomTextView
         android:id="@+id/textview_title"

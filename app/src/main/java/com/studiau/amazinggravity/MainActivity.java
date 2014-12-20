@@ -12,6 +12,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 
+import com.kskkbys.rate.RateThisApp;
+
 /**
  * Author: Daniel Au
  */
@@ -37,6 +39,17 @@ public class MainActivity extends Activity {
         //setSoundEnabled();
 
         setVibrationEnabled();
+
+    }
+
+    @Override
+    protected void onStart() {
+
+        super.onStart();
+
+        RateThisApp.onStart(this);
+
+        RateThisApp.showRateDialogIfNeeded(this);
 
     }
 
