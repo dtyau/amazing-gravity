@@ -30,9 +30,11 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
 
+        effects.initEffects(this);
+
         loadSharedPreferences();
 
-        setSoundEnabled();
+        //setSoundEnabled();
 
         setVibrationEnabled();
 
@@ -165,11 +167,13 @@ public class MainActivity extends Activity {
 
         setVibrationEnabled();
 
+        actionsOnPress();
+
     }
 
-
-
     public void play(View view) {
+
+        actionsOnPress();
 
         Intent intent = new Intent(this, GameActivity.class);
 
@@ -178,6 +182,8 @@ public class MainActivity extends Activity {
     }
 
     public void rateGame(View view) {
+
+        actionsOnPress();
 
         Uri uri = Uri.parse("market://details?id=" + getBaseContext().getPackageName());
 
@@ -205,9 +211,22 @@ public class MainActivity extends Activity {
 
     }
 
+    private void actionsOnPress() {
+
+        if(vibrationEnabled) {
+
+            effects.vibrate(100);
+
+        }
+
+    }
+
+    public Effects effects;
+
     private boolean soundEnabled, vibrationEnabled;
 
     private final static String SHARED_PREFERENCES_SOUND_ENABLED_KEY = "398BC";
+
     private final static String SHARED_PREFERENCES_VIBRATION_ENABLED_KEY = "75DN8";
 
 }
