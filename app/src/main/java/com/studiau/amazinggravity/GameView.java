@@ -226,7 +226,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         } else if (gameState == GameState.GAMEOVER) {
 
-            if(!gameOverProcessed) {
+            while(!gameOverProcessed) {
 
                 scoreManager.update();
 
