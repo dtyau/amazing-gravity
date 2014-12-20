@@ -30,7 +30,7 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
 
-        effects.initEffects(this);
+        Effects.initEffects(this);
 
         loadSharedPreferences();
 
@@ -215,13 +215,11 @@ public class MainActivity extends Activity {
 
         if(vibrationEnabled) {
 
-            effects.vibrate(100);
+            Effects.vibrate(60);
 
         }
 
     }
-
-    public Effects effects;
 
     private boolean soundEnabled, vibrationEnabled;
 

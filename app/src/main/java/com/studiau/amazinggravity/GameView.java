@@ -41,6 +41,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         gameOverProcessed = false;
 
+        loadSharedPreferences();
+
         setFocusable(true);
 
     }
@@ -342,12 +344,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             if (actionType == MotionEvent.ACTION_DOWN) {
 
-                Log.d(TAG, Float.toString(bitmap_replayLocationX));
-
                 if((event.getX() > (bitmap_replayLocationX - (bitmap_replay.getWidth() / 2))) &&
                 event.getX() < (bitmap_replayLocationX + (bitmap_replay.getWidth() / 2)) &&
                         event.getY() > bitmap_replayLocationY - (bitmap_replay.getHeight() / 2) &&
                         event.getY() < bitmap_replayLocationY + (bitmap_replay.getHeight() / 2)) {
+
+                    actionsOnPress();
 
                     reset(ship);
 
@@ -355,6 +357,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                         event.getX() < (bitmap_rateLocationX + (bitmap_rate.getWidth() / 2)) &&
                         event.getY() > bitmap_replayLocationY - (bitmap_rate.getHeight() / 2) &&
                         event.getY() < bitmap_replayLocationY + (bitmap_rate.getHeight() / 2)) {
+
+                    actionsOnPress();
 
                     rateGame();
 
@@ -397,6 +401,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public static void setGameState(GameState newGameState) {
 
         gameState = newGameState;
+
+        if((gameState == GameState.GAMEOVER) && (vibrationEnabled)) {
+
+            Effects.vibrate(600);
+
+        }
 
     }
 
@@ -442,6 +452,27 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
+    private void loadSharedPreferences() {
+
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(getContext());
+
+        soundEnabled = sharedPreferences.getBoolean(SHARED_PREFERENCES_SOUND_ENABLED_KEY, true);
+
+        vibrationEnabled = sharedPreferences.getBoolean(SHARED_PREFERENCES_VIBRATION_ENABLED_KEY, true);
+
+    }
+
+    private void actionsOnPress() {
+
+        if(vibrationEnabled) {
+
+            Effects.vibrate(60);
+
+        }
+
+    }
+
     enum GameState {
 
         RUNNING, GAMEOVER
@@ -468,12 +499,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private Bitmap bitmap_replay, bitmap_rate, bitmap_leaderboard;
 
-    private float bitmap_replayLocationX, bitmap_replayLocationY, bitmap_rateLocationX,
+    private float canvasWidth, canvasHeight, bitmap_replayLocationX, bitmap_replayLocationY, bitmap_rateLocationX,
             bitmap_leaderboardLocationX;
 
     private static GameState gameState;
 
-    private float canvasWidth, canvasHeight;
+    private static boolean soundEnabled, vibrationEnabled;
 
     private final int AMOUNT_OF_EXHAUST = 42;
 
@@ -484,6 +515,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private final float RELATIVE_FONT_SIZE = 12;
 
     private final String SHARED_PREFERENCES_BEST_SCORE_KEY = "8V3JT";
+
+    private final static String SHARED_PREFERENCES_SOUND_ENABLED_KEY = "398BC";
+
+    private final static String SHARED_PREFERENCES_VIBRATION_ENABLED_KEY = "75DN8";
 
     private final static String TAG = GameView.class.getSimpleName();
 
