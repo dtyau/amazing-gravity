@@ -200,7 +200,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         bitmap_rateLocationX = 0.2f * canvasWidth;
 
-        bitmap_leaderboard = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.leaderboard);
+        if(MainActivity.isGooglePlaySignedIn()) {
+
+            bitmap_leaderboard = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.leaderboard);
+
+        } else {
+
+            bitmap_leaderboard = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.leaderboard_disabled);
+
+        }
 
         bitmap_leaderboardLocationX = 0.8f * canvasWidth;
 
@@ -375,9 +383,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                         event.getY() > bitmap_replayLocationY - (bitmap_leaderboard.getHeight() / 2) &&
                         event.getY() < bitmap_replayLocationY + (bitmap_leaderboard.getHeight() / 2)) {
 
-                    actionsOnPress();
+                    if(MainActivity.isGooglePlaySignedIn()) {
 
-                    showLeaderboard();
+                        actionsOnPress();
+
+                        showLeaderboard();
+
+                    }
 
                 }
 
@@ -455,7 +467,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
 
-        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 
         try {
 
