@@ -15,6 +15,7 @@ import android.preference.PreferenceManager;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
@@ -481,6 +482,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         }
 
+        while (!googleApiClient.isConnected()) {
+
+            googleApiClient.connect();
+
+        }
+
         if (googleApiClient.isConnected()) {
 
             unlockAchievements();
@@ -499,8 +506,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private void submitToLeaderboards() {
 
-        Games.Leaderboards.submitScore(googleApiClient,
-                MainActivity.HIGHSCORES_LEADERBOARD_ID, ScoreManager.getScore());
+        if(ScoreManager.getScore() > 0) {
+
+            Games.Leaderboards.submitScore(googleApiClient,
+                    MainActivity.HIGHSCORES_LEADERBOARD_ID, ScoreManager.getScore());
+
+        }
 
     }
 
