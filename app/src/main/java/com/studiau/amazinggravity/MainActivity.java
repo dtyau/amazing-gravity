@@ -338,6 +338,23 @@ public class MainActivity extends Activity implements
 
     }
 
+    public void showLeaderboards(View view) {
+
+        if (googleApiClient.isConnected()) {
+
+            startActivityForResult(Games.Leaderboards
+                    .getLeaderboardIntent(googleApiClient, HIGHSCORES_LEADERBOARD_ID), REQUEST_LEADERBOARD);
+
+        } else {
+
+            googleApiClient.connect();
+
+        }
+
+        actionsOnPress();
+
+    }
+
     private void setImage(int RidButton, int RidDrawable) {
 
         ImageButton button = (ImageButton) findViewById(RidButton);
@@ -379,7 +396,9 @@ public class MainActivity extends Activity implements
 
     private static final int REQUEST_ACHIEVEMENTS = 7891;
 
-    private static final int REQUEST_LEADERBOARDS = 6891;
+    private static final int REQUEST_LEADERBOARD = 6891;
+
+    private final String HIGHSCORES_LEADERBOARD_ID = "CgkI8bfIso0dEAIQBg";
 
     private static boolean googlePlaySignedIn = false;
 
