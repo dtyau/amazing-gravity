@@ -338,7 +338,7 @@ public class MainActivity extends Activity implements
 
     }
 
-    public void showLeaderboards(View view) {
+    public void showLeaderboard(View view) {
 
         if (googleApiClient.isConnected()) {
 
@@ -398,10 +398,10 @@ public class MainActivity extends Activity implements
 
     private static final int REQUEST_LEADERBOARD = 6891;
 
-    private final String HIGHSCORES_LEADERBOARD_ID = "CgkI8bfIso0dEAIQBg";
-
     private static boolean googlePlaySignedIn = false;
 
     private boolean resolvingConnectionFailure = false;
+
+    public static final String HIGHSCORES_LEADERBOARD_ID = "CgkI8bfIso0dEAIQBg";
 
 }

@@ -8,16 +8,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
+
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.Games;
 
 import java.util.ArrayList;
 
@@ -236,6 +236,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                 }
 
+                if(MainActivity.isGooglePlaySignedIn()) {
+
+                    updateToGooglePlayServices();
+
+                }
+
                 gameOverProcessed = true;
 
             }
@@ -362,6 +368,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                     rateGame();
 
+                } else if((event.getX() > (bitmap_leaderboardLocationX - (bitmap_leaderboard.getWidth() / 2))) &&
+                        event.getX() < (bitmap_leaderboardLocationX + (bitmap_leaderboard.getWidth() / 2)) &&
+                        event.getY() > bitmap_replayLocationY - (bitmap_leaderboard.getHeight() / 2) &&
+                        event.getY() < bitmap_replayLocationY + (bitmap_leaderboard.getHeight() / 2)) {
+
+                    actionsOnPress();
+
+                    showLeaderboard();
+
                 }
 
             }
@@ -452,6 +467,43 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
+    private void showLeaderboard() {
+
+            // TODO: how?
+
+    }
+
+    private void updateToGooglePlayServices() {
+
+        while (googleApiClient == null) {
+
+            googleApiClient = MainActivity.googleApiClient;
+
+        }
+
+        if (googleApiClient.isConnected()) {
+
+            unlockAchievements();
+
+            submitToLeaderboards();
+
+        }
+
+    }
+
+    private void unlockAchievements() {
+
+        // TODO
+
+    }
+
+    private void submitToLeaderboards() {
+
+        Games.Leaderboards.submitScore(googleApiClient,
+                MainActivity.HIGHSCORES_LEADERBOARD_ID, ScoreManager.getScore());
+
+    }
+
     private void loadSharedPreferences() {
 
         SharedPreferences sharedPreferences = PreferenceManager
@@ -478,6 +530,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         RUNNING, GAMEOVER
 
     }
+
+    private GoogleApiClient googleApiClient;
 
     private GameThread gameThread;
 

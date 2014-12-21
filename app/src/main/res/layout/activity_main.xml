@@ -80,7 +80,7 @@
         android:layout_below="@+id/imagebutton_rate"
         android:layout_centerHorizontal="true"
         android:background="@null"
-        android:onClick="showLeaderboards"
+        android:onClick="showLeaderboard"
         android:paddingTop="42dp"
         android:src="@drawable/leaderboard" />
 
