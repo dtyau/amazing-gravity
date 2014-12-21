@@ -197,7 +197,7 @@ public class MainActivity extends Activity implements
 
         vibrationEnabled = sharedPreferences.getBoolean(SHARED_PREFERENCES_VIBRATION_ENABLED_KEY, true);
 
-        googlePlayAutoSignIn = sharedPreferences.getBoolean(SHARED_PREFERENCES_GOOGLE_PLAY_AUTO_SIGN_IN_KEY, googlePlayAutoSignIn);
+        googlePlayAutoSignIn = sharedPreferences.getBoolean(SHARED_PREFERENCES_GOOGLE_PLAY_AUTO_SIGN_IN_KEY, true);
 
     }
 
@@ -324,7 +324,7 @@ public class MainActivity extends Activity implements
 
         Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
 
-        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 
         try {
 
