@@ -1,5 +1,6 @@
 package com.studiau.amazinggravity;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -470,7 +471,29 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private void showLeaderboard() {
 
-            // TODO: how?
+        while (googleApiClient == null) {
+
+            googleApiClient = MainActivity.googleApiClient;
+
+        }
+
+        while (!googleApiClient.isConnected()) {
+
+            googleApiClient.connect();
+
+        }
+
+        if (googleApiClient.isConnected()) {
+
+            Intent intent = new Intent();
+
+            intent.setClass(getContext(), MainActivity.class);
+
+            ((Activity) getContext()).startActivityForResult(Games.Leaderboards
+                    .getLeaderboardIntent(googleApiClient, MainActivity.HIGHSCORES_LEADERBOARD_ID),
+                    MainActivity.REQUEST_LEADERBOARD);
+
+        }
 
     }
 

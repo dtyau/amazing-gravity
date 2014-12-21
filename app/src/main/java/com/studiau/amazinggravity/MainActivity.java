@@ -396,7 +396,7 @@ public class MainActivity extends Activity implements
 
     private static final int REQUEST_ACHIEVEMENTS = 7891;
 
-    private static final int REQUEST_LEADERBOARD = 6891;
+    public static final int REQUEST_LEADERBOARD = 6891;
 
     private static boolean googlePlaySignedIn = false;
 
