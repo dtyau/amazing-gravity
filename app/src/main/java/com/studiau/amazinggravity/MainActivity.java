@@ -381,9 +381,9 @@ public class MainActivity extends Activity implements
 
     private boolean soundEnabled, vibrationEnabled, googlePlayAutoSignIn;
 
-    private final static String SHARED_PREFERENCES_SOUND_ENABLED_KEY = "398BC";
+    public final static String SHARED_PREFERENCES_SOUND_ENABLED_KEY = "398BC";
 
-    private final static String SHARED_PREFERENCES_VIBRATION_ENABLED_KEY = "75DN8";
+    public final static String SHARED_PREFERENCES_VIBRATION_ENABLED_KEY = "75DN8";
 
     private final static String SHARED_PREFERENCES_GOOGLE_PLAY_AUTO_SIGN_IN_KEY = "83BG7";
 

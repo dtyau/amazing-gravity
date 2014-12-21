@@ -535,7 +535,35 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private void unlockAchievements() {
 
-        // TODO
+        if(ScoreManager.getScore() == 0) {
+
+            Games.Achievements.unlock(googleApiClient, ACHIEVEMENT_0_SCORE);
+
+        }
+
+        if(ScoreManager.getScore() >= 10) {
+
+            Games.Achievements.unlock(googleApiClient, ACHIEVEMENT_10_SCORE);
+
+        }
+
+        if(ScoreManager.getScore() >= 25) {
+
+            Games.Achievements.unlock(googleApiClient, ACHIEVEMENT_25_SCORE);
+
+        }
+
+        if(ScoreManager.getScore() >= 50) {
+
+            Games.Achievements.unlock(googleApiClient, ACHIEVEMENT_50_SCORE);
+
+        }
+
+        if(ScoreManager.getScore() >= 100) {
+
+            Games.Achievements.unlock(googleApiClient, ACHIEVEMENT_100_SCORE);
+
+        }
 
     }
 
@@ -555,9 +583,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(getContext());
 
-        soundEnabled = sharedPreferences.getBoolean(SHARED_PREFERENCES_SOUND_ENABLED_KEY, true);
+        soundEnabled = sharedPreferences.getBoolean(MainActivity.SHARED_PREFERENCES_SOUND_ENABLED_KEY, true);
 
-        vibrationEnabled = sharedPreferences.getBoolean(SHARED_PREFERENCES_VIBRATION_ENABLED_KEY, true);
+        vibrationEnabled = sharedPreferences.getBoolean(MainActivity.SHARED_PREFERENCES_VIBRATION_ENABLED_KEY, true);
 
     }
 
@@ -612,13 +640,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private final int AMOUNT_OF_STARS = 100;
 
-    private final float RELATIVE_FONT_SIZE = 12;
-
     private final String SHARED_PREFERENCES_BEST_SCORE_KEY = "8V3JT";
 
-    private final static String SHARED_PREFERENCES_SOUND_ENABLED_KEY = "398BC";
+    private final String ACHIEVEMENT_0_SCORE = "CgkI8bfIso0dEAIQAQ";
 
-    private final static String SHARED_PREFERENCES_VIBRATION_ENABLED_KEY = "75DN8";
+    private final String ACHIEVEMENT_10_SCORE = "CgkI8bfIso0dEAIQAg";
+
+    private final String ACHIEVEMENT_25_SCORE = "CgkI8bfIso0dEAIQAw";
+
+    private final String ACHIEVEMENT_50_SCORE = "CgkI8bfIso0dEAIQBA";
+
+    private final String ACHIEVEMENT_100_SCORE = "CgkI8bfIso0dEAIQBQ";
 
     private final static String TAG = GameView.class.getSimpleName();
 
