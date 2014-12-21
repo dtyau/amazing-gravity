@@ -12,13 +12,21 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.Games;
+import com.google.android.gms.plus.Plus;
+import com.google.example.games.basegameutils.BaseGameUtils;
+
 import com.kskkbys.rate.RateThisApp;
 
 /**
  * Author: Daniel Au
  */
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +39,8 @@ public class MainActivity extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_main);
+
+        createGoogleApiClient();
 
         Effects.initEffects(this);
 
@@ -50,6 +60,12 @@ public class MainActivity extends Activity {
         RateThisApp.onStart(this);
 
         RateThisApp.showRateDialogIfNeeded(this);
+
+        if (!resolvingConnectionFailure && googlePlayAutoSignIn) {
+
+            googleApiClient.connect();
+
+        }
 
     }
 
@@ -72,12 +88,103 @@ public class MainActivity extends Activity {
 
         super.onStop();
 
+        if (googleApiClient.isConnected()) {
+
+            googleApiClient.disconnect();
+
+        }
+
     }
 
     @Override
     public void onDestroy() {
 
         super.onDestroy();
+
+    }
+
+    @Override
+    public void onConnected(Bundle connectionHint) {
+
+        googlePlaySignedIn = true;
+
+        googlePlayAutoSignIn = true;
+
+        editSharedPreferencesGooglePlayAutoSignIn();
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int cause) {
+
+        googleApiClient.connect();
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        // Set boolean of Google play sign in to false
+        googlePlaySignedIn = false;
+
+        googlePlayAutoSignIn = false;
+
+        editSharedPreferencesGooglePlayAutoSignIn();
+
+        if (resolvingConnectionFailure) {
+
+            // already resolving
+            return;
+
+        }
+
+        resolvingConnectionFailure = true;
+
+        // Attempt to resolve the connection failure using BaseGameUtils.
+        if (!BaseGameUtils.resolveConnectionFailure(this,
+                googleApiClient, connectionResult,
+                RC_SIGN_IN, getString(R.string.googlePlaySignInFailure))) {
+
+            resolvingConnectionFailure = false;
+
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent intent) {
+
+        if (requestCode == RC_SIGN_IN) {
+
+            // Failure resolved
+            resolvingConnectionFailure = false;
+
+            // If the resolution is good, we prompt sign-in
+            if (resultCode == RESULT_OK) {
+
+                googleApiClient.connect();
+
+            } else {
+
+                // Bring up an error dialog to alert the user that sign-in failed
+                BaseGameUtils.showActivityResultError(this, requestCode,
+                        resultCode, R.string.googlePlaySignInFailure);
+
+            }
+
+        }
+
+    }
+
+    private void createGoogleApiClient() {
+
+        // Create the Google Api Client for the play games services
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(Plus.API).addScope(Plus.SCOPE_PLUS_LOGIN)
+                .addApi(Games.API).addScope(Games.SCOPE_GAMES)
+                .build();
 
     }
 
@@ -89,6 +196,8 @@ public class MainActivity extends Activity {
         soundEnabled = sharedPreferences.getBoolean(SHARED_PREFERENCES_SOUND_ENABLED_KEY, true);
 
         vibrationEnabled = sharedPreferences.getBoolean(SHARED_PREFERENCES_VIBRATION_ENABLED_KEY, true);
+
+        googlePlayAutoSignIn = sharedPreferences.getBoolean(SHARED_PREFERENCES_GOOGLE_PLAY_AUTO_SIGN_IN_KEY, googlePlayAutoSignIn);
 
     }
 
@@ -113,6 +222,19 @@ public class MainActivity extends Activity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putBoolean(SHARED_PREFERENCES_VIBRATION_ENABLED_KEY, vibrationEnabled);
+
+        editor.apply();
+
+    }
+
+    private void editSharedPreferencesGooglePlayAutoSignIn() {
+
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putBoolean(SHARED_PREFERENCES_GOOGLE_PLAY_AUTO_SIGN_IN_KEY, googlePlayAutoSignIn);
 
         editor.apply();
 
@@ -234,10 +356,33 @@ public class MainActivity extends Activity {
 
     }
 
-    private boolean soundEnabled, vibrationEnabled;
+    public static boolean isGooglePlaySignedIn() {
+
+        return googlePlaySignedIn;
+
+    }
+
+    private boolean soundEnabled, vibrationEnabled, googlePlayAutoSignIn;
 
     private final static String SHARED_PREFERENCES_SOUND_ENABLED_KEY = "398BC";
 
     private final static String SHARED_PREFERENCES_VIBRATION_ENABLED_KEY = "75DN8";
+
+    private final static String SHARED_PREFERENCES_GOOGLE_PLAY_AUTO_SIGN_IN_KEY = "83BG7";
+
+    // Google Play Services below
+    // Initialize the google api client
+    public static GoogleApiClient googleApiClient;
+
+    // Some value used for connection failure to Google Api Client
+    private static final int RC_SIGN_IN = 8891;
+
+    private static final int REQUEST_ACHIEVEMENTS = 7891;
+
+    private static final int REQUEST_LEADERBOARDS = 6891;
+
+    private static boolean googlePlaySignedIn = false;
+
+    private boolean resolvingConnectionFailure = false;
 
 }

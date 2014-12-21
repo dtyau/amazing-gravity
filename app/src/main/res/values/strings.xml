@@ -2,7 +2,9 @@
 <resources>
 
     <string name="app_name">Amazing Gravity</string>
-    <string name="hello_world">Hello world!</string>
+
     <string name="action_settings">Settings</string>
+
+    <string name="googlePlaySignInFailure">Google Play sign-in failed, please check your network settings.</string>
 
 </resources>
