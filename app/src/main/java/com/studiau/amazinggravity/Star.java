@@ -2,7 +2,6 @@ package com.studiau.amazinggravity;
 
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 
 import java.util.Random;
@@ -23,13 +22,15 @@ public class Star {
 
         gameViewCanvasHeight = canvasHeight;
 
+        radiusModifier = gameViewCanvasWidth / RADIUS_TO_SCREEN_RATIO;
+
         reset();
 
     }
 
     private void reset() {
 
-        radius = random.nextInt(MAX_RADIUS) + BASE_RADIUS;
+        radius = (random.nextInt(MAX_RADIUS) + BASE_RADIUS) * radiusModifier;
 
         locationX = random.nextFloat() * gameViewCanvasWidth;
 
@@ -81,11 +82,13 @@ public class Star {
 
     private BlurMaskFilter blurMaskFilter;
 
-    private float gameViewCanvasWidth, gameViewCanvasHeight, radius, locationX, locationY, speedX, speedY;
+    private float gameViewCanvasWidth, gameViewCanvasHeight, radius, locationX, locationY, speedX, speedY, radiusModifier;
 
-    private final static int MAX_RADIUS = 3;
+    private final int MAX_RADIUS = 3;
 
-    private final static int BASE_RADIUS = 2;
+    private final int BASE_RADIUS = 2;
+
+    private final int RADIUS_TO_SCREEN_RATIO = 1080;
 
     private final static float BASE_SPEEDX = 0.0001f;
 

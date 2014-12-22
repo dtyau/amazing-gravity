@@ -20,6 +20,10 @@ public class Obstacle {
 
         this.gameViewCanvasHeight = gameViewCanvasHeight;
 
+        RADIUS_TO_MASS_RATIO = gameViewCanvasWidth / 100;
+
+        MAX_RADIUS = (BASE_MASS + MAX_ADDITIONAL_MASS) * RADIUS_TO_MASS_RATIO;
+
         shipLocationX = ship.getLocationX();
 
         shipLocationY = ship.getLocationY();
@@ -323,9 +327,9 @@ public class Obstacle {
 
     private final int MAX_ADDITIONAL_MASS = 6;
 
-    private final float RADIUS_TO_MASS_RATIO = 10;
+    private final float RADIUS_TO_MASS_RATIO;
 
-    private final float MAX_RADIUS = (BASE_MASS + MAX_ADDITIONAL_MASS) * RADIUS_TO_MASS_RATIO;
+    private final float MAX_RADIUS;
 
     private final float BASE_SPEEDX = 0f;
 
