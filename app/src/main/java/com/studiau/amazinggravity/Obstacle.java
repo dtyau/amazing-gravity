@@ -72,7 +72,7 @@ public class Obstacle {
 
     public void update(Ship ship, float collectiveSpeedX) {
 
-        if ((locationY - radius) > gameViewCanvasHeight) {
+        if ((locationY - radius) > (shipLocationY + ship.getHeight())) {
 
             if (!scored) {
 
