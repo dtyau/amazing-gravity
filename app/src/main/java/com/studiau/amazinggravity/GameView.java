@@ -45,6 +45,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         paused = false;
 
+        tutoring = true;
+
+        tutorialAlpha = 255;
+
         gameOverProcessed = false;
 
         loadSharedPreferences();
@@ -241,7 +245,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         if (gameState == GameState.RUNNING) {
 
-            obstacleManager.update(ship);
+            if (!tutoring) {
+
+                obstacleManager.update(ship);
+
+            }
+
+            if ((!tutoring) && (tutorialAlpha > 0)) {
+
+                tutorialAlpha -= TUTORIAL_ALPHA_FADE_RATE;
+
+            }
 
             ship.update();
 
@@ -287,7 +301,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         canvas.drawColor(Color.BLACK);
 
-        paint.setColor(Color.WHITE); // For stars
+        paint.setColor(Color.WHITE); // For stars and tutorial
 
         for (int i = 0; i < AMOUNT_OF_STARS; i++) {
 
@@ -297,7 +311,29 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         if (gameState == GameState.RUNNING) {
 
-            obstacleManager.draw(canvas, paint);
+            if(tutorialAlpha > 0) {
+
+                paint.setTextSize(canvasWidth / RELATIVE_FONT_SIZE_TUTORIAL);
+
+                paint.setTextAlign(Paint.Align.CENTER);
+
+                paint.setAlpha(tutorialAlpha);
+
+                canvas.drawText("slide left or right to navigate", canvasWidth / 2, canvasHeight / 3, paint);
+
+                canvas.drawText("< < <", canvasWidth / 4, ship.getLocationY() + (ship.getHeight() / 4), paint);
+
+                canvas.drawText("> > >", canvasWidth * 3 / 4, ship.getLocationY() + (ship.getHeight() / 4), paint);
+
+            }
+
+            paint.setAlpha(255); // Clean up after tutorial
+
+            if(!tutoring) {
+
+                obstacleManager.draw(canvas, paint);
+
+            }
 
             ship.draw(canvas, paint);
 
@@ -350,6 +386,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             switch (actionType) {
 
                 case (MotionEvent.ACTION_DOWN):
+
+                    if(tutoring) {
+
+                        tutoring = false;
+
+                    }
 
                     ship.handleActionDownAndMove(event.getX());
 
@@ -419,6 +461,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     private void reset(Ship ship) {
+
+        tutoring = true;
+
+        tutorialAlpha = 255;
 
         gameOverProcessed = false;
 
@@ -628,7 +674,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private Paint paint;
 
-    private Boolean started, paused, gameOverProcessed;
+    private Boolean started, paused, gameOverProcessed, tutoring;
 
     private Ship ship;
 
@@ -647,6 +693,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private float canvasWidth, canvasHeight, bitmap_replayLocationX, bitmap_replayLocationY, bitmap_rateLocationX,
             bitmap_leaderboardLocationX;
 
+    private int tutorialAlpha;
+
     private static GameState gameState;
 
     private static boolean soundEnabled, vibrationEnabled;
@@ -656,6 +704,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private final int AMOUNT_OF_EXPLOSION = 300;
 
     private final int AMOUNT_OF_STARS = 100;
+
+    private final int TUTORIAL_ALPHA_FADE_RATE = 5;
+
+    private final float RELATIVE_FONT_SIZE_TUTORIAL = 14;
 
     private final String SHARED_PREFERENCES_BEST_SCORE_KEY = "8V3JT";
 
