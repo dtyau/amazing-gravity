@@ -12,14 +12,18 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
+import com.google.android.gms.plus.Plus;
+import com.google.example.games.basegameutils.BaseGameUtils;
 
 import java.util.ArrayList;
 
@@ -51,6 +55,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
+
+        createGoogleApiClient();
 
         canvasWidth = getWidth();
 
@@ -166,6 +172,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         }
         
     }
+
+    private void createGoogleApiClient() {
+
+        // Create the Google Api Client for the play games services
+        googleApiClient = new GoogleApiClient.Builder(getContext())
+                .addApi(Plus.API).addScope(Plus.SCOPE_PLUS_LOGIN)
+                .addApi(Games.API).addScope(Games.SCOPE_GAMES)
+                .build();
+
+    }
+
 
     private void startGameThread() {
 
@@ -485,7 +502,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         while (googleApiClient == null) {
 
-            googleApiClient = MainActivity.googleApiClient;
+            createGoogleApiClient();
 
         }
 
@@ -513,7 +530,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         while (googleApiClient == null) {
 
-            googleApiClient = MainActivity.googleApiClient;
+            createGoogleApiClient();
 
         }
 

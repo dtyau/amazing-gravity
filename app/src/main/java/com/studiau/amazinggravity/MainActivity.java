@@ -389,7 +389,7 @@ public class MainActivity extends Activity implements
 
     // Google Play Services below
     // Initialize the google api client
-    public static GoogleApiClient googleApiClient;
+    private GoogleApiClient googleApiClient;
 
     // Some value used for connection failure to Google Api Client
     private static final int RC_SIGN_IN = 8891;
