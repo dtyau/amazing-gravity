@@ -317,7 +317,7 @@ public class Obstacle {
 
     private String colour;
 
-    private final int COLOUR_CHANGE_SCORE_INCREMENT = 5;
+    private final int COLOUR_CHANGE_SCORE_INCREMENT = 10;
 
     private final int BASE_MASS = 10;
 
