@@ -223,7 +223,7 @@ public class Obstacle {
 
             case 3:
 
-                return "#E57373"; // red
+                return "#F06292"; // pink
 
             case 4:
 
