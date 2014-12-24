@@ -221,7 +221,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         bitmap_rateLocationX = 0.2f * canvasWidth;
 
-        if(MainActivity.isGooglePlaySignedIn()) {
+        if (MainActivity.isGooglePlaySignedIn()) {
 
             bitmap_leaderboard = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.leaderboard);
 
@@ -267,17 +267,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         } else if (gameState == GameState.GAMEOVER) {
 
-            while(!gameOverProcessed) {
+            while (!gameOverProcessed) {
 
                 scoreManager.update();
 
-                if(scoreManager.isNewBest()) {
+                if (scoreManager.isNewBest()) {
 
                     setBestScoreInPreferences();
 
                 }
 
-                if(MainActivity.isGooglePlaySignedIn()) {
+                if (MainActivity.isGooglePlaySignedIn()) {
 
                     updateToGooglePlayServices();
 
@@ -311,7 +311,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         if (gameState == GameState.RUNNING) {
 
-            if(tutorialAlpha > 0) {
+            if (tutorialAlpha > 0) {
 
                 paint.setTextSize(canvasWidth / RELATIVE_FONT_SIZE_TUTORIAL);
 
@@ -329,7 +329,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             paint.setAlpha(255); // Clean up after tutorial
 
-            if(!tutoring) {
+            if (!tutoring) {
 
                 obstacleManager.draw(canvas, paint);
 
@@ -387,7 +387,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                 case (MotionEvent.ACTION_DOWN):
 
-                    if(tutoring) {
+                    if (tutoring) {
 
                         tutoring = false;
 
@@ -419,7 +419,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             if (actionType == MotionEvent.ACTION_DOWN) {
 
-                if((event.getX() > (bitmap_replayLocationX - (bitmap_replay.getWidth() / 2))) &&
+                if ((event.getX() > (bitmap_replayLocationX - (bitmap_replay.getWidth() / 2))) &&
                         event.getX() < (bitmap_replayLocationX + (bitmap_replay.getWidth() / 2)) &&
                         event.getY() > bitmap_replayLocationY - (bitmap_replay.getHeight() / 2) &&
                         event.getY() < bitmap_replayLocationY + (bitmap_replay.getHeight() / 2)) {
@@ -428,7 +428,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                     reset(ship);
 
-                } else if((event.getX() > (bitmap_rateLocationX - (bitmap_twitter.getWidth() / 2))) &&
+                } else if ((event.getX() > (bitmap_rateLocationX - (bitmap_twitter.getWidth() / 2))) &&
                         event.getX() < (bitmap_rateLocationX + (bitmap_twitter.getWidth() / 2)) &&
                         event.getY() > bitmap_replayLocationY - (bitmap_twitter.getHeight() / 2) &&
                         event.getY() < bitmap_replayLocationY + (bitmap_twitter.getHeight() / 2)) {
@@ -437,12 +437,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                     tweet();
 
-                } else if((event.getX() > (bitmap_leaderboardLocationX - (bitmap_leaderboard.getWidth() / 2))) &&
+                } else if ((event.getX() > (bitmap_leaderboardLocationX - (bitmap_leaderboard.getWidth() / 2))) &&
                         event.getX() < (bitmap_leaderboardLocationX + (bitmap_leaderboard.getWidth() / 2)) &&
                         event.getY() > bitmap_replayLocationY - (bitmap_leaderboard.getHeight() / 2) &&
                         event.getY() < bitmap_replayLocationY + (bitmap_leaderboard.getHeight() / 2)) {
 
-                    if(MainActivity.isGooglePlaySignedIn()) {
+                    if (MainActivity.isGooglePlaySignedIn()) {
 
                         actionsOnPress();
 
@@ -462,13 +462,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private void reset(Ship ship) {
 
+        gameState = GameState.RUNNING;
+
         tutoring = true;
 
         tutorialAlpha = 255;
 
-        gameOverProcessed = false;
-
         scoreManager.reset();
+
+        gameOverProcessed = false;
 
         ship.reset();
 
@@ -486,15 +488,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         }
 
-        gameState = GameState.RUNNING;
-
     }
 
     public static void setGameState(GameState newGameState) {
 
         gameState = newGameState;
 
-        if((gameState == GameState.GAMEOVER) && (vibrationEnabled)) {
+        if ((gameState == GameState.GAMEOVER) && (vibrationEnabled)) {
 
             Effects.vibrate(600);
 
@@ -578,31 +578,31 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private void unlockAchievements() {
 
-        if(ScoreManager.getScore() == 0) {
+        if (ScoreManager.getScore() == 0) {
 
             Games.Achievements.unlock(googleApiClient, ACHIEVEMENT_0_SCORE);
 
         }
 
-        if(ScoreManager.getScore() >= 10) {
+        if (ScoreManager.getScore() >= 10) {
 
             Games.Achievements.unlock(googleApiClient, ACHIEVEMENT_10_SCORE);
 
         }
 
-        if(ScoreManager.getScore() >= 25) {
+        if (ScoreManager.getScore() >= 25) {
 
             Games.Achievements.unlock(googleApiClient, ACHIEVEMENT_25_SCORE);
 
         }
 
-        if(ScoreManager.getScore() >= 50) {
+        if (ScoreManager.getScore() >= 50) {
 
             Games.Achievements.unlock(googleApiClient, ACHIEVEMENT_50_SCORE);
 
         }
 
-        if(ScoreManager.getScore() >= 100) {
+        if (ScoreManager.getScore() >= 100) {
 
             Games.Achievements.unlock(googleApiClient, ACHIEVEMENT_100_SCORE);
 
@@ -612,7 +612,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private void submitToLeaderboards() {
 
-        if(ScoreManager.getScore() > 0) {
+        if (ScoreManager.getScore() > 0) {
 
             Games.Leaderboards.submitScore(googleApiClient,
                     MainActivity.HIGHSCORES_LEADERBOARD_ID, ScoreManager.getScore());
@@ -637,7 +637,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         // Create intent using ACTION_VIEW and a normal Twitter url:
         String tweetUrl = String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
                 urlEncode("Hey! Can you beat my score of " + Integer.toString(ScoreManager.getScore()) +
-                        " on Amazing Gravity?! "), urlEncode("https://play.google.com/store/apps/details?id=com.studiau.amazinggravity"));
+                        " on #AmazingGravity for Android?! "), urlEncode("https://play.google.com/store/apps/details?id=com.studiau.amazinggravity"));
 
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(tweetUrl));
 
@@ -661,15 +661,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public static String urlEncode(String s) {
         try {
             return URLEncoder.encode(s, "UTF-8");
-        }
-        catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException e) {
             throw new RuntimeException("URLEncoder.encode() failed for " + s);
         }
     }
 
     private void actionsOnPress() {
 
-        if(vibrationEnabled) {
+        if (vibrationEnabled) {
 
             Effects.vibrate(60);
 
