@@ -13,19 +13,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.plus.Plus;
-import com.google.example.games.basegameutils.BaseGameUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -222,7 +217,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         bitmap_replayLocationY = 0.7f * canvasHeight;
 
-        bitmap_rate = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.rate);
+        bitmap_twitter = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.twitter);
 
         bitmap_rateLocationX = 0.2f * canvasWidth;
 
@@ -371,8 +366,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             canvas.drawBitmap(bitmap_replay, (bitmap_replayLocationX) - (bitmap_replay.getWidth() / 2),
                     (bitmap_replayLocationY) - (bitmap_replay.getHeight() / 2), paint);
 
-            canvas.drawBitmap(bitmap_rate, (bitmap_rateLocationX) - (bitmap_rate.getWidth() / 2),
-                    (bitmap_replayLocationY) - (bitmap_rate.getHeight() / 2), paint);
+            canvas.drawBitmap(bitmap_twitter, (bitmap_rateLocationX) - (bitmap_twitter.getWidth() / 2),
+                    (bitmap_replayLocationY) - (bitmap_twitter.getHeight() / 2), paint);
 
             canvas.drawBitmap(bitmap_leaderboard, (bitmap_leaderboardLocationX) - (bitmap_leaderboard.getWidth() / 2),
                     (bitmap_replayLocationY) - (bitmap_leaderboard.getHeight() / 2), paint);
@@ -433,14 +428,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                     reset(ship);
 
-                } else if((event.getX() > (bitmap_rateLocationX - (bitmap_rate.getWidth() / 2))) &&
-                        event.getX() < (bitmap_rateLocationX + (bitmap_rate.getWidth() / 2)) &&
-                        event.getY() > bitmap_replayLocationY - (bitmap_rate.getHeight() / 2) &&
-                        event.getY() < bitmap_replayLocationY + (bitmap_rate.getHeight() / 2)) {
+                } else if((event.getX() > (bitmap_rateLocationX - (bitmap_twitter.getWidth() / 2))) &&
+                        event.getX() < (bitmap_rateLocationX + (bitmap_twitter.getWidth() / 2)) &&
+                        event.getY() > bitmap_replayLocationY - (bitmap_twitter.getHeight() / 2) &&
+                        event.getY() < bitmap_replayLocationY + (bitmap_twitter.getHeight() / 2)) {
 
                     actionsOnPress();
 
-                    //rateGame();
                     tweet();
 
                 } else if((event.getX() > (bitmap_leaderboardLocationX - (bitmap_leaderboard.getWidth() / 2))) &&
@@ -527,26 +521,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         editor.putInt(SHARED_PREFERENCES_BEST_SCORE_KEY, ScoreManager.getScore());
 
         editor.apply();
-
-    }
-
-    private void rateGame() {
-
-        Uri uri = Uri.parse("market://details?id=" + getContext().getPackageName());
-
-        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
-
-        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-
-        try {
-
-            getContext().startActivity(goToMarket);
-
-        } catch (ActivityNotFoundException e) {
-
-            getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + getContext().getPackageName())));
-
-        }
 
     }
 
@@ -729,7 +703,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private ScoreManager scoreManager;
 
-    private Bitmap bitmap_replay, bitmap_rate, bitmap_leaderboard;
+    private Bitmap bitmap_replay, bitmap_twitter, bitmap_leaderboard;
 
     private float canvasWidth, canvasHeight, bitmap_replayLocationX, bitmap_replayLocationY, bitmap_rateLocationX,
             bitmap_leaderboardLocationX;
