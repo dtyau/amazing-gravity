@@ -319,7 +319,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                 paint.setAlpha(tutorialAlpha);
 
-                canvas.drawText("slide left or right to navigate", canvasWidth / 2, canvasHeight / 3, paint);
+                canvas.drawText("slide left or right", canvasWidth / 2, canvasHeight / 3.2f, paint);
+                canvas.drawText("to avoid wormholes", canvasWidth / 2, canvasHeight / 2.8f, paint);
 
                 canvas.drawText("< < <", canvasWidth / 4, ship.getLocationY() + (ship.getHeight() / 4), paint);
 
