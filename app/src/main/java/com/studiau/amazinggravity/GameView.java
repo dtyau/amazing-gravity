@@ -179,7 +179,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             paused = false;
 
         }
-        
+
     }
 
     private void createGoogleApiClient() {
@@ -425,7 +425,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             if (actionType == MotionEvent.ACTION_DOWN) {
 
                 if((event.getX() > (bitmap_replayLocationX - (bitmap_replay.getWidth() / 2))) &&
-                event.getX() < (bitmap_replayLocationX + (bitmap_replay.getWidth() / 2)) &&
+                        event.getX() < (bitmap_replayLocationX + (bitmap_replay.getWidth() / 2)) &&
                         event.getY() > bitmap_replayLocationY - (bitmap_replay.getHeight() / 2) &&
                         event.getY() < bitmap_replayLocationY + (bitmap_replay.getHeight() / 2)) {
 
@@ -571,7 +571,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             intent.setClass(getContext(), MainActivity.class);
 
             ((Activity) getContext()).startActivityForResult(Games.Leaderboards
-                    .getLeaderboardIntent(googleApiClient, MainActivity.HIGHSCORES_LEADERBOARD_ID),
+                            .getLeaderboardIntent(googleApiClient, MainActivity.HIGHSCORES_LEADERBOARD_ID),
                     MainActivity.REQUEST_LEADERBOARD);
 
         }
@@ -662,8 +662,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         // Create intent using ACTION_VIEW and a normal Twitter url:
         String tweetUrl = String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
-                        urlEncode("Hey! Can you beat my score of " + Integer.toString(ScoreManager.getScore()) +
-                                " on Amazing Gravity?! "), urlEncode("https://play.google.com/store/apps/details?id=com.studiau.amazinggravity"));
+                urlEncode("Hey! Can you beat my score of " + Integer.toString(ScoreManager.getScore()) +
+                        " on Amazing Gravity?! "), urlEncode("https://play.google.com/store/apps/details?id=com.studiau.amazinggravity"));
 
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(tweetUrl));
 
