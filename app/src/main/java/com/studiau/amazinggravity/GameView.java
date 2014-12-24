@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -14,6 +15,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -25,7 +27,10 @@ import com.google.android.gms.games.Games;
 import com.google.android.gms.plus.Plus;
 import com.google.example.games.basegameutils.BaseGameUtils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Author: Daniel Au
@@ -435,7 +440,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                     actionsOnPress();
 
-                    rateGame();
+                    //rateGame();
+                    tweet();
 
                 } else if((event.getX() > (bitmap_leaderboardLocationX - (bitmap_leaderboard.getWidth() / 2))) &&
                         event.getX() < (bitmap_leaderboardLocationX + (bitmap_leaderboard.getWidth() / 2)) &&
@@ -650,6 +656,41 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         vibrationEnabled = sharedPreferences.getBoolean(MainActivity.SHARED_PREFERENCES_VIBRATION_ENABLED_KEY, true);
 
+    }
+
+    private void tweet() {
+
+        // Create intent using ACTION_VIEW and a normal Twitter url:
+        String tweetUrl = String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
+                        urlEncode("Hey! Can you beat my score of " + Integer.toString(ScoreManager.getScore()) +
+                                " on Amazing Gravity?! "), urlEncode("https://play.google.com/store/apps/details?id=com.studiau.amazinggravity"));
+
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(tweetUrl));
+
+        // Narrow down to official Twitter app, if available:
+        List<ResolveInfo> matches = getContext().getPackageManager().queryIntentActivities(intent, 0);
+
+        for (ResolveInfo info : matches) {
+
+            if (info.activityInfo.packageName.toLowerCase().startsWith("com.twitter")) {
+
+                intent.setPackage(info.activityInfo.packageName);
+
+            }
+        }
+
+        getContext().startActivity(intent);
+
+    }
+
+    // This is for tweet function
+    public static String urlEncode(String s) {
+        try {
+            return URLEncoder.encode(s, "UTF-8");
+        }
+        catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("URLEncoder.encode() failed for " + s);
+        }
     }
 
     private void actionsOnPress() {
