@@ -638,7 +638,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         // Create intent using ACTION_VIEW and a normal Twitter url:
         String tweetUrl = String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
                 urlEncode("Hey! Can you beat my score of " + Integer.toString(ScoreManager.getScore()) +
-                        " on #AmazingGravity for Android?! "), urlEncode("https://play.google.com/store/apps/details?id=com.studiau.amazinggravity"));
+                        " on #AmazingGravity for Android?! "),
+                urlEncode("https://play.google.com/store/apps/details?id=com.studiau.amazinggravity"));
 
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(tweetUrl));
 
