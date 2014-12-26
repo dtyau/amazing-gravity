@@ -1,7 +1,6 @@
 package com.studiau.amazinggravity;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -211,15 +210,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         paint.setTypeface(typeFace);
 
+        bitmap_rowOne = ROW_ONE_LOCATION_Y * canvasHeight;
+
+        bitmap_rowTwo = ROW_TWO_LOCATION_Y * canvasHeight;
+
         bitmap_replay = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.replay);
 
-        bitmap_replayLocationX = 0.5f * canvasWidth;
-
-        bitmap_replayLocationY = 0.7f * canvasHeight;
-
-        bitmap_twitter = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.twitter);
-
-        bitmap_rateLocationX = 0.2f * canvasWidth;
+        bitmap_replayLocationX = 0.336f * canvasWidth;
 
         if (MainActivity.isGooglePlaySignedIn()) {
 
@@ -231,7 +228,19 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         }
 
-        bitmap_leaderboardLocationX = 0.8f * canvasWidth;
+        bitmap_leaderboardLocationX = 0.66f * canvasWidth;
+
+        bitmap_facebook = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.facebook);
+
+        bitmap_facebookLocationX = 0.25f * canvasWidth;
+
+        bitmap_twitter = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.twitter);
+
+        bitmap_twitterLocationX = 0.5f * canvasWidth;
+
+        bitmap_plusOne = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.plusone);
+
+        bitmap_plusOneLocationX = 0.75f * canvasWidth;
 
     }
 
@@ -365,13 +374,19 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             scoreManager.drawWhenOver(canvas, paint);
 
             canvas.drawBitmap(bitmap_replay, (bitmap_replayLocationX) - (bitmap_replay.getWidth() / 2),
-                    (bitmap_replayLocationY) - (bitmap_replay.getHeight() / 2), paint);
-
-            canvas.drawBitmap(bitmap_twitter, (bitmap_rateLocationX) - (bitmap_twitter.getWidth() / 2),
-                    (bitmap_replayLocationY) - (bitmap_twitter.getHeight() / 2), paint);
+                    (bitmap_rowOne) - (bitmap_replay.getHeight() / 2), paint);
 
             canvas.drawBitmap(bitmap_leaderboard, (bitmap_leaderboardLocationX) - (bitmap_leaderboard.getWidth() / 2),
-                    (bitmap_replayLocationY) - (bitmap_leaderboard.getHeight() / 2), paint);
+                    (bitmap_rowOne) - (bitmap_leaderboard.getHeight() / 2), paint);
+
+            canvas.drawBitmap(bitmap_facebook, (bitmap_facebookLocationX) - (bitmap_facebook.getWidth() / 2),
+                    (bitmap_rowTwo) - (bitmap_facebook.getHeight() / 2), paint);
+
+            canvas.drawBitmap(bitmap_twitter, (bitmap_twitterLocationX) - (bitmap_twitter.getWidth() / 2),
+                    (bitmap_rowTwo) - (bitmap_twitter.getHeight() / 2), paint);
+
+            canvas.drawBitmap(bitmap_plusOne, (bitmap_plusOneLocationX) - (bitmap_plusOne.getWidth() / 2),
+                    (bitmap_rowTwo) - (bitmap_plusOne.getHeight() / 2), paint);
 
         }
 
@@ -422,17 +437,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                 if ((event.getX() > (bitmap_replayLocationX - (bitmap_replay.getWidth() / 2))) &&
                         event.getX() < (bitmap_replayLocationX + (bitmap_replay.getWidth() / 2)) &&
-                        event.getY() > bitmap_replayLocationY - (bitmap_replay.getHeight() / 2) &&
-                        event.getY() < bitmap_replayLocationY + (bitmap_replay.getHeight() / 2)) {
+                        event.getY() > bitmap_rowOne - (bitmap_replay.getHeight() / 2) &&
+                        event.getY() < bitmap_rowOne + (bitmap_replay.getHeight() / 2)) {
 
                     actionsOnPress();
 
                     reset(ship);
 
-                } else if ((event.getX() > (bitmap_rateLocationX - (bitmap_twitter.getWidth() / 2))) &&
-                        event.getX() < (bitmap_rateLocationX + (bitmap_twitter.getWidth() / 2)) &&
-                        event.getY() > bitmap_replayLocationY - (bitmap_twitter.getHeight() / 2) &&
-                        event.getY() < bitmap_replayLocationY + (bitmap_twitter.getHeight() / 2)) {
+                } else if ((event.getX() > (bitmap_twitterLocationX - (bitmap_twitter.getWidth() / 2))) &&
+                        event.getX() < (bitmap_twitterLocationX + (bitmap_twitter.getWidth() / 2)) &&
+                        event.getY() > bitmap_rowTwo - (bitmap_twitter.getHeight() / 2) &&
+                        event.getY() < bitmap_rowTwo + (bitmap_twitter.getHeight() / 2)) {
 
                     actionsOnPress();
 
@@ -440,8 +455,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                 } else if ((event.getX() > (bitmap_leaderboardLocationX - (bitmap_leaderboard.getWidth() / 2))) &&
                         event.getX() < (bitmap_leaderboardLocationX + (bitmap_leaderboard.getWidth() / 2)) &&
-                        event.getY() > bitmap_replayLocationY - (bitmap_leaderboard.getHeight() / 2) &&
-                        event.getY() < bitmap_replayLocationY + (bitmap_leaderboard.getHeight() / 2)) {
+                        event.getY() > bitmap_rowOne - (bitmap_leaderboard.getHeight() / 2) &&
+                        event.getY() < bitmap_rowOne + (bitmap_leaderboard.getHeight() / 2)) {
 
                     if (MainActivity.isGooglePlaySignedIn()) {
 
@@ -704,10 +719,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private ScoreManager scoreManager;
 
-    private Bitmap bitmap_replay, bitmap_twitter, bitmap_leaderboard;
+    private Bitmap bitmap_replay, bitmap_twitter, bitmap_leaderboard, bitmap_facebook, bitmap_plusOne;
 
-    private float canvasWidth, canvasHeight, bitmap_replayLocationX, bitmap_replayLocationY, bitmap_rateLocationX,
-            bitmap_leaderboardLocationX;
+    private float canvasWidth, canvasHeight, bitmap_rowOne, bitmap_rowTwo, bitmap_replayLocationX,
+            bitmap_twitterLocationX, bitmap_leaderboardLocationX, bitmap_facebookLocationX, bitmap_plusOneLocationX;
 
     private int tutorialAlpha;
 
@@ -724,6 +739,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private final int TUTORIAL_ALPHA_FADE_RATE = 5;
 
     private final float RELATIVE_FONT_SIZE_TUTORIAL = 14;
+
+    private final float ROW_ONE_LOCATION_Y = 0.65f;
+
+    private final float ROW_TWO_LOCATION_Y = 0.85f;
 
     private final String SHARED_PREFERENCES_BEST_SCORE_KEY = "8V3JT";
 
