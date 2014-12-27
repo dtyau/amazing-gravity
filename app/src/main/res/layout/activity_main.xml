@@ -70,7 +70,7 @@
         android:layout_centerHorizontal="true"
         android:background="@null"
         android:onClick="showLeaderboard"
-        android:paddingTop="42dp"
+        android:paddingTop="48dp"
         android:src="@drawable/leaderboard" />
 
     <com.studiau.amazinggravity.CustomTextView
