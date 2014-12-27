@@ -1,7 +1,10 @@
 package com.studiau.amazinggravity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ResolveInfo;
@@ -16,6 +19,7 @@ import android.preference.PreferenceManager;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.TextView;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
@@ -230,17 +234,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         bitmap_leaderboardLocationX = 0.66f * canvasWidth;
 
-        bitmap_facebook = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.facebook);
+        bitmap_share = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.share);
 
-        bitmap_facebookLocationX = 0.25f * canvasWidth;
+        bitmap_shareLocationX = 0.25f * canvasWidth;
 
         bitmap_twitter = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.twitter);
 
         bitmap_twitterLocationX = 0.5f * canvasWidth;
 
-        bitmap_plusOne = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.plusone);
+        bitmap_rate = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.rate );
 
-        bitmap_plusOneLocationX = 0.75f * canvasWidth;
+        bitmap_rateLocationX = 0.75f * canvasWidth;
 
     }
 
@@ -379,14 +383,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             canvas.drawBitmap(bitmap_leaderboard, (bitmap_leaderboardLocationX) - (bitmap_leaderboard.getWidth() / 2),
                     (bitmap_rowOne) - (bitmap_leaderboard.getHeight() / 2), paint);
 
-            canvas.drawBitmap(bitmap_facebook, (bitmap_facebookLocationX) - (bitmap_facebook.getWidth() / 2),
-                    (bitmap_rowTwo) - (bitmap_facebook.getHeight() / 2), paint);
+            canvas.drawBitmap(bitmap_share, (bitmap_shareLocationX) - (bitmap_share.getWidth() / 2),
+                    (bitmap_rowTwo) - (bitmap_share.getHeight() / 2), paint);
 
             canvas.drawBitmap(bitmap_twitter, (bitmap_twitterLocationX) - (bitmap_twitter.getWidth() / 2),
                     (bitmap_rowTwo) - (bitmap_twitter.getHeight() / 2), paint);
 
-            canvas.drawBitmap(bitmap_plusOne, (bitmap_plusOneLocationX) - (bitmap_plusOne.getWidth() / 2),
-                    (bitmap_rowTwo) - (bitmap_plusOne.getHeight() / 2), paint);
+            canvas.drawBitmap(bitmap_rate, (bitmap_rateLocationX) - (bitmap_rate.getWidth() / 2),
+                    (bitmap_rowTwo) - (bitmap_rate.getHeight() / 2), paint);
 
         }
 
@@ -444,15 +448,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                     reset(ship);
 
-                } else if ((event.getX() > (bitmap_twitterLocationX - (bitmap_twitter.getWidth() / 2))) &&
-                        event.getX() < (bitmap_twitterLocationX + (bitmap_twitter.getWidth() / 2)) &&
-                        event.getY() > bitmap_rowTwo - (bitmap_twitter.getHeight() / 2) &&
-                        event.getY() < bitmap_rowTwo + (bitmap_twitter.getHeight() / 2)) {
-
-                    actionsOnPress();
-
-                    tweet();
-
                 } else if ((event.getX() > (bitmap_leaderboardLocationX - (bitmap_leaderboard.getWidth() / 2))) &&
                         event.getX() < (bitmap_leaderboardLocationX + (bitmap_leaderboard.getWidth() / 2)) &&
                         event.getY() > bitmap_rowOne - (bitmap_leaderboard.getHeight() / 2) &&
@@ -464,7 +459,40 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                         showLeaderboard();
 
+                    } else {
+
+                        actionsOnPress();
+
+                        showLeaderboardDisabledAlert();
+
                     }
+
+                } else if ((event.getX() > (bitmap_shareLocationX - (bitmap_share.getWidth() / 2))) &&
+                        event.getX() < (bitmap_shareLocationX + (bitmap_share.getWidth() / 2)) &&
+                        event.getY() > bitmap_rowTwo - (bitmap_share.getHeight() / 2) &&
+                        event.getY() < bitmap_rowTwo + (bitmap_share.getHeight() / 2)) {
+
+                    actionsOnPress();
+
+                    share();
+
+                } else if ((event.getX() > (bitmap_twitterLocationX - (bitmap_twitter.getWidth() / 2))) &&
+                        event.getX() < (bitmap_twitterLocationX + (bitmap_twitter.getWidth() / 2)) &&
+                        event.getY() > bitmap_rowTwo - (bitmap_twitter.getHeight() / 2) &&
+                        event.getY() < bitmap_rowTwo + (bitmap_twitter.getHeight() / 2)) {
+
+                    actionsOnPress();
+
+                    tweet();
+
+                } else if ((event.getX() > (bitmap_rateLocationX - (bitmap_rate.getWidth() / 2))) &&
+                        event.getX() < (bitmap_rateLocationX + (bitmap_rate.getWidth() / 2)) &&
+                        event.getY() > bitmap_rowTwo - (bitmap_rate.getHeight() / 2) &&
+                        event.getY() < bitmap_rowTwo + (bitmap_rate.getHeight() / 2)) {
+
+                    actionsOnPress();
+
+                    rateGame();
 
                 }
 
@@ -648,6 +676,21 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
+    private void share() {
+
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+
+        sharingIntent.setType("text/plain");
+
+        String shareBody = "Hey! Can you beat my score of " + Integer.toString(ScoreManager.getScore()) +
+                " on #AmazingGravity for Android?! https://play.google.com/store/apps/details?id=com.studiau.amazinggravity";
+
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+
+        getContext().startActivity(Intent.createChooser(sharingIntent, "Share via"));
+
+    }
+
     private void tweet() {
 
         // Create intent using ACTION_VIEW and a normal Twitter url:
@@ -676,11 +719,56 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     // This is for tweet function
     public static String urlEncode(String s) {
+
         try {
+
             return URLEncoder.encode(s, "UTF-8");
+
         } catch (UnsupportedEncodingException e) {
+
             throw new RuntimeException("URLEncoder.encode() failed for " + s);
+
         }
+
+    }
+
+    private void rateGame() {
+
+        Uri uri = Uri.parse("market://details?id=" + getContext().getPackageName());
+
+        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+
+        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+
+        try {
+
+             getContext().startActivity(goToMarket);
+
+        } catch (ActivityNotFoundException e) {
+
+            getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + getContext().getPackageName())));
+
+        }
+
+    }
+
+    private void showLeaderboardDisabledAlert() {
+
+        new AlertDialog.Builder(getContext())
+                .setTitle("Google Play Leaderboard")
+                .setMessage("Please sign-in to Google Play on the main page to view or submit scores to the leaderboard.")
+                .setNeutralButton("Okay", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        // Dismiss the dialog.
+
+                    }
+
+                })
+                .setIcon(R.drawable.leaderboard)
+                .show();
+
     }
 
     private void actionsOnPress() {
@@ -719,10 +807,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private ScoreManager scoreManager;
 
-    private Bitmap bitmap_replay, bitmap_twitter, bitmap_leaderboard, bitmap_facebook, bitmap_plusOne;
+    private Bitmap bitmap_replay, bitmap_twitter, bitmap_leaderboard, bitmap_share, bitmap_rate;
 
     private float canvasWidth, canvasHeight, bitmap_rowOne, bitmap_rowTwo, bitmap_replayLocationX,
-            bitmap_twitterLocationX, bitmap_leaderboardLocationX, bitmap_facebookLocationX, bitmap_plusOneLocationX;
+            bitmap_twitterLocationX, bitmap_leaderboardLocationX, bitmap_shareLocationX, bitmap_rateLocationX;
 
     private int tutorialAlpha;
 
