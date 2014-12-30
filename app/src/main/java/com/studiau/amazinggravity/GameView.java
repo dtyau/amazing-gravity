@@ -222,15 +222,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         bitmap_replayLocationX = 0.336f * canvasWidth;
 
-        if (MainActivity.isGooglePlaySignedIn()) {
+        bitmap_leaderboard = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.leaderboard);
 
-            bitmap_leaderboard = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.leaderboard);
-
-        } else {
-
-            bitmap_leaderboard = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.leaderboard_disabled);
-
-        }
+        bitmap_leaderboard_dismissed = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.leaderboard_disabled);
 
         bitmap_leaderboardLocationX = 0.66f * canvasWidth;
 
@@ -380,8 +374,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             canvas.drawBitmap(bitmap_replay, (bitmap_replayLocationX) - (bitmap_replay.getWidth() / 2),
                     (bitmap_rowOne) - (bitmap_replay.getHeight() / 2), paint);
 
-            canvas.drawBitmap(bitmap_leaderboard, (bitmap_leaderboardLocationX) - (bitmap_leaderboard.getWidth() / 2),
-                    (bitmap_rowOne) - (bitmap_leaderboard.getHeight() / 2), paint);
+            if (MainActivity.isGooglePlaySignedIn()) {
+
+                canvas.drawBitmap(bitmap_leaderboard, (bitmap_leaderboardLocationX) - (bitmap_leaderboard.getWidth() / 2),
+                        (bitmap_rowOne) - (bitmap_leaderboard.getHeight() / 2), paint);
+
+            } else {
+
+                canvas.drawBitmap(bitmap_leaderboard_dismissed, (bitmap_leaderboardLocationX) - (bitmap_leaderboard_dismissed.getWidth() / 2),
+                        (bitmap_rowOne) - (bitmap_leaderboard_dismissed.getHeight() / 2), paint);
+
+            }
 
             canvas.drawBitmap(bitmap_share, (bitmap_shareLocationX) - (bitmap_share.getWidth() / 2),
                     (bitmap_rowTwo) - (bitmap_share.getHeight() / 2), paint);
@@ -807,7 +810,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private ScoreManager scoreManager;
 
-    private Bitmap bitmap_replay, bitmap_twitter, bitmap_leaderboard, bitmap_share, bitmap_rate;
+    private Bitmap bitmap_replay, bitmap_twitter, bitmap_leaderboard, bitmap_leaderboard_dismissed,
+            bitmap_share, bitmap_rate;
 
     private float canvasWidth, canvasHeight, bitmap_rowOne, bitmap_rowTwo, bitmap_replayLocationX,
             bitmap_twitterLocationX, bitmap_leaderboardLocationX, bitmap_shareLocationX, bitmap_rateLocationX;
