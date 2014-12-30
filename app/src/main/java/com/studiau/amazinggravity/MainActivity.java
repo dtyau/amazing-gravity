@@ -40,6 +40,8 @@ public class MainActivity extends Activity implements
 
         setContentView(R.layout.activity_main);
 
+        signingIn = (CustomTextView) findViewById(R.id.text_googlePlaySigningIn);
+
         createGoogleApiClient();
 
         Effects.initEffects(this);
@@ -64,6 +66,8 @@ public class MainActivity extends Activity implements
         if (!resolvingConnectionFailure && googlePlayAutoSignIn) {
 
             googleApiClient.connect();
+
+            signingIn.setVisibility(View.VISIBLE);
 
         }
 
@@ -112,12 +116,16 @@ public class MainActivity extends Activity implements
 
         editSharedPreferencesGooglePlayAutoSignIn();
 
+        signingIn.setVisibility(View.INVISIBLE);
+
     }
 
     @Override
     public void onConnectionSuspended(int cause) {
 
         googleApiClient.connect();
+
+        signingIn.setVisibility(View.VISIBLE);
 
     }
 
@@ -129,6 +137,8 @@ public class MainActivity extends Activity implements
         googlePlayAutoSignIn = false;
 
         editSharedPreferencesGooglePlayAutoSignIn();
+
+        signingIn.setVisibility(View.INVISIBLE);
 
         if (resolvingConnectionFailure) {
 
@@ -164,7 +174,9 @@ public class MainActivity extends Activity implements
 
                 googleApiClient.connect();
 
-            } else {
+                signingIn.setVisibility(View.VISIBLE);
+
+            } else if (resultCode != RESULT_CANCELED) {
 
                 // Bring up an error dialog to alert the user that sign-in failed
                 BaseGameUtils.showActivityResultError(this, requestCode,
@@ -368,6 +380,8 @@ public class MainActivity extends Activity implements
     // Google Play Services below
     // Initialize the google api client
     private GoogleApiClient googleApiClient;
+
+    private CustomTextView signingIn;
 
     // Some value used for connection failure to Google Api Client
     private static final int RC_SIGN_IN = 8891;

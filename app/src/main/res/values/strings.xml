@@ -5,6 +5,8 @@
 
     <string name="action_settings">Settings</string>
 
+    <string name="googlePlaySigningIn">Signing in to Google Play&#8230;</string>
+
     <string name="googlePlaySignInFailure">Google Play sign-in failed, please check your network settings.</string>
 
 </resources>

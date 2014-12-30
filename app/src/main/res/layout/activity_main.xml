@@ -51,6 +51,17 @@
         android:textAlignment="center"
         android:textSize="60dp" />
 
+    <com.studiau.amazinggravity.CustomTextView
+        android:id="@+id/text_googlePlaySigningIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textview_title2"
+        android:layout_centerHorizontal="true"
+        android:text="@string/googlePlaySigningIn"
+        android:textAlignment="center"
+        android:textSize="14dp"
+        android:visibility="invisible"/>
+
     <ImageButton
         android:id="@+id/imagebutton_play"
         android:layout_width="wrap_content"
