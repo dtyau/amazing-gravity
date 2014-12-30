@@ -91,11 +91,111 @@ public class ObstacleManager {
 
     }
 
+    // For particle interaction
+
+    public boolean checkCollisionForParticles(Ship ship, float particle_LocationX, float particle_LocationY) {
+
+        boolean collision = false;
+
+        for (Obstacle obstacle: obstacles) {
+
+            if ((obstacle.getLocationY() + obstacle.getRadius()) > ship.getLocationY()) {
+
+                float distanceX = Math.abs(particle_LocationX - obstacle.getLocationX());
+
+                float distanceY = Math.abs(particle_LocationY - obstacle.getLocationY());
+
+                float distance = (float) Math.sqrt((distanceX * distanceX) + (distanceY* distanceY));
+
+                if (distance < obstacle.getRadius()) {
+
+                    collision = true;
+
+                }
+
+            }
+
+        }
+
+        return collision;
+
+    }
+
+    public float giveSpeedXForParticles(Ship ship, float particle_LocationX) {
+
+        float collectiveNewSpeedX = 0;
+
+        for (Obstacle obstacle: obstacles) {
+
+            if ((obstacle.getLocationY() > (PARTICLE_AFFECTED_Y * gameViewCanvasHeight)) &&
+                    (obstacle.getLocationY() < gameViewCanvasHeight)) {
+
+                float distanceX = Math.abs(particle_LocationX - obstacle.getLocationX()) / gameViewCanvasWidth;
+
+                if (distanceX > 1) {
+
+                    distanceX = 1;
+
+                }
+
+                float newSpeedX = (float) ((((-1 * (Math.pow(distanceX, 2))) + 1)) / 400);
+
+                if ((particle_LocationX - obstacle.getLocationX()) > 0) {
+
+                    collectiveNewSpeedX = -newSpeedX;
+
+                } else {
+
+                    collectiveNewSpeedX = newSpeedX;
+
+                }
+
+            }
+
+        }
+
+        return collectiveNewSpeedX;
+
+    }
+
+    public float giveSpeedYForParticles(Ship ship, float particle_LocationY) {
+
+        float collectiveNewSpeedY = 0;
+
+        for (Obstacle obstacle: obstacles) {
+
+            if ((obstacle.getLocationY() > (PARTICLE_AFFECTED_Y * gameViewCanvasHeight)) &&
+            (obstacle.getLocationY() < gameViewCanvasHeight)) {
+
+                float distanceY = (particle_LocationY - obstacle.getLocationY()) / gameViewCanvasHeight;
+
+                float newSpeedY = (float) ((((-1 * (Math.pow(Math.abs(distanceY), 2))) + 1)) / 640);
+
+                if (distanceY > 0) {
+
+                    collectiveNewSpeedY = -newSpeedY;
+
+                } else {
+
+                    collectiveNewSpeedY = newSpeedY;
+
+                }
+
+            }
+
+        }
+
+        return collectiveNewSpeedY;
+
+    }
+
     private BlurMaskFilter blurMaskFilter;
 
     private ArrayList<Obstacle> obstacles;
 
     private float gameViewCanvasWidth, gameViewCanvasHeight;
+
+    private final float PARTICLE_AFFECTED_Y = 0.5f;
 
     public static final int NUMBER_OF_OBSTACLES = 5;
 

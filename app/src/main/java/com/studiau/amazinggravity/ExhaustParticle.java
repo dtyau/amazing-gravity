@@ -38,17 +38,22 @@ public class ExhaustParticle {
 
     }
 
-    public void update(Ship ship) {
+    public void update(Ship ship, ObstacleManager obstacleManager) {
 
-        if (locationY > gameViewCanvasHeight) {
+        if ((locationX < 0) || (locationX > gameViewCanvasWidth) || (locationY > gameViewCanvasHeight) ||
+                (obstacleManager.checkCollisionForParticles(ship, locationX, locationY))) {
 
             reset(ship);
 
         }
 
-        locationX += (speedX - ship.getSpeedX() * SPEEDX_MODIFIER) * gameViewCanvasWidth;
+        float speedXFromObstacle = obstacleManager.giveSpeedXForParticles(ship, locationX);
 
-        locationY += speedY * gameViewCanvasHeight;
+        float speedYFromObstacle = obstacleManager.giveSpeedYForParticles(ship, locationY);
+
+        locationX += ((speedX - ship.getSpeedX() * SPEEDX_MODIFIER) + speedXFromObstacle) * gameViewCanvasWidth;
+
+        locationY += (speedY + speedYFromObstacle) * gameViewCanvasHeight;
 
     }
 
