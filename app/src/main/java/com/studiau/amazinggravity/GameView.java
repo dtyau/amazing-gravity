@@ -276,6 +276,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             while (!gameOverProcessed) {
 
+                updateExperience(scoreManager.getScore());
+
                 scoreManager.update();
 
                 if (scoreManager.isNewBest()) {
@@ -546,6 +548,23 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             Effects.vibrate(600);
 
         }
+
+    }
+
+    private void updateExperience(int score) {
+
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(getContext());
+
+        int totalExperience = sharedPreferences.getInt(SHARED_PREFERENCES_TOTAL_EXPERIENCE_KEY, 0);
+
+        totalExperience += score;
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putInt(SHARED_PREFERENCES_TOTAL_EXPERIENCE_KEY, totalExperience);
+
+        editor.apply();
 
     }
 
@@ -837,6 +856,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private final float ROW_TWO_LOCATION_Y = 0.85f;
 
     private final String SHARED_PREFERENCES_BEST_SCORE_KEY = "8V3JT";
+
+    private final String SHARED_PREFERENCES_TOTAL_EXPERIENCE_KEY = "HD61J";
 
     private final String ACHIEVEMENT_0_SCORE = "CgkI8bfIso0dEAIQAQ";
 
