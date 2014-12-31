@@ -16,10 +16,10 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.TextView;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
@@ -51,6 +51,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         tutoring = true;
 
         tutorialAlpha = 255;
+
+        level = 0;
+
+        experienceInLevel = 0;
+
+        experienceForNextLevel = 0;
+
+        // Defaults to 0.25f to prevent weird rectangle being drawn before shit is updated
+        experienceForDraw = 0.25f;
 
         gameOverProcessed = false;
 
@@ -276,7 +285,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             while (!gameOverProcessed) {
 
-                updateExperience(scoreManager.getScore());
+                updateExperience(ScoreManager.getScore());
+
+                determineLevelAndExperience();
 
                 scoreManager.update();
 
@@ -369,35 +380,65 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             }
 
+            drawLevelAndExperience(canvas);
+
             paint.setColor(Color.WHITE); // For score
 
             scoreManager.drawWhenOver(canvas, paint);
 
-            canvas.drawBitmap(bitmap_replay, (bitmap_replayLocationX) - (bitmap_replay.getWidth() / 2),
-                    (bitmap_rowOne) - (bitmap_replay.getHeight() / 2), paint);
-
-            if (MainActivity.isGooglePlaySignedIn()) {
-
-                canvas.drawBitmap(bitmap_leaderboard, (bitmap_leaderboardLocationX) - (bitmap_leaderboard.getWidth() / 2),
-                        (bitmap_rowOne) - (bitmap_leaderboard.getHeight() / 2), paint);
-
-            } else {
-
-                canvas.drawBitmap(bitmap_leaderboard_dismissed, (bitmap_leaderboardLocationX) - (bitmap_leaderboard_dismissed.getWidth() / 2),
-                        (bitmap_rowOne) - (bitmap_leaderboard_dismissed.getHeight() / 2), paint);
-
-            }
-
-            canvas.drawBitmap(bitmap_share, (bitmap_shareLocationX) - (bitmap_share.getWidth() / 2),
-                    (bitmap_rowTwo) - (bitmap_share.getHeight() / 2), paint);
-
-            canvas.drawBitmap(bitmap_twitter, (bitmap_twitterLocationX) - (bitmap_twitter.getWidth() / 2),
-                    (bitmap_rowTwo) - (bitmap_twitter.getHeight() / 2), paint);
-
-            canvas.drawBitmap(bitmap_rate, (bitmap_rateLocationX) - (bitmap_rate.getWidth() / 2),
-                    (bitmap_rowTwo) - (bitmap_rate.getHeight() / 2), paint);
+            drawButtons(canvas);
 
         }
+
+    }
+
+    private void drawLevelAndExperience(Canvas canvas) {
+
+        paint.setColor(Color.GRAY); // For experience bar
+
+        canvas.drawRect(canvasWidth * 0.25f, canvasHeight * 0.3f, canvasWidth * 0.75f, canvasHeight * 0.31f, paint);
+
+        paint.setColor(Color.WHITE); // For current experience
+
+        canvas.drawRect(canvasWidth * 0.25f, canvasHeight * 0.3f, canvasWidth * experienceForDraw, canvasHeight * 0.31f, paint);
+
+        paint.setTextSize(canvasWidth / LEVEL_RELATIVE_FONT_SIZE);
+
+        paint.setTextAlign(Paint.Align.RIGHT);
+
+        canvas.drawText("Lv " + Integer.toString(level + 1), canvasWidth * 0.21f, canvasHeight * 0.316f, paint);
+
+        paint.setTextAlign(Paint.Align.LEFT);
+
+        canvas.drawText("Lv " + Integer.toString(level + 2), canvasWidth * 0.79f, canvasHeight * 0.316f, paint);
+
+    }
+
+    private void drawButtons(Canvas canvas) {
+
+        canvas.drawBitmap(bitmap_replay, (bitmap_replayLocationX) - (bitmap_replay.getWidth() / 2),
+                (bitmap_rowOne) - (bitmap_replay.getHeight() / 2), paint);
+
+        if (MainActivity.isGooglePlaySignedIn()) {
+
+            canvas.drawBitmap(bitmap_leaderboard, (bitmap_leaderboardLocationX) - (bitmap_leaderboard.getWidth() / 2),
+                    (bitmap_rowOne) - (bitmap_leaderboard.getHeight() / 2), paint);
+
+        } else {
+
+            canvas.drawBitmap(bitmap_leaderboard_dismissed, (bitmap_leaderboardLocationX) - (bitmap_leaderboard_dismissed.getWidth() / 2),
+                    (bitmap_rowOne) - (bitmap_leaderboard_dismissed.getHeight() / 2), paint);
+
+        }
+
+        canvas.drawBitmap(bitmap_share, (bitmap_shareLocationX) - (bitmap_share.getWidth() / 2),
+                (bitmap_rowTwo) - (bitmap_share.getHeight() / 2), paint);
+
+        canvas.drawBitmap(bitmap_twitter, (bitmap_twitterLocationX) - (bitmap_twitter.getWidth() / 2),
+                (bitmap_rowTwo) - (bitmap_twitter.getHeight() / 2), paint);
+
+        canvas.drawBitmap(bitmap_rate, (bitmap_rateLocationX) - (bitmap_rate.getWidth() / 2),
+                (bitmap_rowTwo) - (bitmap_rate.getHeight() / 2), paint);
 
     }
 
@@ -548,6 +589,25 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             Effects.vibrate(600);
 
         }
+
+    }
+
+    private void determineLevelAndExperience() {
+
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(getContext());
+
+        int totalExperience = sharedPreferences.getInt(SHARED_PREFERENCES_TOTAL_EXPERIENCE_KEY, 0);
+
+        level = (int) Math.floor(Math.pow((totalExperience / EXPERIENCE_CONSTANT), (1 / EXPERIENCE_POWER)));
+
+        experienceInLevel = totalExperience - (int) Math.floor(
+                (Math.pow((level), EXPERIENCE_POWER) * EXPERIENCE_CONSTANT));
+
+        experienceForNextLevel = (int) (Math.floor((Math.pow((level + 1), EXPERIENCE_POWER) * EXPERIENCE_CONSTANT)) -
+                Math.floor((Math.pow((level), EXPERIENCE_POWER) * EXPERIENCE_CONSTANT)));
+
+        experienceForDraw = 0.25f + (((float) experienceInLevel / experienceForNextLevel) * 0.5f);
 
     }
 
@@ -833,9 +893,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             bitmap_share, bitmap_rate;
 
     private float canvasWidth, canvasHeight, bitmap_rowOne, bitmap_rowTwo, bitmap_replayLocationX,
-            bitmap_twitterLocationX, bitmap_leaderboardLocationX, bitmap_shareLocationX, bitmap_rateLocationX;
+            bitmap_twitterLocationX, bitmap_leaderboardLocationX, bitmap_shareLocationX, bitmap_rateLocationX,
+            experienceForDraw;
 
-    private int tutorialAlpha;
+    private int tutorialAlpha, level, experienceInLevel, experienceForNextLevel;
 
     private static GameState gameState;
 
@@ -848,6 +909,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private final int AMOUNT_OF_STARS = 100;
 
     private final int TUTORIAL_ALPHA_FADE_RATE = 5;
+
+    private final int EXPERIENCE_CONSTANT = 256;
+
+    private final int LEVEL_RELATIVE_FONT_SIZE = 18;
+
+    private final float EXPERIENCE_POWER = 1.5f;
 
     private final float RELATIVE_FONT_SIZE_TUTORIAL = 14;
 
