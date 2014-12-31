@@ -123,7 +123,7 @@ public class ObstacleManager {
 
     public float giveSpeedXForParticles(Ship ship, float particle_LocationX) {
 
-        float collectiveNewSpeedX = 0;
+        float newSpeedX = 0;
 
         for (Obstacle obstacle: obstacles) {
 
@@ -138,15 +138,15 @@ public class ObstacleManager {
 
                 }
 
-                float newSpeedX = (float) ((((-1 * (Math.pow(distanceX, 2))) + 1)) / 400);
+                newSpeedX = (float) ((((-1 * (Math.pow(distanceX, 2))) + 1)) / 200);
 
                 if ((particle_LocationX - obstacle.getLocationX()) > 0) {
 
-                    collectiveNewSpeedX = -newSpeedX;
+                    return -newSpeedX;
 
                 } else {
 
-                    collectiveNewSpeedX = newSpeedX;
+                    return newSpeedX;
 
                 }
 
@@ -154,38 +154,7 @@ public class ObstacleManager {
 
         }
 
-        return collectiveNewSpeedX;
-
-    }
-
-    public float giveSpeedYForParticles(Ship ship, float particle_LocationY) {
-
-        float collectiveNewSpeedY = 0;
-
-        for (Obstacle obstacle: obstacles) {
-
-            if ((obstacle.getLocationY() > (PARTICLE_AFFECTED_Y * gameViewCanvasHeight)) &&
-            (obstacle.getLocationY() < gameViewCanvasHeight)) {
-
-                float distanceY = (particle_LocationY - obstacle.getLocationY()) / gameViewCanvasHeight;
-
-                float newSpeedY = (float) ((((-1 * (Math.pow(Math.abs(distanceY), 2))) + 1)) / 640);
-
-                if (distanceY > 0) {
-
-                    collectiveNewSpeedY = -newSpeedY;
-
-                } else {
-
-                    collectiveNewSpeedY = newSpeedY;
-
-                }
-
-            }
-
-        }
-
-        return collectiveNewSpeedY;
+        return newSpeedX;
 
     }
 

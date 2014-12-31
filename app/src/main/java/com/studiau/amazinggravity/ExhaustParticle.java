@@ -49,11 +49,9 @@ public class ExhaustParticle {
 
         float speedXFromObstacle = obstacleManager.giveSpeedXForParticles(ship, locationX);
 
-        float speedYFromObstacle = obstacleManager.giveSpeedYForParticles(ship, locationY);
-
         locationX += ((speedX - ship.getSpeedX() * SPEEDX_MODIFIER) + speedXFromObstacle) * gameViewCanvasWidth;
 
-        locationY += (speedY + speedYFromObstacle) * gameViewCanvasHeight;
+        locationY += speedY * gameViewCanvasHeight;
 
     }
 
