@@ -90,10 +90,10 @@ public class Star {
 
     private final int RADIUS_TO_SCREEN_RATIO = 1080;
 
-    private final static float BASE_SPEEDX = 0.0001f;
+    private final static float BASE_SPEEDX = 0.0004f;
 
-    private final static float BASE_SPEEDY = 0.0001f;
+    private final static float BASE_SPEEDY = 0.0004f;
 
-    private final static float SHIP_SPEEDX_DAMPENER = 0.1f;
+    private final static float SHIP_SPEEDX_DAMPENER = 0.3f;
 
 }
