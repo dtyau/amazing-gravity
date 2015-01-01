@@ -31,6 +31,8 @@ public class Ship {
 
         locationY = canvasHeight * BASE_LOCATIONY;
 
+        speedBoostTrigger = canvasHeight * SPEED_BOOST_TRIGGER;
+
         this.controlInverted = controlInverted;
 
         reset();
@@ -38,6 +40,20 @@ public class Ship {
     }
 
     public void update() {
+
+        if (speedBoost > 1) {
+
+            speedBoost -= SPEED_BOOST_DECREMENT;
+
+            if(speedBoost < 1) {
+
+                speedBoost = 1;
+
+                boosting = false;
+
+            }
+
+        }
 
         if (rotation < desiredRotation &&
                 (rotation + ROTATION_SPEED) <= desiredRotation) {
@@ -71,7 +87,7 @@ public class Ship {
 
     }
 
-    public void handleActionDownAndMove(float touchEventX) {
+    public void handleActionDownAndMove(float touchEventX, float touchEventY) {
 
         float distanceX = Math.abs(locationX - touchEventX) /
                 locationX;
@@ -116,6 +132,14 @@ public class Ship {
 
         }
 
+        float distanceY = locationY - touchEventY;
+
+        if (distanceY > speedBoostTrigger) {
+
+            activateSpeedBoost();
+
+        }
+
     }
 
     public void handleActionUp() {
@@ -133,6 +157,22 @@ public class Ship {
         rotation = 0;
 
         desiredRotation = 0;
+
+        speedBoost = 1;
+
+        boosting = false;
+
+    }
+
+    public void activateSpeedBoost() {
+
+        if(!boosting) {
+
+            speedBoost = INITIAL_SPEED_BOOST;
+
+            boosting = true;
+
+        }
 
     }
 
@@ -171,11 +211,11 @@ public class Ship {
 
         if(controlInverted) {
 
-            return -speedX;
+            return -(speedX * speedBoost);
 
         }
 
-        return speedX;
+        return (speedX * speedBoost);
 
     }
 
@@ -209,25 +249,31 @@ public class Ship {
 
     private Matrix matrix;
 
-    private boolean controlInverted;
+    private boolean controlInverted, boosting;
 
-    private float locationX, locationY, speedX, desiredRotation, rotation;
+    private float locationX, locationY, speedX, desiredRotation, rotation, speedBoost, speedBoostTrigger;
 
-    private static final float BASE_SPEEDX = 0f;
+    private final float SPEED_BOOST_TRIGGER = 0.2f;
 
-    private static final float MAX_ADDITIONAL_SPEEDX = 0.0044f;
+    private final float INITIAL_SPEED_BOOST = 3;
 
-    private static final float BASE_SPEEDY = 0.0001f;
+    private final float SPEED_BOOST_DECREMENT = 0.1f;
 
-    private static final float BASE_LOCATIONX = 0.5f;
+    private final float BASE_SPEEDX = 0f;
 
-    private static final float BASE_LOCATIONY = 0.75f;
+    private final float MAX_ADDITIONAL_SPEEDX = 0.0044f;
 
-    private static final float MAX_ROTATION = 60;
+    private final float BASE_SPEEDY = 0.0001f;
 
-    private static final float ROTATION_SPEED = 10;
+    private final float BASE_LOCATIONX = 0.5f;
 
-    private static final float MAX_HORIZONTAL_TOUCH = 0.6f;
+    private final float BASE_LOCATIONY = 0.75f;
+
+    private final float MAX_ROTATION = 60;
+
+    private final float ROTATION_SPEED = 10;
+
+    private final float MAX_HORIZONTAL_TOUCH = 0.6f;
 
     private final static String TAG = Ship.class.getSimpleName();
 

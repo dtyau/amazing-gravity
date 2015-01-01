@@ -459,19 +459,25 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                     }
 
-                    ship.handleActionDownAndMove(event.getX());
+                    ship.handleActionDownAndMove(event.getX(), event.getY());
 
                     return true;
 
                 case (MotionEvent.ACTION_MOVE):
 
-                    ship.handleActionDownAndMove(event.getX());
+                    ship.handleActionDownAndMove(event.getX(), event.getY());
 
                     return true;
 
                 case (MotionEvent.ACTION_UP):
 
                     ship.handleActionUp();
+
+                    return true;
+
+                case (MotionEvent.ACTION_POINTER_DOWN):
+
+                    ship.activateSpeedBoost();
 
                     return true;
 
