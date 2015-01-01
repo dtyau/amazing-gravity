@@ -15,7 +15,7 @@ import android.util.Log;
 
 public class Ship {
 
-    public Ship(Context context, float canvasWidth, float canvasHeight) {
+    public Ship(Context context, float canvasWidth, float canvasHeight, boolean controlInverted) {
 
         blurMaskFilter = new BlurMaskFilter(10, BlurMaskFilter.Blur.SOLID);
 
@@ -30,6 +30,8 @@ public class Ship {
         locationX = canvasWidth * BASE_LOCATIONX;
 
         locationY = canvasHeight * BASE_LOCATIONY;
+
+        this.controlInverted = controlInverted;
 
         reset();
 
@@ -88,13 +90,29 @@ public class Ship {
 
             speedX = newSpeedX;
 
-            desiredRotation = MAX_ROTATION * (modifierX);
+            if(controlInverted) {
+
+                desiredRotation = -MAX_ROTATION * (modifierX);
+
+            } else {
+
+                desiredRotation = MAX_ROTATION * (modifierX);
+
+            }
 
         } else if (touchEventX > locationX) {
 
             speedX = -newSpeedX;
 
-            desiredRotation = -MAX_ROTATION * (modifierX);
+            if(controlInverted) {
+
+                desiredRotation = MAX_ROTATION * (modifierX);
+
+            } else {
+
+                desiredRotation = -MAX_ROTATION * (modifierX);
+
+            }
 
         }
 
@@ -151,6 +169,12 @@ public class Ship {
 
     public float getSpeedX() {
 
+        if(controlInverted) {
+
+            return -speedX;
+
+        }
+
         return speedX;
 
     }
@@ -184,6 +208,8 @@ public class Ship {
     private Bitmap bitmap;
 
     private Matrix matrix;
+
+    private boolean controlInverted;
 
     private float locationX, locationY, speedX, desiredRotation, rotation;
 

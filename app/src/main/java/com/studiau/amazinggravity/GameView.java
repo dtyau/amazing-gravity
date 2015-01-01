@@ -82,7 +82,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         scoreManager = new ScoreManager(canvasWidth, canvasHeight, getBestScoreFromPreferences());
 
-        ship = new Ship(getContext(), canvasWidth, canvasHeight);
+        ship = new Ship(getContext(), canvasWidth, canvasHeight, controlInverted);
 
         obstacleManager = new ObstacleManager(canvasWidth, canvasHeight, ship);
 
@@ -752,6 +752,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(getContext());
 
+        controlInverted = sharedPreferences.getBoolean(MainActivity.SHARED_PREFERENCES_INVERTED_KEY, false);
+
         soundEnabled = sharedPreferences.getBoolean(MainActivity.SHARED_PREFERENCES_SOUND_ENABLED_KEY, true);
 
         vibrationEnabled = sharedPreferences.getBoolean(MainActivity.SHARED_PREFERENCES_VIBRATION_ENABLED_KEY, true);
@@ -900,7 +902,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private static GameState gameState;
 
-    private static boolean soundEnabled, vibrationEnabled;
+    private static boolean controlInverted, soundEnabled, vibrationEnabled;
 
     private final int AMOUNT_OF_EXHAUST = 42;
 
