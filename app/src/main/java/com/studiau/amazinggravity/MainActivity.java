@@ -50,6 +50,8 @@ public class MainActivity extends Activity implements
 
         //setSoundEnabled();
 
+        setControlInverted();
+
         setVibrationEnabled();
 
     }
@@ -205,6 +207,8 @@ public class MainActivity extends Activity implements
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
 
+        controlInverted = sharedPreferences.getBoolean(SHARED_PREFERENCES_INVERTED_KEY, false);
+
         soundEnabled = sharedPreferences.getBoolean(SHARED_PREFERENCES_SOUND_ENABLED_KEY, true);
 
         vibrationEnabled = sharedPreferences.getBoolean(SHARED_PREFERENCES_VIBRATION_ENABLED_KEY, true);
@@ -221,6 +225,19 @@ public class MainActivity extends Activity implements
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putBoolean(SHARED_PREFERENCES_SOUND_ENABLED_KEY, soundEnabled);
+
+        editor.apply();
+
+    }
+
+    private void editSharedPreferencesInverted() {
+
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putBoolean(SHARED_PREFERENCES_INVERTED_KEY, controlInverted);
 
         editor.apply();
 
@@ -261,6 +278,20 @@ public class MainActivity extends Activity implements
         } else {
 
             setImage(R.id.imagebutton_sound, R.drawable.volume_off);
+
+        }
+
+    }
+
+    private void setControlInverted() {
+
+        if(controlInverted) {
+
+            setImage(R.id.imagebutton_invert, R.drawable.invert);
+
+        } else {
+
+            setImage(R.id.imagebutton_invert, R.drawable.no_invert);
 
         }
 
@@ -318,6 +349,26 @@ public class MainActivity extends Activity implements
 
     }
 
+    public void toggleControlInverted(View view) {
+
+        if(controlInverted) {
+
+            controlInverted = false;
+
+        } else {
+
+            controlInverted = true;
+
+        }
+
+        editSharedPreferencesInverted();
+
+        setControlInverted();
+
+        actionsOnPress();
+
+    }
+
     public void play(View view) {
 
         actionsOnPress();
@@ -369,11 +420,13 @@ public class MainActivity extends Activity implements
 
     }
 
-    private boolean soundEnabled, vibrationEnabled, googlePlayAutoSignIn;
+    private boolean controlInverted, soundEnabled, vibrationEnabled, googlePlayAutoSignIn;
 
     public final static String SHARED_PREFERENCES_SOUND_ENABLED_KEY = "398BC";
 
     public final static String SHARED_PREFERENCES_VIBRATION_ENABLED_KEY = "75DN8";
+
+    public final static String SHARED_PREFERENCES_INVERTED_KEY = "4H9W2H";
 
     private final static String SHARED_PREFERENCES_GOOGLE_PLAY_AUTO_SIGN_IN_KEY = "83BG7";
 
