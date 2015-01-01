@@ -7,7 +7,6 @@ import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.util.Log;
 
 /**
  * Author: Daniel Au
@@ -166,13 +165,21 @@ public class Ship {
 
     public void activateSpeedBoost() {
 
-        if(!boosting) {
+        if(!boosting && (speedBoostCounter >= 1)) {
 
             speedBoost = INITIAL_SPEED_BOOST;
 
             boosting = true;
 
+            speedBoostCounter--;
+
         }
+
+    }
+
+    public void setSpeedBoostCounter(int speedBoostCounter) {
+
+        this.speedBoostCounter = speedBoostCounter;
 
     }
 
@@ -251,9 +258,12 @@ public class Ship {
 
     private boolean controlInverted, boosting;
 
-    private float locationX, locationY, speedX, desiredRotation, rotation, speedBoost, speedBoostTrigger;
+    private int speedBoostCounter, defaultSpeedBoostCounter;
 
-    private final float SPEED_BOOST_TRIGGER = 0.2f;
+    private float locationX, locationY, speedX, desiredRotation, rotation, speedBoost,
+            speedBoostTrigger;
+
+    private final float SPEED_BOOST_TRIGGER = 0.10f;
 
     private final float INITIAL_SPEED_BOOST = 3;
 

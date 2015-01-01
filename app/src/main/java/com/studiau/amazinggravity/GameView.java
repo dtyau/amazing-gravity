@@ -16,7 +16,6 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -61,6 +60,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         // Defaults to 0.25f to prevent weird rectangle being drawn before shit is updated
         experienceForDraw = 0.25f;
 
+        determineLevelAndExperience();
+
         gameOverProcessed = false;
 
         loadSharedPreferences();
@@ -83,6 +84,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         scoreManager = new ScoreManager(canvasWidth, canvasHeight, getBestScoreFromPreferences());
 
         ship = new Ship(getContext(), canvasWidth, canvasHeight, controlInverted);
+
+        ship.setSpeedBoostCounter(level + 1);
 
         obstacleManager = new ObstacleManager(canvasWidth, canvasHeight, ship);
 
@@ -289,6 +292,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                 determineLevelAndExperience();
 
+                ship.setSpeedBoostCounter(level + 1);
+
                 scoreManager.update();
 
                 if (scoreManager.isNewBest()) {
@@ -340,6 +345,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 paint.setAlpha(tutorialAlpha);
 
                 canvas.drawText("slide left or right", canvasWidth / 2, canvasHeight / 3.2f, paint);
+
                 canvas.drawText("to avoid wormholes", canvasWidth / 2, canvasHeight / 2.8f, paint);
 
                 canvas.drawText("< < <", canvasWidth / 4, ship.getLocationY() + (ship.getHeight() / 4), paint);
