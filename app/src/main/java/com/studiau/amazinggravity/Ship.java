@@ -285,7 +285,7 @@ public class Ship {
             speedBoostTrigger, bitmap_speedBoostLocationX,
             bitmap_speedBoostDefaultLocationY, bitmap_speedBoostLocationYIncrement;
 
-    private final float BITMAP_SPEED_BOOST_DEFAULT_LOCATION_Y = 0.03f;
+    private final float BITMAP_SPEED_BOOST_DEFAULT_LOCATION_Y = 0.01f;
 
     private final float BITMAP_SPEED_BOOST_LOCATION_Y_INCREMENT = 0.05f;
 
