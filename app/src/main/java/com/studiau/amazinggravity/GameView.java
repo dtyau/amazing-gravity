@@ -422,11 +422,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         paint.setTextAlign(Paint.Align.RIGHT);
 
-        canvas.drawText("Lv " + Integer.toString(level + 1), canvasWidth * 0.21f, canvasHeight * 0.316f, paint);
+        canvas.drawText("Lv " + Integer.toString(level + 1), canvasWidth * 0.18f, canvasHeight * 0.316f, paint);
 
         paint.setTextAlign(Paint.Align.LEFT);
 
-        canvas.drawText("Lv " + Integer.toString(level + 2), canvasWidth * 0.79f, canvasHeight * 0.316f, paint);
+        canvas.drawText("Lv " + Integer.toString(level + 2), canvasWidth * 0.82f, canvasHeight * 0.316f, paint);
 
     }
 
