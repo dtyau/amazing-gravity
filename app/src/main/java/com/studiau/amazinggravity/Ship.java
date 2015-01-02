@@ -24,6 +24,10 @@ public class Ship {
 
         bitmap_speedBoostLocationX = 0.03f * canvasWidth;
 
+        bitmap_speedBoostDefaultLocationY = BITMAP_SPEED_BOOST_DEFAULT_LOCATION_Y * canvasHeight;
+
+        bitmap_speedBoostLocationYIncrement = BITMAP_SPEED_BOOST_LOCATION_Y_INCREMENT * canvasHeight;
+
         matrix = new Matrix();
 
         matrix.postTranslate(-bitmap.getWidth() / 2, -bitmap.getHeight() / 2);
@@ -92,8 +96,8 @@ public class Ship {
 
         while (drawSpeedBoostCounter > 0) {
 
-            float speedBoostLocationY = BITMAP_SPEED_BOOST_DEFAULT_LOCATION_Y +
-                    (BITMAP_SPEED_BOOST_LOCATION_Y_INCREMENT * speedBoostCounter);
+            float speedBoostLocationY = bitmap_speedBoostDefaultLocationY +
+                    (bitmap_speedBoostLocationYIncrement * drawSpeedBoostCounter);
 
             canvas.drawBitmap(bitmap_speedBoost, bitmap_speedBoostLocationX, speedBoostLocationY, paint);
 
@@ -278,7 +282,8 @@ public class Ship {
     private int speedBoostCounter;
 
     private float locationX, locationY, speedX, desiredRotation, rotation, speedBoost,
-            speedBoostTrigger, bitmap_speedBoostLocationX;
+            speedBoostTrigger, bitmap_speedBoostLocationX,
+            bitmap_speedBoostDefaultLocationY, bitmap_speedBoostLocationYIncrement;
 
     private final float BITMAP_SPEED_BOOST_DEFAULT_LOCATION_Y = 0.03f;
 
