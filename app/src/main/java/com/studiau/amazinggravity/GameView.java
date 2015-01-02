@@ -252,6 +252,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         bitmap_rateLocationX = 0.75f * canvasWidth;
 
+        bitmap_speedBoost = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.speed_boost);
+
+        bitmap_speedBoostLocationX = 0.03f * canvasWidth;
+
     }
 
     public void update() {
@@ -362,6 +366,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             }
 
+            drawSpeedBoost(canvas);
+
             ship.draw(canvas, paint);
 
             paint.setColor(Color.parseColor("#B0BEC5")); // For exhaust particles
@@ -386,6 +392,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             }
 
+            drawSpeedBoost(canvas);
+
             drawLevelAndExperience(canvas);
 
             paint.setColor(Color.WHITE); // For score
@@ -395,6 +403,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             drawButtons(canvas);
 
         }
+
+    }
+
+    private void drawSpeedBoost(Canvas canvas) {
+
+
 
     }
 
@@ -904,11 +918,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private ScoreManager scoreManager;
 
     private Bitmap bitmap_replay, bitmap_twitter, bitmap_leaderboard, bitmap_leaderboard_dismissed,
-            bitmap_share, bitmap_rate;
+            bitmap_share, bitmap_rate, bitmap_speedBoost;
 
     private float canvasWidth, canvasHeight, bitmap_rowOne, bitmap_rowTwo, bitmap_replayLocationX,
-            bitmap_twitterLocationX, bitmap_leaderboardLocationX, bitmap_shareLocationX, bitmap_rateLocationX,
-            experienceForDraw;
+            bitmap_twitterLocationX, bitmap_leaderboardLocationX, bitmap_shareLocationX,
+            bitmap_rateLocationX, bitmap_speedBoostLocationX, experienceForDraw;
 
     private int tutorialAlpha, level, experienceInLevel, experienceForNextLevel;
 
