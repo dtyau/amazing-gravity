@@ -16,6 +16,7 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -412,7 +413,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         paint.setColor(Color.GRAY); // For experience bar
 
-        canvas.drawRect(canvasWidth * 0.25f, canvasHeight * 0.302f, canvasWidth * 0.75f, canvasHeight * 0.308f, paint);
+        canvas.drawRect(canvasWidth * 0.25f, canvasHeight * 0.30f, canvasWidth * 0.75f, canvasHeight * 0.31f, paint);
 
         paint.setColor(Color.WHITE); // For current experience
 
@@ -621,15 +622,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         int totalExperience = sharedPreferences.getInt(SHARED_PREFERENCES_TOTAL_EXPERIENCE_KEY, 0);
 
-        level = (int) Math.floor(Math.pow((totalExperience / EXPERIENCE_CONSTANT), (1 / EXPERIENCE_POWER)));
+        level = (int) Math.pow(((float) totalExperience / EXPERIENCE_CONSTANT), (1 / EXPERIENCE_POWER));
 
-        experienceInLevel = totalExperience - (int) Math.floor(
-                (Math.pow((level), EXPERIENCE_POWER) * EXPERIENCE_CONSTANT));
+        experienceInLevel = (int) (totalExperience - (Math.pow(level, EXPERIENCE_POWER) * EXPERIENCE_CONSTANT));
 
-        experienceForNextLevel = (int) (Math.floor((Math.pow((level + 1), EXPERIENCE_POWER) * EXPERIENCE_CONSTANT)) -
-                Math.floor((Math.pow((level), EXPERIENCE_POWER) * EXPERIENCE_CONSTANT)));
+        experienceForNextLevel = (int) (((Math.pow((level + 1), EXPERIENCE_POWER) * EXPERIENCE_CONSTANT)) -
+                (Math.pow(level, EXPERIENCE_POWER) * EXPERIENCE_CONSTANT));
 
-        experienceForDraw = 0.25f + (((float) experienceInLevel / experienceForNextLevel) * 0.5f);
+        experienceForDraw = 0.25f + (((float) experienceInLevel / experienceForNextLevel) * 0.50f);
 
     }
 
