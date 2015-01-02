@@ -420,7 +420,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         paint.setColor(Color.GRAY); // For experience bar
 
-        canvas.drawRect(canvasWidth * 0.25f, canvasHeight * 0.30f, canvasWidth * 0.75f, canvasHeight * 0.31f, paint);
+        canvas.drawRect(canvasWidth * 0.25f, canvasHeight * 0.302f, canvasWidth * 0.75f, canvasHeight * 0.308f, paint);
 
         paint.setColor(Color.WHITE); // For current experience
 
