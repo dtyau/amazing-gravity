@@ -253,6 +253,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         bitmap_rateLocationX = 0.75f * canvasWidth;
 
+        bitmap_arrow_left = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.arrow_left);
+
+        bitmap_arrow_right = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.arrow_right);
+
+        bitmap_arrow_up = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.arrow_up);
+
     }
 
     public void update() {
@@ -349,19 +355,20 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                 canvas.drawText("to avoid wormholes", canvasWidth / 2, canvasHeight * 0.52f, paint);
 
-                canvas.drawText("< < <", canvasWidth / 4, ship.getLocationY() + (ship.getHeight() / 4), paint);
+                canvas.drawBitmap(bitmap_arrow_left, canvasWidth * 0.25f - bitmap_arrow_left.getWidth() / 2,
+                        canvasHeight * 0.75f - bitmap_arrow_left.getHeight() / 2, paint);
 
-                canvas.drawText("> > >", canvasWidth * 3 / 4, ship.getLocationY() + (ship.getHeight() / 4), paint);
+                canvas.drawBitmap(bitmap_arrow_right, canvasWidth * 0.75f - bitmap_arrow_right.getWidth() / 2,
+                        canvasHeight * 0.75f - bitmap_arrow_right.getHeight() / 2, paint);
 
-                if(level > 0) {
+                canvas.drawBitmap(bitmap_arrow_up, canvasWidth * 0.50f - bitmap_arrow_up.getWidth() /2,
+                        canvasHeight * 0.65f - bitmap_arrow_up.getHeight() / 2, paint);
 
-                    canvas.drawText("slide up or", canvasWidth / 2, canvasHeight * 0.21f, paint);
+                canvas.drawText("slide up from ship or", canvasWidth / 2, canvasHeight * 0.21f, paint);
 
-                    canvas.drawText("tap while turning", canvasWidth / 2, canvasHeight * 0.25f, paint);
+                canvas.drawText("tap while turning", canvasWidth / 2, canvasHeight * 0.25f, paint);
 
-                    canvas.drawText("for speed boost!", canvasWidth / 2, canvasHeight * 0.29f, paint);
-
-                }
+                canvas.drawText("for speed boost!", canvasWidth / 2, canvasHeight * 0.29f, paint);
 
             }
 
@@ -914,7 +921,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private ScoreManager scoreManager;
 
     private Bitmap bitmap_replay, bitmap_twitter, bitmap_leaderboard, bitmap_leaderboard_dismissed,
-            bitmap_share, bitmap_rate;
+            bitmap_share, bitmap_rate, bitmap_arrow_left, bitmap_arrow_right, bitmap_arrow_up;
 
     private float canvasWidth, canvasHeight, bitmap_rowOne, bitmap_rowTwo, bitmap_replayLocationX,
             bitmap_twitterLocationX, bitmap_leaderboardLocationX, bitmap_shareLocationX,
