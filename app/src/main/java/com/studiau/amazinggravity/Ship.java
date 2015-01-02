@@ -20,6 +20,10 @@ public class Ship {
 
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ship);
 
+        bitmap_speedBoost = BitmapFactory.decodeResource(context.getResources(), R.drawable.speed_boost);
+
+        bitmap_speedBoostLocationX = 0.03f * canvasWidth;
+
         matrix = new Matrix();
 
         matrix.postTranslate(-bitmap.getWidth() / 2, -bitmap.getHeight() / 2);
@@ -252,7 +256,7 @@ public class Ship {
 
     private BlurMaskFilter blurMaskFilter;
 
-    private Bitmap bitmap;
+    private Bitmap bitmap, bitmap_speedBoost;
 
     private Matrix matrix;
 
@@ -261,7 +265,9 @@ public class Ship {
     private int speedBoostCounter;
 
     private float locationX, locationY, speedX, desiredRotation, rotation, speedBoost,
-            speedBoostTrigger;
+            speedBoostTrigger, bitmap_speedBoostLocationX, bitmap_speedBoostDefaultLocationY;
+
+    private final float BITMAP_SPEED_BOOST_LOCATION_Y_INCREMENT = 0.5f;
 
     private final float SPEED_BOOST_TRIGGER = 0.10f;
 
