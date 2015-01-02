@@ -88,6 +88,19 @@ public class Ship {
 
         paint.setMaskFilter(null);
 
+        int drawSpeedBoostCounter = speedBoostCounter;
+
+        while (drawSpeedBoostCounter > 0) {
+
+            float speedBoostLocationY = BITMAP_SPEED_BOOST_DEFAULT_LOCATION_Y +
+                    (BITMAP_SPEED_BOOST_LOCATION_Y_INCREMENT * speedBoostCounter);
+
+            canvas.drawBitmap(bitmap_speedBoost, bitmap_speedBoostLocationX, speedBoostLocationY, paint);
+
+            drawSpeedBoostCounter--;
+
+        }
+
     }
 
     public void handleActionDownAndMove(float touchEventX, float touchEventY) {
@@ -265,9 +278,11 @@ public class Ship {
     private int speedBoostCounter;
 
     private float locationX, locationY, speedX, desiredRotation, rotation, speedBoost,
-            speedBoostTrigger, bitmap_speedBoostLocationX, bitmap_speedBoostDefaultLocationY;
+            speedBoostTrigger, bitmap_speedBoostLocationX;
 
-    private final float BITMAP_SPEED_BOOST_LOCATION_Y_INCREMENT = 0.5f;
+    private final float BITMAP_SPEED_BOOST_DEFAULT_LOCATION_Y = 0.03f;
+
+    private final float BITMAP_SPEED_BOOST_LOCATION_Y_INCREMENT = 0.05f;
 
     private final float SPEED_BOOST_TRIGGER = 0.10f;
 
