@@ -258,7 +258,7 @@ public class Ship {
 
     private boolean controlInverted, boosting;
 
-    private int speedBoostCounter, defaultSpeedBoostCounter;
+    private int speedBoostCounter;
 
     private float locationX, locationY, speedX, desiredRotation, rotation, speedBoost,
             speedBoostTrigger;
