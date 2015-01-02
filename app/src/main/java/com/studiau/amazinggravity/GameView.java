@@ -481,6 +481,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                     return true;
 
+                case (MotionEvent.ACTION_POINTER_DOWN):
+
+                    ship.activateSpeedBoost();
+
+                    return true;
+
                 default:
 
                     return super.onTouchEvent(event);
