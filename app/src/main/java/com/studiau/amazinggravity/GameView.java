@@ -344,9 +344,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                 paint.setAlpha(tutorialAlpha);
 
-                canvas.drawText("slide left or right", canvasWidth / 2, canvasHeight * 0.56f, paint);
+                canvas.drawText("slide left or right", canvasWidth / 2, canvasHeight * 0.48f, paint);
 
-                canvas.drawText("to avoid wormholes", canvasWidth / 2, canvasHeight * 0.6f, paint);
+                canvas.drawText("to avoid wormholes", canvasWidth / 2, canvasHeight * 0.52f, paint);
 
                 canvas.drawText("< < <", canvasWidth / 4, ship.getLocationY() + (ship.getHeight() / 4), paint);
 
@@ -354,11 +354,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                 if(level > 0) {
 
-                    canvas.drawText("slide up or", canvasWidth / 2, canvasHeight * 0.24f, paint);
+                    canvas.drawText("slide up or", canvasWidth / 2, canvasHeight * 0.21f, paint);
 
-                    canvas.drawText("tap while turning", canvasWidth / 2, canvasHeight * 0.28f, paint);
+                    canvas.drawText("tap while turning", canvasWidth / 2, canvasHeight * 0.25f, paint);
 
-                    canvas.drawText("for speed boost!", canvasWidth / 2, canvasHeight * 0.32f, paint);
+                    canvas.drawText("for speed boost!", canvasWidth / 2, canvasHeight * 0.29f, paint);
 
                 }
 
