@@ -5,7 +5,13 @@
 
     <string name="action_settings">Settings</string>
 
+    <string name="googlePlayPleaseSignIn">Sign-in to Google Play to submit scores!</string>
+
     <string name="googlePlaySigningIn">Signing in to Google Play&#8230;</string>
+
+    <string name="googlePlaySignInFailed">Unable to sign-in to Google Play.</string>
+
+    <string name="googlePlaySignedIn">Connected to Google Play!</string>
 
     <string name="googlePlaySignInFailure">Google Play sign-in failed, please check your network settings.</string>
 

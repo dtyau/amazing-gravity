@@ -69,7 +69,7 @@ public class MainActivity extends Activity implements
 
             googleApiClient.connect();
 
-            signingIn.setVisibility(View.VISIBLE);
+            signingIn.setText(R.string.googlePlaySigningIn);
 
         }
 
@@ -118,7 +118,7 @@ public class MainActivity extends Activity implements
 
         editSharedPreferencesGooglePlayAutoSignIn();
 
-        signingIn.setVisibility(View.INVISIBLE);
+        signingIn.setText(R.string.googlePlaySignedIn);
 
     }
 
@@ -127,7 +127,7 @@ public class MainActivity extends Activity implements
 
         googleApiClient.connect();
 
-        signingIn.setVisibility(View.VISIBLE);
+        signingIn.setText(R.string.googlePlaySigningIn);
 
     }
 
@@ -140,7 +140,7 @@ public class MainActivity extends Activity implements
 
         editSharedPreferencesGooglePlayAutoSignIn();
 
-        signingIn.setVisibility(View.INVISIBLE);
+        signingIn.setText(R.string.googlePlaySignInFailed);
 
         if (resolvingConnectionFailure) {
 
@@ -176,7 +176,7 @@ public class MainActivity extends Activity implements
 
                 googleApiClient.connect();
 
-                signingIn.setVisibility(View.VISIBLE);
+                signingIn.setText(R.string.googlePlaySigningIn);
 
             } else if (resultCode != RESULT_CANCELED) {
 

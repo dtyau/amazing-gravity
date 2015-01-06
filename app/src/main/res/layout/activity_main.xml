@@ -36,10 +36,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textview_title2"
         android:layout_centerHorizontal="true"
-        android:text="@string/googlePlaySigningIn"
+        android:text="@string/googlePlayPleaseSignIn"
         android:textAlignment="center"
-        android:textSize="14dp"
-        android:visibility="invisible"/>
+        android:textSize="14dp" />
 
     <ImageButton
         android:id="@+id/imagebutton_play"
