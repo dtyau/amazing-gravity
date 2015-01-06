@@ -361,14 +361,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 canvas.drawBitmap(bitmap_arrow_right, canvasWidth * 0.75f - bitmap_arrow_right.getWidth() / 2,
                         canvasHeight * 0.75f - bitmap_arrow_right.getHeight() / 2, paint);
 
-                canvas.drawBitmap(bitmap_arrow_up, canvasWidth * 0.50f - bitmap_arrow_up.getWidth() /2,
-                        canvasHeight * 0.65f - bitmap_arrow_up.getHeight() / 2, paint);
+                canvas.drawText("tap while turning", canvasWidth / 2, canvasHeight * 0.21f, paint);
 
-                canvas.drawText("slide up from ship or", canvasWidth / 2, canvasHeight * 0.21f, paint);
-
-                canvas.drawText("tap while turning", canvasWidth / 2, canvasHeight * 0.25f, paint);
-
-                canvas.drawText("for speed boost!", canvasWidth / 2, canvasHeight * 0.29f, paint);
+                canvas.drawText("for speed boost!", canvasWidth / 2, canvasHeight * 0.25f, paint);
 
             }
 
@@ -483,13 +478,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                     }
 
-                    ship.handleActionDownAndMove(event.getX(), event.getY());
+                    ship.handleActionDownAndMove(event.getX());
 
                     return true;
 
                 case (MotionEvent.ACTION_MOVE):
 
-                    ship.handleActionDownAndMove(event.getX(), event.getY());
+                    ship.handleActionDownAndMove(event.getX());
 
                     return true;
 

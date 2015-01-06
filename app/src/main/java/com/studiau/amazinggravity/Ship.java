@@ -107,7 +107,7 @@ public class Ship {
 
     }
 
-    public void handleActionDownAndMove(float touchEventX, float touchEventY) {
+    public void handleActionDownAndMove(float touchEventX) {
 
         float distanceX = Math.abs(locationX - touchEventX) /
                 locationX;
@@ -149,14 +149,6 @@ public class Ship {
                 desiredRotation = -MAX_ROTATION * (modifierX);
 
             }
-
-        }
-
-        float distanceY = locationY - touchEventY;
-
-        if (distanceY > speedBoostTrigger) {
-
-            activateSpeedBoost();
 
         }
 
