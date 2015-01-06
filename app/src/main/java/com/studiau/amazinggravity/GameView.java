@@ -941,11 +941,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private final int TUTORIAL_ALPHA_FADE_RATE = 5;
 
-    private final int EXPERIENCE_CONSTANT = 256;
+    private final int EXPERIENCE_CONSTANT = 333;
 
     private final int LEVEL_RELATIVE_FONT_SIZE = 18;
 
-    private final float EXPERIENCE_POWER = 1.5f;
+    private final float EXPERIENCE_POWER = 1.8f;
 
     private final float RELATIVE_FONT_SIZE_TUTORIAL = 14;
 
