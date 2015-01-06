@@ -184,6 +184,10 @@ public class MainActivity extends Activity implements
                 BaseGameUtils.showActivityResultError(this, requestCode,
                         resultCode, R.string.googlePlaySignInFailure);
 
+            } else {
+
+                signingIn.setText(R.string.googlePlayPleaseSignIn);
+
             }
 
         }
