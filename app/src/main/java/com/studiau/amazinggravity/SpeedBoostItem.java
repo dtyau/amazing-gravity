@@ -103,10 +103,51 @@ public class SpeedBoostItem {
 
     public void checkCollision(Ship ship) {
 
-        if (((locationX + (bitmap.getWidth() / 2)) > (ship.getLocationX() - (ship.getWidth() / 2))) &&
-                ((locationX - (bitmap.getWidth() / 2)) < (ship.getLocationX() + (ship.getWidth() / 2))) &&
-                ((locationY + (bitmap.getHeight() / 2)) > (ship.getLocationY() - (ship.getHeight() / 2))) &&
-                ((locationY - (bitmap.getHeight() / 2)) < (ship.getLocationY() + (ship.getHeight() / 2)))) {
+        float shipAngle = (float) Math.toRadians(ship.getAngle());
+
+        // Rotate the circle's center points back (change point of reference)
+        float unrotatedLocationX = (float) (Math.cos(shipAngle) * (locationX - ship.getLocationX()) -
+                Math.sin(shipAngle) * (locationY - ship.getLocationY()) + ship.getLocationX());
+
+        float unrotatedLocationY = (float) (Math.sin(shipAngle) * (locationX - ship.getLocationX()) +
+                Math.cos(shipAngle) * (locationY - ship.getLocationY()) + ship.getLocationY());
+
+        // Closest point in the rectangle to the center of circle rotated backwards (unrotated)
+        float closestX, closestY;
+
+        // Find the unrotated closest X point from center of circle rotated backwards (unrotated)
+        if (unrotatedLocationX < (ship.getLocationX() - (ship.getWidth() / 2))) {
+
+            closestX = ship.getLocationX() - (ship.getWidth() / 2);
+
+        } else if (unrotatedLocationX > (ship.getLocationX() + (ship.getWidth() / 2))) {
+
+            closestX = ship.getLocationX() + (ship.getWidth() / 2);
+
+        } else {
+
+            closestX = unrotatedLocationX;
+
+        }
+
+        // Find the unrotated closest Y point from center of circle rotated backwards (unrotated)
+        if (unrotatedLocationY < (ship.getLocationY() - (ship.getHeight() / 2))) {
+
+            closestY = ship.getLocationY() - (ship.getHeight() / 2);
+
+        } else if (unrotatedLocationY > (ship.getLocationY() + (ship.getHeight() / 2))) {
+
+            closestY = ship.getLocationY() + (ship.getHeight() / 2);
+
+        } else {
+
+            closestY = unrotatedLocationY;
+
+        }
+
+        float distance = pythagorizeDistance(unrotatedLocationX, unrotatedLocationY, closestX, closestY);
+
+        if (distance < bitmap.getWidth()) {
 
             ship.incrementSpeedBoostCounter();
 
@@ -123,6 +164,16 @@ public class SpeedBoostItem {
             }
 
         }
+
+    }
+
+    private float pythagorizeDistance(float fromX, float fromY, float toX, float toY) {
+
+        float a = Math.abs(fromX - toX);
+
+        float b = Math.abs(fromY - toY);
+
+        return (float) Math.sqrt((a * a) + (b * b));
 
     }
 
