@@ -3,7 +3,6 @@ package com.studiau.amazinggravity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
@@ -15,8 +14,6 @@ import android.graphics.Paint;
 public class Ship {
 
     public Ship(Context context, float canvasWidth, float canvasHeight, boolean controlInverted) {
-
-        blurMaskFilter = new BlurMaskFilter(10, BlurMaskFilter.Blur.SOLID);
 
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ship);
 
@@ -86,11 +83,9 @@ public class Ship {
 
     public void draw(Canvas canvas, Paint paint) {
 
-        paint.setMaskFilter(blurMaskFilter);
+        paint.setMaskFilter(null);
 
         canvas.drawBitmap(bitmap, matrix, paint);
-
-        paint.setMaskFilter(null);
 
         int drawSpeedBoostCounter = speedBoostCounter;
 
@@ -262,8 +257,6 @@ public class Ship {
         return bitmap.getHeight();
 
     }
-
-    private BlurMaskFilter blurMaskFilter;
 
     private Bitmap bitmap, bitmap_speedBoost;
 
