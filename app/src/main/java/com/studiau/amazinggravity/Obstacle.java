@@ -42,14 +42,13 @@ public class Obstacle {
 
         radius = mass * RADIUS_TO_MASS_RATIO;
 
-        locationX = random.nextFloat() * gameViewCanvasWidth;
+        if (random.nextBoolean()) {
 
-        while (locationX / gameViewCanvasWidth < 0.1 ||
-                locationX / gameViewCanvasWidth > 0.4 &&
-                        locationX / gameViewCanvasWidth < 0.6 ||
-                locationX / gameViewCanvasWidth > 0.9) {
+            locationX = ((random.nextFloat() * 0.3f) + 0.1f) * gameViewCanvasWidth;
 
-            locationX = random.nextFloat() * gameViewCanvasWidth;
+        } else {
+
+            locationX = ((random.nextFloat() * 0.3f) + 0.6f) * gameViewCanvasWidth;
 
         }
 
