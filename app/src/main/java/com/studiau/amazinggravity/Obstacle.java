@@ -1,7 +1,9 @@
 package com.studiau.amazinggravity;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.Paint;
 
 import java.util.Random;
@@ -12,7 +14,9 @@ import java.util.Random;
 
 public class Obstacle {
 
-    public Obstacle(float gameViewCanvasWidth, float gameViewCanvasHeight, Ship ship) {
+    public Obstacle(Context context, float gameViewCanvasWidth, float gameViewCanvasHeight, Ship ship) {
+
+        this.context = context;
 
         random = new Random();
 
@@ -67,6 +71,24 @@ public class Obstacle {
 
         scored = false;
 
+        if(ScoreManager.getScore() > 1) {
+
+            if (random.nextFloat() < CHANCE_FOR_SPEED_BOOST_ITEM) {
+
+                speedBoostItem = new SpeedBoostItem(context, colour, radius, locationX, locationY);
+
+                linkedWithSpeedBoost = true;
+
+            } else {
+
+                speedBoostItem = null;
+
+                linkedWithSpeedBoost = false;
+
+            }
+
+        }
+
     }
 
     public void update(Ship ship, float collectiveSpeedX) {
@@ -99,6 +121,12 @@ public class Obstacle {
 
         }
 
+        if (linkedWithSpeedBoost && !speedBoostItem.isCollided()) {
+
+            speedBoostItem.checkCollision(ship);
+
+        }
+
     }
 
     public void draw(Canvas canvas, Paint paint) {
@@ -106,6 +134,12 @@ public class Obstacle {
         paint.setColor(Color.parseColor(colour));
 
         canvas.drawCircle(locationX, locationY, radius, paint);
+
+        if(linkedWithSpeedBoost) {
+
+            speedBoostItem.draw(canvas, paint);
+
+        }
 
     }
 
@@ -182,6 +216,12 @@ public class Obstacle {
 
             locationX += (speedX - ship.getSpeedX()) * gameViewCanvasWidth;
 
+            if(linkedWithSpeedBoost) {
+
+                speedBoostItem.updateLocationX((speedX - ship.getSpeedX()) * gameViewCanvasWidth);
+
+            }
+
         }
 
     }
@@ -189,6 +229,12 @@ public class Obstacle {
     private void updateLocationY() {
 
         locationY += speedY * gameViewCanvasHeight;
+
+        if(linkedWithSpeedBoost) {
+
+            speedBoostItem.updateLocationY(speedY * gameViewCanvasHeight);
+
+        }
 
     }
 
@@ -310,13 +356,17 @@ public class Obstacle {
 
     }
 
+    private Context context;
+
     private Random random;
+
+    private SpeedBoostItem speedBoostItem;
 
     private float gameViewCanvasWidth, gameViewCanvasHeight,
             shipLocationX, shipLocationY, shipWidth, shipHeight,
             mass, radius, locationX, locationY, speedX, speedY, oldSpeedX;
 
-    private boolean scored;
+    private boolean scored, linkedWithSpeedBoost;
 
     private String colour;
 
@@ -337,6 +387,8 @@ public class Obstacle {
     private final float BASE_SPEEDY = 0.006f;
 
     private final float MAX_HORIZONTAL_LOCATION_SHIFT = 0.3f;
+
+    private final float CHANCE_FOR_SPEED_BOOST_ITEM = 0.2f;
 
     private final int NUMBER_OF_OBSTACLES = ObstacleManager.NUMBER_OF_OBSTACLES;
 

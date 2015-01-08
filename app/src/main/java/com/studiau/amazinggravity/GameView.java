@@ -88,7 +88,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         ship.setSpeedBoostCounter(1);
 
-        obstacleManager = new ObstacleManager(canvasWidth, canvasHeight, ship);
+        obstacleManager = new ObstacleManager(getContext(), canvasWidth, canvasHeight, ship);
 
         exhaustParticles = new ArrayList<>();
 
@@ -399,7 +399,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             }
 
-            drawLevelAndExperience(canvas);
+            //drawLevelAndExperience(canvas);
 
             paint.setColor(Color.WHITE); // For score
 

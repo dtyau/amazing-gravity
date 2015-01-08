@@ -113,7 +113,7 @@ public class ScoreManager {
 
     private final static float TEXT_GAME_OVER_POSITION_X = 0.5f;
 
-    private final static float TEXT_GAME_OVER_POSITION_Y = 0.2f;
+    private final static float TEXT_GAME_OVER_POSITION_Y = 0.25f;
 
     private final static float SCORE_PLAY_POSITION_X = 0.95f;
 

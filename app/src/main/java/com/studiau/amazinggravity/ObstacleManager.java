@@ -1,5 +1,6 @@
 package com.studiau.amazinggravity;
 
+import android.content.Context;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -13,7 +14,9 @@ import java.util.ArrayList;
 
 public class ObstacleManager {
 
-    public ObstacleManager(float gameViewCanvasWidth, float gameViewCanvasHeight, Ship ship) {
+    public ObstacleManager(Context context, float gameViewCanvasWidth, float gameViewCanvasHeight, Ship ship) {
+
+        this.context = context;
 
         blurMaskFilter = new BlurMaskFilter(42, BlurMaskFilter.Blur.OUTER);
 
@@ -39,9 +42,9 @@ public class ObstacleManager {
 
     public void draw(Canvas canvas, Paint paint) {
 
-        paint.setMaskFilter(blurMaskFilter);
-
         for (Obstacle obstacle : obstacles) {
+
+            paint.setMaskFilter(blurMaskFilter);
 
             obstacle.draw(canvas, paint);
 
@@ -73,7 +76,7 @@ public class ObstacleManager {
 
     private void addObstacle(Ship ship) {
 
-        obstacles.add(new Obstacle(gameViewCanvasWidth, gameViewCanvasHeight, ship));
+        obstacles.add(new Obstacle(context, gameViewCanvasWidth, gameViewCanvasHeight, ship));
 
     }
 
@@ -157,6 +160,8 @@ public class ObstacleManager {
         return newSpeedX;
 
     }
+
+    private Context context;
 
     private BlurMaskFilter blurMaskFilter;
 
