@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -16,9 +17,15 @@ import java.util.Random;
 
 public class SpeedBoostItem {
 
-    public SpeedBoostItem(Context context, String colour, float radius, float locationX, float locationY) {
+    public SpeedBoostItem(Context context, String colour, float radius, float locationX, float locationY, float canvasWidth, float canvasHeight) {
 
-        lightingColorFilter = new LightingColorFilter(Color.BLACK, Color.parseColor(colour));
+        this.colour = colour;
+
+        lightingColorFilter = new LightingColorFilter(Color.BLACK, Color.parseColor(this.colour));
+
+        this.canvasWidth = canvasWidth;
+
+        this.canvasHeight = canvasHeight;
 
         random = new Random();
 
@@ -36,6 +43,8 @@ public class SpeedBoostItem {
 
         this.locationY = locationY - (bitmap.getHeight() / 2);
 
+        explosionParticles = new ArrayList<>();
+
         collided = false;
 
     }
@@ -45,6 +54,14 @@ public class SpeedBoostItem {
         if(!collided) {
 
             locationX += speedX;
+
+        } else {
+
+            for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) {
+
+                explosionParticles.get(i).update();
+
+            }
 
         }
 
@@ -62,15 +79,23 @@ public class SpeedBoostItem {
 
     public void draw(Canvas canvas, Paint paint) {
 
-        if(!collided) {
+        paint.setMaskFilter(null);
 
-            paint.setMaskFilter(null);
+        if(!collided) {
 
             paint.setColorFilter(lightingColorFilter);
 
             canvas.drawBitmap(bitmap, locationX, locationY, paint);
 
             paint.setColorFilter(null);
+
+        } else {
+
+            for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) { // For explosion
+
+                explosionParticles.get(i).draw(canvas, paint);
+
+            }
 
         }
 
@@ -87,6 +112,16 @@ public class SpeedBoostItem {
 
             collided = true;
 
+            while (explosionParticles.size() < AMOUNT_OF_EXPLOSION) {
+
+                for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) {
+
+                    explosionParticles.add(new ExplosionParticle(colour, SPEED_BOOST_ITEM_EXPLOSION_RADIUS, locationX, locationY, canvasWidth, canvasHeight));
+
+                }
+
+            }
+
         }
 
     }
@@ -97,6 +132,8 @@ public class SpeedBoostItem {
 
     }
 
+    private ArrayList<ExplosionParticle> explosionParticles;
+
     private Bitmap bitmap;
 
     private LightingColorFilter lightingColorFilter;
@@ -105,8 +142,14 @@ public class SpeedBoostItem {
 
     private boolean collided;
 
-    private float locationX, locationY;
+    private String colour;
+
+    private float locationX, locationY, canvasWidth, canvasHeight;
 
     private final int DISTANCE_FROM_OBSTACLE_MULTIPLIER = 2;
+
+    private final int AMOUNT_OF_EXPLOSION = 30;
+
+    private final int SPEED_BOOST_ITEM_EXPLOSION_RADIUS = 4;
 
 }

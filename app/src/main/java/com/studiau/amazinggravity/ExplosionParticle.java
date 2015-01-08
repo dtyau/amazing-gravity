@@ -24,6 +24,36 @@ public class ExplosionParticle {
 
     }
 
+    public ExplosionParticle(String colour, int radius, float locationX, float locationY, float canvasWidth, float canvasHeight) {
+
+        random = new Random();
+
+        gameViewCanvasWidth = canvasWidth;
+
+        gameViewCanvasHeight = canvasHeight;
+
+        this.radius = radius;
+
+        this.locationX = locationX;
+
+        this.locationY = locationY;
+
+        angle = (float) Math.toRadians(random.nextInt(359));
+
+        speedX = (float) (Math.sin(angle) * random.nextFloat() * BASE_SPEEDX);
+
+        speedY = (float) (Math.cos(angle) * random.nextFloat() * BASE_SPEEDY);
+
+        speedZ = random.nextInt(2);
+
+        this.colour = colour;
+
+        alpha = 255;
+
+        updateCounter = 0;
+
+    }
+
     public void reset(Ship ship) {
 
         radius = BASE_RADIUS + random.nextInt(MAX_ADDITIONAL_RADIUS);

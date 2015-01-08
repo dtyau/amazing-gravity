@@ -75,7 +75,8 @@ public class Obstacle {
 
             if (random.nextFloat() < CHANCE_FOR_SPEED_BOOST_ITEM) {
 
-                speedBoostItem = new SpeedBoostItem(context, colour, radius, locationX, locationY);
+                speedBoostItem = new SpeedBoostItem(context, colour, radius, locationX, locationY,
+                        gameViewCanvasWidth, gameViewCanvasHeight);
 
                 linkedWithSpeedBoost = true;
 
