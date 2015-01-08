@@ -191,6 +191,12 @@ public class Ship {
 
     }
 
+    public void incrementSpeedBoostCounter() {
+
+        speedBoostCounter++;
+
+    }
+
     public float getBaseSpeedY() {
 
         return BASE_SPEEDY;
