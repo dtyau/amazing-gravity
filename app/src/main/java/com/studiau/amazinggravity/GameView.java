@@ -86,7 +86,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         ship = new Ship(getContext(), canvasWidth, canvasHeight, controlInverted);
 
-        ship.setSpeedBoostCounter(level + 1);
+        ship.setSpeedBoostCounter(1);
 
         obstacleManager = new ObstacleManager(canvasWidth, canvasHeight, ship);
 
@@ -299,7 +299,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                 determineLevelAndExperience();
 
-                ship.setSpeedBoostCounter(level + 1);
+                ship.setSpeedBoostCounter(1);
 
                 scoreManager.update();
 
@@ -928,7 +928,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private static boolean controlInverted, soundEnabled, vibrationEnabled;
 
-    private final int AMOUNT_OF_EXHAUST = 42;
+    private final int AMOUNT_OF_EXHAUST = 30;
 
     private final int AMOUNT_OF_EXPLOSION = 300;
 
