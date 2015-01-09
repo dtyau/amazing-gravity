@@ -390,7 +390,7 @@ public class Obstacle {
 
     private final float MAX_HORIZONTAL_LOCATION_SHIFT = 0.3f;
 
-    private final float CHANCE_FOR_SPEED_BOOST_ITEM = 1f;
+    private final float CHANCE_FOR_SPEED_BOOST_ITEM = 0.2f;
 
     private final int NUMBER_OF_OBSTACLES = ObstacleManager.NUMBER_OF_OBSTACLES;
 
