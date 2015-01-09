@@ -36,6 +36,11 @@ public class Obstacle {
 
         shipHeight = ship.getHeight();
 
+        colour = setObstacleColour();
+
+        speedBoostItem = new SpeedBoostItem(context, colour, random.nextBoolean(), radius, locationX, locationY,
+                gameViewCanvasWidth, gameViewCanvasHeight);
+
         reset(ship);
 
     }
@@ -75,14 +80,11 @@ public class Obstacle {
 
             if (random.nextFloat() < CHANCE_FOR_SPEED_BOOST_ITEM) {
 
-                speedBoostItem = new SpeedBoostItem(context, colour, radius, locationX, locationY,
-                        gameViewCanvasWidth, gameViewCanvasHeight);
-
                 linkedWithSpeedBoost = true;
 
-            } else {
+                speedBoostItem.reset(colour, random.nextBoolean(), radius, locationX, locationY);
 
-                speedBoostItem = null;
+            } else {
 
                 linkedWithSpeedBoost = false;
 

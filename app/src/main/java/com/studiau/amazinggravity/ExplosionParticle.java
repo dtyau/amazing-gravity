@@ -78,11 +78,31 @@ public class ExplosionParticle {
 
     }
 
+    public void reset(String colour, int radius) {
+
+        this.colour = colour;
+
+        this.radius = radius;
+
+        angle = (float) Math.toRadians(random.nextInt(359));
+
+        speedX = (float) (Math.sin(angle) * random.nextFloat() * BASE_SPEEDX);
+
+        speedY = (float) (Math.cos(angle) * random.nextFloat() * BASE_SPEEDY);
+
+        speedZ = random.nextInt(2);
+
+        alpha = 255;
+
+        updateCounter = 0;
+
+    }
+
     public void update() {
 
         if (alpha >= ALPHA_FADE) {
 
-            locationX += speedX * gameViewCanvasHeight;
+            locationX += speedX * gameViewCanvasWidth;
 
             locationY += speedY * gameViewCanvasHeight;
 
@@ -133,6 +153,14 @@ public class ExplosionParticle {
             paint.setAlpha(255);
 
         }
+
+    }
+
+    public void setLocation(float locationX, float locationY) {
+
+        this.locationX = locationX;
+
+        this.locationY = locationY;
 
     }
 

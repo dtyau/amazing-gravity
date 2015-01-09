@@ -9,7 +9,6 @@ import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * @Author: Daniel Au.
@@ -17,21 +16,31 @@ import java.util.Random;
 
 public class SpeedBoostItem {
 
-    public SpeedBoostItem(Context context, String colour, float radius, float locationX, float locationY, float canvasWidth, float canvasHeight) {
-
-        this.colour = colour;
-
-        lightingColorFilter = new LightingColorFilter(Color.BLACK, Color.parseColor(this.colour));
-
-        this.canvasWidth = canvasWidth;
-
-        this.canvasHeight = canvasHeight;
-
-        random = new Random();
+    public SpeedBoostItem(Context context, String colour, boolean rightSide, float radius, float locationX, float locationY, float canvasWidth, float canvasHeight) {
 
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.speed_boost);
 
-        if(random.nextBoolean()) {
+        explosionParticles = new ArrayList<>();
+
+        while (explosionParticles.size() < AMOUNT_OF_EXPLOSION) {
+
+            for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) {
+
+                explosionParticles.add(new ExplosionParticle(colour, SPEED_BOOST_ITEM_EXPLOSION_RADIUS, locationX, locationY, canvasWidth, canvasHeight));
+
+            }
+
+        }
+
+        reset(colour, rightSide, radius, locationX, locationY);
+
+    }
+
+    public void reset(String colour, boolean rightSide, float radius, float locationX, float locationY) {
+
+        lightingColorFilter = new LightingColorFilter(Color.BLACK, Color.parseColor(colour));
+
+        if(rightSide) {
 
             this.locationX = locationX + (DISTANCE_FROM_OBSTACLE_MULTIPLIER * radius) - (bitmap.getWidth() / 2);
 
@@ -43,7 +52,11 @@ public class SpeedBoostItem {
 
         this.locationY = locationY - (bitmap.getHeight() / 2);
 
-        explosionParticles = new ArrayList<>();
+        for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) {
+
+            explosionParticles.get(i).reset(colour, SPEED_BOOST_ITEM_EXPLOSION_RADIUS);
+
+        }
 
         collided = false;
 
@@ -105,24 +118,32 @@ public class SpeedBoostItem {
 
         float shipAngle = (float) Math.toRadians(ship.getAngle());
 
-        // Rotate the circle's center points back (change point of reference)
-        float unrotatedLocationX = (float) (Math.cos(shipAngle) * (locationX - ship.getLocationX()) -
-                Math.sin(shipAngle) * (locationY - ship.getLocationY()) + ship.getLocationX());
+        float shipLocationX = ship.getLocationX();
 
-        float unrotatedLocationY = (float) (Math.sin(shipAngle) * (locationX - ship.getLocationX()) +
-                Math.cos(shipAngle) * (locationY - ship.getLocationY()) + ship.getLocationY());
+        float shipLocationY = ship.getLocationY();
+
+        float shipWidth = ship.getWidth();
+
+        float shipHeight = ship.getHeight();
+
+        // Rotate the circle's center points back (change point of reference)
+        float unrotatedLocationX = (float) (Math.cos(shipAngle) * (locationX - shipLocationX) -
+                Math.sin(shipAngle) * (locationY - shipLocationY) + shipLocationX);
+
+        float unrotatedLocationY = (float) (Math.sin(shipAngle) * (locationX - shipLocationX) +
+                Math.cos(shipAngle) * (locationY - shipLocationY) + shipLocationY);
 
         // Closest point in the rectangle to the center of circle rotated backwards (unrotated)
         float closestX, closestY;
 
         // Find the unrotated closest X point from center of circle rotated backwards (unrotated)
-        if (unrotatedLocationX < (ship.getLocationX() - (ship.getWidth() / 2))) {
+        if (unrotatedLocationX < (shipLocationX - (shipWidth / 2))) {
 
-            closestX = ship.getLocationX() - (ship.getWidth() / 2);
+            closestX = shipLocationX - (shipWidth / 2);
 
-        } else if (unrotatedLocationX > (ship.getLocationX() + (ship.getWidth() / 2))) {
+        } else if (unrotatedLocationX > (shipLocationX + (shipWidth / 2))) {
 
-            closestX = ship.getLocationX() + (ship.getWidth() / 2);
+            closestX = shipLocationX + (shipWidth / 2);
 
         } else {
 
@@ -131,13 +152,13 @@ public class SpeedBoostItem {
         }
 
         // Find the unrotated closest Y point from center of circle rotated backwards (unrotated)
-        if (unrotatedLocationY < (ship.getLocationY() - (ship.getHeight() / 2))) {
+        if (unrotatedLocationY < (shipLocationY - (shipHeight / 2))) {
 
-            closestY = ship.getLocationY() - (ship.getHeight() / 2);
+            closestY = shipLocationY - (shipHeight / 2);
 
-        } else if (unrotatedLocationY > (ship.getLocationY() + (ship.getHeight() / 2))) {
+        } else if (unrotatedLocationY > (shipLocationY + (shipHeight / 2))) {
 
-            closestY = ship.getLocationY() + (ship.getHeight() / 2);
+            closestY = shipLocationY + (shipHeight / 2);
 
         } else {
 
@@ -151,17 +172,13 @@ public class SpeedBoostItem {
 
             ship.incrementSpeedBoostCounter();
 
-            collided = true;
+            for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) {
 
-            while (explosionParticles.size() < AMOUNT_OF_EXPLOSION) {
-
-                for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) {
-
-                    explosionParticles.add(new ExplosionParticle(colour, SPEED_BOOST_ITEM_EXPLOSION_RADIUS, locationX, locationY, canvasWidth, canvasHeight));
-
-                }
+                explosionParticles.get(i).setLocation(locationX, locationY);
 
             }
+
+            collided = true;
 
         }
 
@@ -189,13 +206,9 @@ public class SpeedBoostItem {
 
     private LightingColorFilter lightingColorFilter;
 
-    private Random random;
-
     private boolean collided;
 
-    private String colour;
-
-    private float locationX, locationY, canvasWidth, canvasHeight;
+    private float locationX, locationY;
 
     private final int DISTANCE_FROM_OBSTACLE_MULTIPLIER = 2;
 
