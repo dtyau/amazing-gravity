@@ -4,7 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 /**
- * Author: Daniel Au
+ * @Author: Daniel Au
  */
 
 public class ScoreManager {

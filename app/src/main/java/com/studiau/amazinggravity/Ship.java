@@ -8,7 +8,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 
 /**
- * Author: Daniel Au
+ * @Author: Daniel Au
  */
 
 public class Ship {

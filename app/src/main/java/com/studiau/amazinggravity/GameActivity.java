@@ -6,7 +6,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 /**
- * Author: Daniel Au
+ * @Author: Daniel Au
  */
 
 public class GameActivity extends Activity {

@@ -1,13 +1,12 @@
 package com.studiau.amazinggravity;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 
 import java.util.Random;
 
 /**
- * Author: Daniel Au
+ * @Author: Daniel Au
  */
 
 public class ExhaustParticle {

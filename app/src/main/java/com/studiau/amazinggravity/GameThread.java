@@ -4,7 +4,7 @@ import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
 /**
- * Author: Daniel Au
+ * @Author: Daniel Au
  */
 
 public class GameThread extends Thread {

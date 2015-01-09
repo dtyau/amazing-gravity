@@ -3,13 +3,12 @@ package com.studiau.amazinggravity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.graphics.Paint;
 
 import java.util.Random;
 
 /**
- * Author: Daniel Au
+ * @Author: Daniel Au
  */
 
 public class Obstacle {
@@ -391,7 +390,7 @@ public class Obstacle {
 
     private final float MAX_HORIZONTAL_LOCATION_SHIFT = 0.3f;
 
-    private final float CHANCE_FOR_SPEED_BOOST_ITEM = 0.2f;
+    private final float CHANCE_FOR_SPEED_BOOST_ITEM = 1f;
 
     private final int NUMBER_OF_OBSTACLES = ObstacleManager.NUMBER_OF_OBSTACLES;
 

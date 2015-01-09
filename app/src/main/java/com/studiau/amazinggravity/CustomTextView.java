@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 /**
- * Author: Daniel Au
+ * @Author: Daniel Au
  */
 
 public class CustomTextView extends TextView {

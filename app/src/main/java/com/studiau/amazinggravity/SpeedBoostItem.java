@@ -3,6 +3,7 @@ package com.studiau.amazinggravity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LightingColorFilter;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 public class SpeedBoostItem {
 
     public SpeedBoostItem(Context context, String colour, boolean rightSide, float radius, float locationX, float locationY, float canvasWidth, float canvasHeight) {
+
+        this.colour = colour;
 
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.speed_boost);
 
@@ -37,6 +40,8 @@ public class SpeedBoostItem {
     }
 
     public void reset(String colour, boolean rightSide, float radius, float locationX, float locationY) {
+
+        this.colour = colour;
 
         lightingColorFilter = new LightingColorFilter(Color.BLACK, Color.parseColor(colour));
 
@@ -205,6 +210,8 @@ public class SpeedBoostItem {
     private Bitmap bitmap;
 
     private LightingColorFilter lightingColorFilter;
+
+    private String colour;
 
     private boolean collided;
 

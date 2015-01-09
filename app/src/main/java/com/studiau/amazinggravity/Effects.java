@@ -1,12 +1,10 @@
 package com.studiau.amazinggravity;
 
 import android.content.Context;
-import android.media.AudioManager;
-import android.media.SoundPool;
 import android.os.Vibrator;
 
 /**
- * Author: Daniel Au
+ * @Author: Daniel Au
  */
 
 public class Effects {

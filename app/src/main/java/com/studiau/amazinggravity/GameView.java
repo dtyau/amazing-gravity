@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Author: Daniel Au
+ * @Author: Daniel Au
  */
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
@@ -516,6 +516,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                         event.getY() < bitmap_rowOne + (bitmap_replay.getHeight() / 2)) {
 
                     actionsOnPress();
+
+                    System.gc();
 
                     reset(ship);
 

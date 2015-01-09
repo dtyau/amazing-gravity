@@ -1,15 +1,11 @@
 package com.studiau.amazinggravity;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageButton;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -21,7 +17,7 @@ import com.google.example.games.basegameutils.BaseGameUtils;
 import com.kskkbys.rate.RateThisApp;
 
 /**
- * Author: Daniel Au
+ * @Author: Daniel Au
  */
 
 public class MainActivity extends Activity implements
@@ -32,11 +28,6 @@ public class MainActivity extends Activity implements
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_main);
 
