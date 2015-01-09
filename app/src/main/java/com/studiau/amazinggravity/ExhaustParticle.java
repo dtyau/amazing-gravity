@@ -70,8 +70,8 @@ public class ExhaustParticle {
 
     private static final float SPEEDX_MODIFIER = 3;
 
-    private static final float BASE_SPEEDY = 0.005f;
+    private static final float BASE_SPEEDY = 0.003f;
 
-    private static final float MAX_ADDITIONAL_SPEEDY = 0.01f;
+    private static final float MAX_ADDITIONAL_SPEEDY = 0.007f;
 
 }

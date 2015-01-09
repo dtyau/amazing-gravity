@@ -377,7 +377,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             ship.draw(canvas, paint);
 
-            paint.setColor(Color.parseColor("#B0BEC5")); // For exhaust particles
+            if(ship.isBoosting()) {
+
+                paint.setColor(Color.parseColor("#2196F3")); // For boosting exhaust particles
+
+            } else {
+
+                paint.setColor(Color.parseColor("#B0BEC5")); // For exhaust particles
+
+            }
 
             for (int i = 0; i < AMOUNT_OF_EXHAUST; i++) {
 

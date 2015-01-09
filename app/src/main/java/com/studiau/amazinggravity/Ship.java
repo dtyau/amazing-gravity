@@ -197,6 +197,12 @@ public class Ship {
 
     }
 
+    public boolean isBoosting() {
+
+        return boosting;
+
+    }
+
     public float getBaseSpeedY() {
 
         return BASE_SPEEDY;
