@@ -96,7 +96,7 @@ public class ObstacleManager {
 
     // For particle interaction
 
-    public boolean checkCollisionForParticles(Ship ship, float particle_LocationX, float particle_LocationY) {
+    public boolean checkCollisionForParticles(Ship ship, float particleLocationX, float particleLocationY) {
 
         boolean collision = false;
 
@@ -104,11 +104,11 @@ public class ObstacleManager {
 
             if ((obstacle.getLocationY() + obstacle.getRadius()) > ship.getLocationY()) {
 
-                float distanceX = Math.abs(particle_LocationX - obstacle.getLocationX());
+                float distanceX = Math.abs(particleLocationX - obstacle.getLocationX());
 
-                float distanceY = Math.abs(particle_LocationY - obstacle.getLocationY());
+                float distanceY = Math.abs(particleLocationY - obstacle.getLocationY());
 
-                float distance = (float) Math.sqrt((distanceX * distanceX) + (distanceY* distanceY));
+                float distance = (float) Math.sqrt((distanceX * distanceX) + (distanceY * distanceY));
 
                 if (distance < obstacle.getRadius()) {
 

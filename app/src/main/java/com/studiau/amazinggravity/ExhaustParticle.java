@@ -25,15 +25,17 @@ public class ExhaustParticle {
 
     public void reset(Ship ship) {
 
-        radius = BASE_RADIUS + random.nextInt(MAX_ADDITIONAL_RADIUS);
+        float randomFloat = random.nextFloat();
+
+        radius = BASE_RADIUS + (randomFloat * MAX_ADDITIONAL_RADIUS);
 
         locationX = ship.getExhaustLocationX();
 
         locationY = ship.getExhaustLocationY();
 
-        speedX = ((random.nextFloat() - 0.5f) / 0.5f) * BASE_SPEEDX;
+        speedX = ((randomFloat - 0.5f) / 0.5f) * BASE_SPEEDX;
 
-        speedY = BASE_SPEEDY + (random.nextFloat() * MAX_ADDITIONAL_SPEEDY);
+        speedY = BASE_SPEEDY + (randomFloat * MAX_ADDITIONAL_SPEEDY);
 
     }
 

@@ -278,9 +278,11 @@ public class Ship {
 
     private int speedBoostCounter;
 
-    private float locationX, locationY, speedX, desiredRotation, rotation, speedBoost,
+    private float speedX, desiredRotation, rotation, speedBoost,
             speedBoostTrigger, bitmap_speedBoostLocationX,
             bitmap_speedBoostDefaultLocationY, bitmap_speedBoostLocationYIncrement;
+
+    public static float locationX, locationY;
 
     private final float BITMAP_SPEED_BOOST_DEFAULT_LOCATION_Y = 0.01f;
 

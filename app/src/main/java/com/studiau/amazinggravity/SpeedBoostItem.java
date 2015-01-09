@@ -3,7 +3,6 @@ package com.studiau.amazinggravity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LightingColorFilter;
@@ -17,9 +16,12 @@ import java.util.ArrayList;
 
 public class SpeedBoostItem {
 
-    public SpeedBoostItem(Context context, String colour, boolean rightSide, float radius, float locationX, float locationY, float canvasWidth, float canvasHeight) {
+    public SpeedBoostItem(Context context, String colour, boolean rightSide, float radius,
+                          float locationX, float locationY, float canvasWidth, float canvasHeight) {
 
-        this.colour = colour;
+        gameViewCanvasWidth = canvasWidth;
+
+        gameViewCanvasHeight = canvasHeight;
 
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.speed_boost);
 
@@ -40,8 +42,6 @@ public class SpeedBoostItem {
     }
 
     public void reset(String colour, boolean rightSide, float radius, float locationX, float locationY) {
-
-        this.colour = colour;
 
         lightingColorFilter = new LightingColorFilter(Color.BLACK, Color.parseColor(colour));
 
@@ -97,21 +97,28 @@ public class SpeedBoostItem {
 
     public void draw(Canvas canvas, Paint paint) {
 
-        paint.setMaskFilter(null);
+        if(((locationX + (bitmap.getWidth() / 2)) > 0) &&
+                ((locationX - (bitmap.getWidth() / 2)) < gameViewCanvasWidth) &&
+                ((locationY + (bitmap.getHeight() / 2)) > 0) &&
+                ((locationY - (bitmap.getHeight() / 2)) < gameViewCanvasHeight)) {
 
-        if(!collided) {
+            paint.setMaskFilter(null);
 
-            paint.setColorFilter(lightingColorFilter);
+            if (!collided) {
 
-            canvas.drawBitmap(bitmap, locationX, locationY, paint);
+                paint.setColorFilter(lightingColorFilter);
 
-            paint.setColorFilter(null);
+                canvas.drawBitmap(bitmap, locationX, locationY, paint);
 
-        } else {
+                paint.setColorFilter(null);
 
-            for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) { // For explosion
+            } else {
 
-                explosionParticles.get(i).draw(canvas, paint);
+                for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) { // For explosion
+
+                    explosionParticles.get(i).draw(canvas, paint);
+
+                }
 
             }
 
@@ -211,11 +218,9 @@ public class SpeedBoostItem {
 
     private LightingColorFilter lightingColorFilter;
 
-    private String colour;
-
     private boolean collided;
 
-    private float locationX, locationY;
+    private float locationX, locationY, gameViewCanvasWidth, gameViewCanvasHeight;
 
     private final int DISTANCE_FROM_OBSTACLE_MULTIPLIER = 2;
 

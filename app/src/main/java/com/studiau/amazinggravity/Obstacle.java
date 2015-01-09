@@ -15,8 +15,6 @@ public class Obstacle {
 
     public Obstacle(Context context, float gameViewCanvasWidth, float gameViewCanvasHeight, Ship ship) {
 
-        this.context = context;
-
         random = new Random();
 
         this.gameViewCanvasWidth = gameViewCanvasWidth;
@@ -50,13 +48,17 @@ public class Obstacle {
 
         radius = mass * RADIUS_TO_MASS_RATIO;
 
-        if (random.nextBoolean()) {
+        float randomFloat = random.nextFloat();
 
-            locationX = ((random.nextFloat() * 0.3f) + 0.1f) * gameViewCanvasWidth;
+        boolean randomBoolean = random.nextBoolean();
+
+        if (randomBoolean) {
+
+            locationX = ((randomFloat * 0.3f) + 0.1f) * gameViewCanvasWidth;
 
         } else {
 
-            locationX = ((random.nextFloat() * 0.3f) + 0.6f) * gameViewCanvasWidth;
+            locationX = ((randomFloat * 0.3f) + 0.6f) * gameViewCanvasWidth;
 
         }
 
@@ -77,11 +79,11 @@ public class Obstacle {
 
         if(ScoreManager.getScore() > 1) {
 
-            if (random.nextFloat() < CHANCE_FOR_SPEED_BOOST_ITEM) {
+            if (randomFloat < CHANCE_FOR_SPEED_BOOST_ITEM) {
 
                 linkedWithSpeedBoost = true;
 
-                speedBoostItem.reset(colour, random.nextBoolean(), radius, locationX, locationY);
+                speedBoostItem.reset(colour, randomBoolean, radius, locationX, locationY);
 
             } else {
 
@@ -117,15 +119,20 @@ public class Obstacle {
 
         updateLocationY();
 
-        if (checkCollision(ship)) {
+        if(((locationY + radius) > (shipLocationY - shipHeight)) &&
+                ((locationY - radius) < (shipLocationY + shipHeight))) {
 
-            GameView.setGameState(GameView.GameState.GAMEOVER);
+            if (checkCollision(ship)) {
 
-        }
+                GameView.setGameState(GameView.GameState.GAMEOVER);
 
-        if (linkedWithSpeedBoost && !speedBoostItem.isCollided()) {
+            }
 
-            speedBoostItem.checkCollision(ship);
+            if (linkedWithSpeedBoost && !speedBoostItem.isCollided()) {
+
+                speedBoostItem.checkCollision(ship);
+
+            }
 
         }
 
@@ -133,9 +140,14 @@ public class Obstacle {
 
     public void draw(Canvas canvas, Paint paint) {
 
-        paint.setColor(Color.parseColor(colour));
+        if(((locationX + radius) > 0) && ((locationX - radius) < gameViewCanvasWidth) &&
+                ((locationY + radius) > 0) && ((locationY - radius) < gameViewCanvasHeight)) {
 
-        canvas.drawCircle(locationX, locationY, radius, paint);
+            paint.setColor(Color.parseColor(colour));
+
+            canvas.drawCircle(locationX, locationY, radius, paint);
+
+        }
 
         if(linkedWithSpeedBoost) {
 
@@ -357,8 +369,6 @@ public class Obstacle {
         return locationY;
 
     }
-
-    private Context context;
 
     private Random random;
 

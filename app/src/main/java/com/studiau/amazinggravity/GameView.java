@@ -472,6 +472,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
+        float eventX = event.getX();
+
+        float eventY = event.getY();
+
         int actionType = event.getActionMasked();
 
         if (gameState == GameState.RUNNING) {
@@ -486,13 +490,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                     }
 
-                    ship.handleActionDownAndMove(event.getX());
+                    ship.handleActionDownAndMove(eventX);
 
                     return true;
 
                 case (MotionEvent.ACTION_MOVE):
 
-                    ship.handleActionDownAndMove(event.getX());
+                    ship.handleActionDownAndMove(eventX);
 
                     return true;
 
@@ -518,21 +522,19 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             if (actionType == MotionEvent.ACTION_DOWN) {
 
-                if ((event.getX() > (bitmap_replayLocationX - (bitmap_replay.getWidth() / 2))) &&
-                        event.getX() < (bitmap_replayLocationX + (bitmap_replay.getWidth() / 2)) &&
-                        event.getY() > bitmap_rowOne - (bitmap_replay.getHeight() / 2) &&
-                        event.getY() < bitmap_rowOne + (bitmap_replay.getHeight() / 2)) {
+                if ((eventX > (bitmap_replayLocationX - (bitmap_replay.getWidth() / 2))) &&
+                        eventX < (bitmap_replayLocationX + (bitmap_replay.getWidth() / 2)) &&
+                        eventY > bitmap_rowOne - (bitmap_replay.getHeight() / 2) &&
+                        eventY < bitmap_rowOne + (bitmap_replay.getHeight() / 2)) {
 
                     actionsOnPress();
 
-                    System.gc();
-
                     reset(ship);
 
-                } else if ((event.getX() > (bitmap_leaderboardLocationX - (bitmap_leaderboard.getWidth() / 2))) &&
-                        event.getX() < (bitmap_leaderboardLocationX + (bitmap_leaderboard.getWidth() / 2)) &&
-                        event.getY() > bitmap_rowOne - (bitmap_leaderboard.getHeight() / 2) &&
-                        event.getY() < bitmap_rowOne + (bitmap_leaderboard.getHeight() / 2)) {
+                } else if ((eventX > (bitmap_leaderboardLocationX - (bitmap_leaderboard.getWidth() / 2))) &&
+                        eventX < (bitmap_leaderboardLocationX + (bitmap_leaderboard.getWidth() / 2)) &&
+                        eventY > bitmap_rowOne - (bitmap_leaderboard.getHeight() / 2) &&
+                        eventY < bitmap_rowOne + (bitmap_leaderboard.getHeight() / 2)) {
 
                     if (MainActivity.isGooglePlaySignedIn()) {
 
@@ -548,28 +550,28 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                     }
 
-                } else if ((event.getX() > (bitmap_shareLocationX - (bitmap_share.getWidth() / 2))) &&
-                        event.getX() < (bitmap_shareLocationX + (bitmap_share.getWidth() / 2)) &&
-                        event.getY() > bitmap_rowTwo - (bitmap_share.getHeight() / 2) &&
-                        event.getY() < bitmap_rowTwo + (bitmap_share.getHeight() / 2)) {
+                } else if ((eventX > (bitmap_shareLocationX - (bitmap_share.getWidth() / 2))) &&
+                        eventX < (bitmap_shareLocationX + (bitmap_share.getWidth() / 2)) &&
+                        eventY > bitmap_rowTwo - (bitmap_share.getHeight() / 2) &&
+                        eventY < bitmap_rowTwo + (bitmap_share.getHeight() / 2)) {
 
                     actionsOnPress();
 
                     share();
 
-                } else if ((event.getX() > (bitmap_twitterLocationX - (bitmap_twitter.getWidth() / 2))) &&
-                        event.getX() < (bitmap_twitterLocationX + (bitmap_twitter.getWidth() / 2)) &&
-                        event.getY() > bitmap_rowTwo - (bitmap_twitter.getHeight() / 2) &&
-                        event.getY() < bitmap_rowTwo + (bitmap_twitter.getHeight() / 2)) {
+                } else if ((eventX > (bitmap_twitterLocationX - (bitmap_twitter.getWidth() / 2))) &&
+                        eventX < (bitmap_twitterLocationX + (bitmap_twitter.getWidth() / 2)) &&
+                        eventY > bitmap_rowTwo - (bitmap_twitter.getHeight() / 2) &&
+                        eventY < bitmap_rowTwo + (bitmap_twitter.getHeight() / 2)) {
 
                     actionsOnPress();
 
                     tweet();
 
-                } else if ((event.getX() > (bitmap_rateLocationX - (bitmap_rate.getWidth() / 2))) &&
-                        event.getX() < (bitmap_rateLocationX + (bitmap_rate.getWidth() / 2)) &&
-                        event.getY() > bitmap_rowTwo - (bitmap_rate.getHeight() / 2) &&
-                        event.getY() < bitmap_rowTwo + (bitmap_rate.getHeight() / 2)) {
+                } else if ((eventX > (bitmap_rateLocationX - (bitmap_rate.getWidth() / 2))) &&
+                        eventX < (bitmap_rateLocationX + (bitmap_rate.getWidth() / 2)) &&
+                        eventY > bitmap_rowTwo - (bitmap_rate.getHeight() / 2) &&
+                        eventY < bitmap_rowTwo + (bitmap_rate.getHeight() / 2)) {
 
                     actionsOnPress();
 
