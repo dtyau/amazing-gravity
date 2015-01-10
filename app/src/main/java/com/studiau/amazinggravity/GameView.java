@@ -84,7 +84,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         scoreManager = new ScoreManager(canvasWidth, canvasHeight, getBestScoreFromPreferences());
 
-        ship = new Ship(getContext(), canvasWidth, canvasHeight, controlInverted);
+        ship = new Ship(getContext(), controlInverted);
 
         ship.setSpeedBoostCounter(1);
 
@@ -108,7 +108,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) {
 
-                explosionParticles.add(new ExplosionParticle(ship, canvasWidth, canvasHeight));
+                explosionParticles.add(new ExplosionParticle(canvasWidth, canvasHeight));
 
             }
 
@@ -611,7 +611,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) {
 
-            explosionParticles.get(i).reset(ship);
+            explosionParticles.get(i).reset();
 
         }
 

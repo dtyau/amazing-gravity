@@ -54,9 +54,9 @@ public class SpeedBoostItem {
 
         this.locationY = locationY - (bitmap.getHeight() * 0.5f);
 
-        for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) {
+        for (ExplosionParticle explosionParticle : explosionParticles) {
 
-            explosionParticles.get(i).reset(colour, SPEED_BOOST_ITEM_EXPLOSION_RADIUS);
+            explosionParticle.reset(colour, SPEED_BOOST_ITEM_EXPLOSION_RADIUS);
 
         }
 
@@ -72,9 +72,9 @@ public class SpeedBoostItem {
 
         } else {
 
-            for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) {
+            for (ExplosionParticle explosionParticle : explosionParticles) {
 
-                explosionParticles.get(i).update();
+                explosionParticle.update();
 
             }
 
@@ -111,9 +111,9 @@ public class SpeedBoostItem {
 
             } else {
 
-                for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) { // For explosion
+                for (ExplosionParticle explosionParticle : explosionParticles) {
 
-                    explosionParticles.get(i).draw(canvas, paint);
+                    explosionParticle.draw(canvas, paint);
 
                 }
 
@@ -125,37 +125,29 @@ public class SpeedBoostItem {
 
     public void checkCollision(Ship ship) {
 
-        float shipLocationX = ship.getLocationX();
-
-        float shipLocationY = ship.getLocationY();
-
-        float shipWidth = ship.getWidth();
-
-        float shipHeight = ship.getHeight();
-
-        if (((locationX + bitmap.getWidth()) > (shipLocationX - shipWidth)) &&
-                ((locationX - bitmap.getWidth()) < (shipLocationX + shipWidth))) {
+        if (((locationX + bitmap.getWidth()) > (Ship.locationX - Ship.width)) &&
+                ((locationX - bitmap.getWidth()) < (Ship.locationX + Ship.width))) {
 
             float shipAngle = (float) Math.toRadians(ship.getAngle());
 
             // Rotate the circle's center points back (change point of reference)
-            float unrotatedLocationX = (float) (Math.cos(shipAngle) * (locationX - shipLocationX) -
-                    Math.sin(shipAngle) * (locationY - shipLocationY) + shipLocationX);
+            float unrotatedLocationX = (float) (Math.cos(shipAngle) * (locationX - Ship.locationX) -
+                    Math.sin(shipAngle) * (locationY - Ship.locationY) + Ship.locationX);
 
-            float unrotatedLocationY = (float) (Math.sin(shipAngle) * (locationX - shipLocationX) +
-                    Math.cos(shipAngle) * (locationY - shipLocationY) + shipLocationY);
+            float unrotatedLocationY = (float) (Math.sin(shipAngle) * (locationX - Ship.locationX) +
+                    Math.cos(shipAngle) * (locationY - Ship.locationY) + Ship.locationY);
 
             // Closest point in the rectangle to the center of circle rotated backwards (unrotated)
             float closestX, closestY;
 
             // Find the unrotated closest X point from center of circle rotated backwards (unrotated)
-            if (unrotatedLocationX < (shipLocationX - (shipWidth * 0.5f))) {
+            if (unrotatedLocationX < Ship.leftEdge) {
 
-                closestX = shipLocationX - (shipWidth * 0.5f);
+                closestX = Ship.leftEdge;
 
-            } else if (unrotatedLocationX > (shipLocationX + (shipWidth * 0.5f))) {
+            } else if (unrotatedLocationX > Ship.rightEdge) {
 
-                closestX = shipLocationX + (shipWidth * 0.5f);
+                closestX = Ship.rightEdge;
 
             } else {
 
@@ -164,13 +156,13 @@ public class SpeedBoostItem {
             }
 
             // Find the unrotated closest Y point from center of circle rotated backwards (unrotated)
-            if (unrotatedLocationY < (shipLocationY - (shipHeight * 0.5f))) {
+            if (unrotatedLocationY < Ship.topEdge) {
 
-                closestY = shipLocationY - (shipHeight * 0.5f);
+                closestY = Ship.topEdge;
 
-            } else if (unrotatedLocationY > (shipLocationY + (shipHeight * 0.5f))) {
+            } else if (unrotatedLocationY > Ship.bottomEdge) {
 
-                closestY = shipLocationY + (shipHeight * 0.5f);
+                closestY = Ship.bottomEdge;
 
             } else {
 
@@ -184,9 +176,9 @@ public class SpeedBoostItem {
 
                 ship.incrementSpeedBoostCounter();
 
-                for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) {
+                for (ExplosionParticle explosionParticle : explosionParticles) {
 
-                    explosionParticles.get(i).setLocation(locationX, locationY);
+                    explosionParticle.setLocation(locationX, locationY);
 
                 }
 

@@ -21,14 +21,6 @@ public class Obstacle {
 
         MAX_RADIUS = (BASE_MASS + MAX_ADDITIONAL_MASS) * RADIUS_TO_MASS_RATIO;
 
-        shipLocationX = ship.getLocationX();
-
-        shipLocationY = ship.getLocationY();
-
-        shipWidth = ship.getWidth();
-
-        shipHeight = ship.getHeight();
-
         colour = setObstacleColour();
 
         speedBoostItem = new SpeedBoostItem(context, colour, random.nextBoolean(), radius, locationX, locationY);
@@ -93,7 +85,7 @@ public class Obstacle {
 
     public void update(Ship ship, float collectiveSpeedX) {
 
-        if ((locationY - radius) > (shipLocationY + ship.getHeight())) {
+        if ((locationY - radius) > Ship.bottomEdge) {
 
             if (!scored) {
 
@@ -115,11 +107,11 @@ public class Obstacle {
 
         updateLocationY();
 
-        if(((locationY + radius) > (shipLocationY - shipHeight)) &&
-                ((locationY - radius) < (shipLocationY + shipHeight))) {
+        if(((locationY + radius) > (Ship.locationY - Ship.height)) &&
+                ((locationY - radius) < (Ship.locationY + Ship.height))) {
 
-            if(((locationX + radius) > (shipLocationX - shipWidth)) &&
-                    ((locationX - radius) < (shipLocationX + shipWidth))) {
+            if(((locationX + radius) > (Ship.locationX - Ship.width)) &&
+                    ((locationX - radius) < (Ship.locationX + Ship.width))) {
 
                 if (checkCollision(ship)) {
 
@@ -163,23 +155,23 @@ public class Obstacle {
         float shipAngle = (float) Math.toRadians(ship.getAngle());
 
         // Rotate the circle's center points back (change point of reference)
-        float unrotatedLocationX = (float) (Math.cos(shipAngle) * (locationX - shipLocationX) -
-                Math.sin(shipAngle) * (locationY - shipLocationY) + shipLocationX);
+        float unrotatedLocationX = (float) (Math.cos(shipAngle) * (locationX - Ship.locationX) -
+                Math.sin(shipAngle) * (locationY - Ship.locationY) + Ship.locationX);
 
-        float unrotatedLocationY = (float) (Math.sin(shipAngle) * (locationX - shipLocationX) +
-                Math.cos(shipAngle) * (locationY - shipLocationY) + shipLocationY);
+        float unrotatedLocationY = (float) (Math.sin(shipAngle) * (locationX - Ship.locationX) +
+                Math.cos(shipAngle) * (locationY - Ship.locationY) + Ship.locationY);
 
         // Closest point in the rectangle to the center of circle rotated backwards (unrotated)
         float closestX, closestY;
 
         // Find the unrotated closest X point from center of circle rotated backwards (unrotated)
-        if (unrotatedLocationX < (shipLocationX - (shipWidth * 0.5f))) {
+        if (unrotatedLocationX < Ship.leftEdge) {
 
-            closestX = shipLocationX - (shipWidth * 0.5f);
+            closestX = Ship.leftEdge;
 
-        } else if (unrotatedLocationX > (shipLocationX + (shipWidth * 0.5f))) {
+        } else if (unrotatedLocationX > Ship.rightEdge) {
 
-            closestX = shipLocationX + (shipWidth * 0.5f);
+            closestX = Ship.rightEdge;
 
         } else {
 
@@ -188,13 +180,13 @@ public class Obstacle {
         }
 
         // Find the unrotated closest Y point from center of circle rotated backwards (unrotated)
-        if (unrotatedLocationY < (shipLocationY - (shipHeight * 0.5f))) {
+        if (unrotatedLocationY < Ship.topEdge) {
 
-            closestY = shipLocationY - (shipHeight * 0.5f);
+            closestY = Ship.topEdge;
 
-        } else if (unrotatedLocationY > (shipLocationY + (shipHeight * 0.5f))) {
+        } else if (unrotatedLocationY > Ship.bottomEdge) {
 
-            closestY = shipLocationY + (shipHeight * 0.5f);
+            closestY = Ship.bottomEdge;
 
         } else {
 
@@ -224,7 +216,7 @@ public class Obstacle {
         if ((locationY + radius) > 0) {
 
             float verticalDampening = (float) ((Math.pow(
-                    ((Math.abs(locationY - shipLocationY) / shipLocationY) - 1), 2) *
+                    ((Math.abs(locationY - Ship.locationY) / Ship.locationY) - 1), 2) *
                     0.9) + 0.1);
 
             speedX += (collectiveSpeedX * verticalDampening);
@@ -310,13 +302,13 @@ public class Obstacle {
                 ((locationX + radius) > 0) &&
                 ((locationX - radius) < GameView.canvasWidth)) {
 
-            float distanceX = Math.abs(locationX - shipLocationX) /
-                    shipLocationX;
+            float distanceX = Math.abs(locationX - Ship.locationX) /
+                    Ship.locationX;
 
             float newSpeedX = (float) ((1 - (0.9f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) *
                     (((-1 * (Math.pow(distanceX, 4))) + 1) * 0.0005f));
 
-            if (locationX < shipLocationX) {
+            if (locationX < Ship.locationX) {
 
                 oldSpeedX = newSpeedX;
 
@@ -332,8 +324,8 @@ public class Obstacle {
 
         } else {
 
-            float distanceY = (Math.abs(locationY - shipLocationY) /
-                    ((GameView.canvasHeight * ObstacleManager.OBSTACLE_KILL_HEIGHT_RATIO) - shipLocationY));
+            float distanceY = (Math.abs(locationY - Ship.locationY) /
+                    ((GameView.canvasHeight * ObstacleManager.OBSTACLE_KILL_HEIGHT_RATIO) - Ship.locationY));
 
             if (distanceY <= 1) {
 
@@ -375,8 +367,7 @@ public class Obstacle {
 
     private SpeedBoostItem speedBoostItem;
 
-    private float shipLocationX, shipLocationY, shipWidth, shipHeight,
-            mass, radius, locationX, locationY, speedX, speedY, oldSpeedX;
+    private float mass, radius, locationX, locationY, speedX, speedY, oldSpeedX;
 
     private boolean scored, linkedWithSpeedBoost;
 

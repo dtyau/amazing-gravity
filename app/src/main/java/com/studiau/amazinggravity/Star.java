@@ -64,7 +64,7 @@ public class Star {
 
         }
 
-        locationY += (speedY + ship.getBaseSpeedY()) * gameViewCanvasHeight;
+        locationY += (speedY + Ship.BASE_SPEEDY) * gameViewCanvasHeight;
 
     }
 

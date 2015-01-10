@@ -13,29 +13,39 @@ import android.graphics.Paint;
 
 public class Ship {
 
-    public Ship(Context context, float canvasWidth, float canvasHeight, boolean controlInverted) {
+    public Ship(Context context, boolean controlInverted) {
 
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ship);
 
         bitmap_speedBoost = BitmapFactory.decodeResource(context.getResources(), R.drawable.speed_boost);
 
-        bitmap_speedBoostLocationX = 0.03f * canvasWidth;
+        bitmap_speedBoostLocationX = 0.03f * GameView.canvasWidth;
 
-        bitmap_speedBoostDefaultLocationY = BITMAP_SPEED_BOOST_DEFAULT_LOCATION_Y * canvasHeight;
+        bitmap_speedBoostDefaultLocationY = BITMAP_SPEED_BOOST_DEFAULT_LOCATION_Y * GameView.canvasHeight;
 
-        bitmap_speedBoostLocationYIncrement = BITMAP_SPEED_BOOST_LOCATION_Y_INCREMENT * canvasHeight;
+        bitmap_speedBoostLocationYIncrement = BITMAP_SPEED_BOOST_LOCATION_Y_INCREMENT * GameView.canvasHeight;
 
         matrix = new Matrix();
 
-        matrix.postTranslate(-bitmap.getWidth() / 2, -bitmap.getHeight() / 2);
+        matrix.postTranslate(-bitmap.getWidth() * 0.5f, -bitmap.getHeight() * 0.5f);
 
         matrix.postTranslate(locationX, locationY);
 
-        locationX = canvasWidth * BASE_LOCATIONX;
+        locationX = GameView.canvasWidth * BASE_LOCATIONX;
 
-        locationY = canvasHeight * BASE_LOCATIONY;
+        locationY = GameView.canvasHeight * BASE_LOCATIONY;
 
-        speedBoostTrigger = canvasHeight * SPEED_BOOST_TRIGGER;
+        width = bitmap.getWidth();
+
+        height = bitmap.getHeight();
+
+        leftEdge = locationX - (width * 0.5f);
+
+        rightEdge = locationX + (width * 0.5f);
+
+        topEdge = locationY - (height * 0.5f);
+
+        bottomEdge = locationY + (height * 0.5f);
 
         this.controlInverted = controlInverted;
 
@@ -73,7 +83,7 @@ public class Ship {
 
         matrix.reset();
 
-        matrix.postTranslate(-bitmap.getWidth() / 2, -bitmap.getHeight() / 2);
+        matrix.postTranslate(-bitmap.getWidth() * 0.5f, -bitmap.getHeight() * 0.5f);
 
         matrix.postRotate(rotation);
 
@@ -203,12 +213,6 @@ public class Ship {
 
     }
 
-    public float getBaseSpeedY() {
-
-        return BASE_SPEEDY;
-
-    }
-
     public float getExhaustLocationX() {
 
         return locationX - ((rotation / MAX_ROTATION) * (bitmap.getWidth() / 2));
@@ -219,18 +223,6 @@ public class Ship {
 
         return locationY +
                 ((1 - Math.abs(rotation / MAX_ROTATION)) * (bitmap.getHeight() / 2));
-
-    }
-
-    public float getLocationX() {
-
-        return locationX;
-
-    }
-
-    public float getLocationY() {
-
-        return locationY;
 
     }
 
@@ -258,18 +250,6 @@ public class Ship {
 
     }
 
-    public float getWidth() {
-
-        return bitmap.getWidth();
-
-    }
-
-    public float getHeight() {
-
-        return bitmap.getHeight();
-
-    }
-
     private Bitmap bitmap, bitmap_speedBoost;
 
     private Matrix matrix;
@@ -278,37 +258,36 @@ public class Ship {
 
     private int speedBoostCounter;
 
-    private float speedX, desiredRotation, rotation, speedBoost,
-            speedBoostTrigger, bitmap_speedBoostLocationX,
+    private float speedX, desiredRotation, rotation, speedBoost, bitmap_speedBoostLocationX,
             bitmap_speedBoostDefaultLocationY, bitmap_speedBoostLocationYIncrement;
 
-    public static float locationX, locationY;
+    public static float locationX, locationY, leftEdge, rightEdge, topEdge, bottomEdge, width, height;
 
-    private final float BITMAP_SPEED_BOOST_DEFAULT_LOCATION_Y = 0.01f;
+    private static final float BITMAP_SPEED_BOOST_DEFAULT_LOCATION_Y = 0.01f;
 
-    private final float BITMAP_SPEED_BOOST_LOCATION_Y_INCREMENT = 0.05f;
+    private static final float BITMAP_SPEED_BOOST_LOCATION_Y_INCREMENT = 0.05f;
 
-    private final float SPEED_BOOST_TRIGGER = 0.10f;
+    private static final float SPEED_BOOST_TRIGGER = 0.10f;
 
-    private final float INITIAL_SPEED_BOOST = 3;
+    private static final float INITIAL_SPEED_BOOST = 3;
 
-    private final float SPEED_BOOST_DECREMENT = 0.1f;
+    private static final float SPEED_BOOST_DECREMENT = 0.1f;
 
-    private final float BASE_SPEEDX = 0f;
+    private static final float BASE_SPEEDX = 0f;
 
-    private final float MAX_ADDITIONAL_SPEEDX = 0.0044f;
+    private static final float MAX_ADDITIONAL_SPEEDX = 0.0044f;
 
-    private final float BASE_SPEEDY = 0.0001f;
+    public static final float BASE_SPEEDY = 0.0001f;
 
-    private final float BASE_LOCATIONX = 0.5f;
+    private static final float BASE_LOCATIONX = 0.5f;
 
-    private final float BASE_LOCATIONY = 0.75f;
+    private static final float BASE_LOCATIONY = 0.75f;
 
-    private final float MAX_ROTATION = 60;
+    private static final float MAX_ROTATION = 60;
 
-    private final float ROTATION_SPEED = 10;
+    private static final float ROTATION_SPEED = 10;
 
-    private final float MAX_HORIZONTAL_TOUCH = 0.6f;
+    private static final float MAX_HORIZONTAL_TOUCH = 0.6f;
 
     private final static String TAG = Ship.class.getSimpleName();
 

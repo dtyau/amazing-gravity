@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class ExplosionParticle {
 
-    public ExplosionParticle(Ship ship, float canvasWidth, float canvasHeight) {
+    public ExplosionParticle(float canvasWidth, float canvasHeight) {
 
         random = new Random();
 
@@ -20,7 +20,7 @@ public class ExplosionParticle {
 
         gameViewCanvasHeight = canvasHeight;
 
-        reset(ship);
+        reset();
 
     }
 
@@ -54,13 +54,13 @@ public class ExplosionParticle {
 
     }
 
-    public void reset(Ship ship) {
+    public void reset() {
 
         radius = BASE_RADIUS + random.nextInt(MAX_ADDITIONAL_RADIUS);
 
-        locationX = ship.getLocationX();
+        locationX = Ship.locationX;
 
-        locationY = ship.getLocationY();
+        locationY = Ship.locationY;
 
         angle = (float) Math.toRadians(random.nextInt(359));
 
