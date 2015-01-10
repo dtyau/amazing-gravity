@@ -88,21 +88,26 @@ public class ObstacleManager {
 
     public boolean checkCollisionForParticles(float particleLocationX, float particleLocationY) {
 
-        boolean collision = false;
-
         for (Obstacle obstacle: obstacles) {
 
-            if ((obstacle.getLocationY() + obstacle.getRadius()) > Ship.locationY) {
+            float radius = obstacle.getRadius();
 
-                float distanceX = Math.abs(particleLocationX - obstacle.getLocationX());
+            float locationX = obstacle.getLocationX();
 
-                float distanceY = Math.abs(particleLocationY - obstacle.getLocationY());
+            float locationY = obstacle.getLocationY();
+
+            if (((locationY + radius) > Ship.locationY) &&
+                    ((locationX + radius) > 0) && ((locationX - radius) < GameView.canvasWidth)) {
+
+                float distanceX = Math.abs(particleLocationX - locationX);
+
+                float distanceY = Math.abs(particleLocationY - locationY);
 
                 float distance = (float) Math.sqrt((distanceX * distanceX) + (distanceY * distanceY));
 
-                if (distance < obstacle.getRadius()) {
+                if (distance < radius) {
 
-                    collision = true;
+                    return true;
 
                 }
 
@@ -110,7 +115,7 @@ public class ObstacleManager {
 
         }
 
-        return collision;
+        return false;
 
     }
 
