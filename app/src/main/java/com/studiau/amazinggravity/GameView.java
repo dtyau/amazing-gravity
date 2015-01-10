@@ -88,7 +88,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         ship.setSpeedBoostCounter(1);
 
-        obstacleManager = new ObstacleManager(getContext(), canvasWidth, canvasHeight, ship);
+        obstacleManager = new ObstacleManager(getContext(), ship);
 
         exhaustParticles = new ArrayList<>();
 
@@ -934,7 +934,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             bitmap_twitterLocationX, bitmap_leaderboardLocationX, bitmap_shareLocationX,
             bitmap_rateLocationX, experienceForDraw;
 
-    private int canvasWidth, canvasHeight, tutorialAlpha, level, experienceInLevel, experienceForNextLevel;
+    private int tutorialAlpha, level, experienceInLevel, experienceForNextLevel;
+
+    public static int canvasWidth, canvasHeight;
 
     private static GameState gameState;
 

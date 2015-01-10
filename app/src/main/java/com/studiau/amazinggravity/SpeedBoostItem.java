@@ -17,11 +17,7 @@ import java.util.ArrayList;
 public class SpeedBoostItem {
 
     public SpeedBoostItem(Context context, String colour, boolean rightSide, float radius,
-                          float locationX, float locationY, float canvasWidth, float canvasHeight) {
-
-        gameViewCanvasWidth = canvasWidth;
-
-        gameViewCanvasHeight = canvasHeight;
+                          float locationX, float locationY) {
 
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.speed_boost);
 
@@ -31,7 +27,8 @@ public class SpeedBoostItem {
 
             for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) {
 
-                explosionParticles.add(new ExplosionParticle(colour, SPEED_BOOST_ITEM_EXPLOSION_RADIUS, locationX, locationY, canvasWidth, canvasHeight));
+                explosionParticles.add(new ExplosionParticle(colour, SPEED_BOOST_ITEM_EXPLOSION_RADIUS,
+                        locationX, locationY, GameView.canvasWidth, GameView.canvasHeight));
 
             }
 
@@ -47,15 +44,15 @@ public class SpeedBoostItem {
 
         if (rightSide) {
 
-            this.locationX = locationX + (DISTANCE_FROM_OBSTACLE_MULTIPLIER * radius) - (bitmap.getWidth() / 2);
+            this.locationX = locationX + (DISTANCE_FROM_OBSTACLE_MULTIPLIER * radius) - (bitmap.getWidth() * 0.5f);
 
         } else {
 
-            this.locationX = locationX - (DISTANCE_FROM_OBSTACLE_MULTIPLIER * radius) - (bitmap.getWidth() / 2);
+            this.locationX = locationX - (DISTANCE_FROM_OBSTACLE_MULTIPLIER * radius) - (bitmap.getWidth() * 0.5f);
 
         }
 
-        this.locationY = locationY - (bitmap.getHeight() / 2);
+        this.locationY = locationY - (bitmap.getHeight() * 0.5f);
 
         for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) {
 
@@ -97,10 +94,10 @@ public class SpeedBoostItem {
 
     public void draw(Canvas canvas, Paint paint) {
 
-        if (((locationX + (bitmap.getWidth() / 2)) > 0) &&
-                ((locationX - (bitmap.getWidth() / 2)) < gameViewCanvasWidth) &&
-                ((locationY + (bitmap.getHeight() / 2)) > 0) &&
-                ((locationY - (bitmap.getHeight() / 2)) < gameViewCanvasHeight)) {
+        if (((locationX + (bitmap.getWidth() * 0.5f)) > 0) &&
+                ((locationX - (bitmap.getWidth() * 0.5f)) < GameView.canvasWidth) &&
+                ((locationY + (bitmap.getHeight() * 0.5f)) > 0) &&
+                ((locationY - (bitmap.getHeight() * 0.5f)) < GameView.canvasHeight)) {
 
             paint.setMaskFilter(null);
 
@@ -152,13 +149,13 @@ public class SpeedBoostItem {
             float closestX, closestY;
 
             // Find the unrotated closest X point from center of circle rotated backwards (unrotated)
-            if (unrotatedLocationX < (shipLocationX - (shipWidth / 2))) {
+            if (unrotatedLocationX < (shipLocationX - (shipWidth * 0.5f))) {
 
-                closestX = shipLocationX - (shipWidth / 2);
+                closestX = shipLocationX - (shipWidth * 0.5f);
 
-            } else if (unrotatedLocationX > (shipLocationX + (shipWidth / 2))) {
+            } else if (unrotatedLocationX > (shipLocationX + (shipWidth * 0.5f))) {
 
-                closestX = shipLocationX + (shipWidth / 2);
+                closestX = shipLocationX + (shipWidth * 0.5f);
 
             } else {
 
@@ -167,13 +164,13 @@ public class SpeedBoostItem {
             }
 
             // Find the unrotated closest Y point from center of circle rotated backwards (unrotated)
-            if (unrotatedLocationY < (shipLocationY - (shipHeight / 2))) {
+            if (unrotatedLocationY < (shipLocationY - (shipHeight * 0.5f))) {
 
-                closestY = shipLocationY - (shipHeight / 2);
+                closestY = shipLocationY - (shipHeight * 0.5f);
 
-            } else if (unrotatedLocationY > (shipLocationY + (shipHeight / 2))) {
+            } else if (unrotatedLocationY > (shipLocationY + (shipHeight * 0.5f))) {
 
-                closestY = shipLocationY + (shipHeight / 2);
+                closestY = shipLocationY + (shipHeight * 0.5f);
 
             } else {
 
@@ -225,12 +222,12 @@ public class SpeedBoostItem {
 
     private boolean collided;
 
-    private float locationX, locationY, gameViewCanvasWidth, gameViewCanvasHeight;
+    private float locationX, locationY;
 
-    private final int DISTANCE_FROM_OBSTACLE_MULTIPLIER = 2;
+    private static final int DISTANCE_FROM_OBSTACLE_MULTIPLIER = 2;
 
-    private final int AMOUNT_OF_EXPLOSION = 30;
+    private static final int AMOUNT_OF_EXPLOSION = 30;
 
-    private final int SPEED_BOOST_ITEM_EXPLOSION_RADIUS = 4;
+    private static final int SPEED_BOOST_ITEM_EXPLOSION_RADIUS = 4;
 
 }

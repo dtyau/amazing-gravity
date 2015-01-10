@@ -14,15 +14,11 @@ import java.util.ArrayList;
 
 public class ObstacleManager {
 
-    public ObstacleManager(Context context, int gameViewCanvasWidth, int gameViewCanvasHeight, Ship ship) {
+    public ObstacleManager(Context context, Ship ship) {
 
         this.context = context;
 
         blurMaskFilter = new BlurMaskFilter(42, BlurMaskFilter.Blur.OUTER);
-
-        ObstacleManager.gameViewCanvasWidth = gameViewCanvasWidth;
-
-        ObstacleManager.gameViewCanvasHeight = gameViewCanvasHeight;
 
         obstacles = new ArrayList<>();
 
@@ -64,11 +60,11 @@ public class ObstacleManager {
 
         for (int i = 0; i < NUMBER_OF_OBSTACLES; i++) {
 
-            obstacles.add(new Obstacle(context, gameViewCanvasWidth, gameViewCanvasHeight, ship));
+            obstacles.add(new Obstacle(context, ship));
 
             obstacles.get(i).setBottomEdgeToLocationYWithMaxRadius(locationY);
 
-            locationY -= ((gameViewCanvasHeight * OBSTACLE_KILL_HEIGHT_RATIO) / (NUMBER_OF_OBSTACLES - 1));
+            locationY -= ((GameView.canvasHeight * OBSTACLE_KILL_HEIGHT_RATIO) / (NUMBER_OF_OBSTACLES - 1));
 
         }
 
@@ -123,8 +119,6 @@ public class ObstacleManager {
     private BlurMaskFilter blurMaskFilter;
 
     private ArrayList<Obstacle> obstacles;
-
-    private static int gameViewCanvasWidth, gameViewCanvasHeight;
 
     public static final int NUMBER_OF_OBSTACLES = 5;
 

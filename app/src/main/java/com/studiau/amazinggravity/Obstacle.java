@@ -13,15 +13,11 @@ import java.util.Random;
 
 public class Obstacle {
 
-    public Obstacle(Context context, float gameViewCanvasWidth, float gameViewCanvasHeight, Ship ship) {
+    public Obstacle(Context context, Ship ship) {
 
         random = new Random();
 
-        this.gameViewCanvasWidth = gameViewCanvasWidth;
-
-        this.gameViewCanvasHeight = gameViewCanvasHeight;
-
-        RADIUS_TO_MASS_RATIO = gameViewCanvasWidth / 100;
+        RADIUS_TO_MASS_RATIO = GameView.canvasWidth * 0.01f;
 
         MAX_RADIUS = (BASE_MASS + MAX_ADDITIONAL_MASS) * RADIUS_TO_MASS_RATIO;
 
@@ -35,8 +31,7 @@ public class Obstacle {
 
         colour = setObstacleColour();
 
-        speedBoostItem = new SpeedBoostItem(context, colour, random.nextBoolean(), radius, locationX, locationY,
-                gameViewCanvasWidth, gameViewCanvasHeight);
+        speedBoostItem = new SpeedBoostItem(context, colour, random.nextBoolean(), radius, locationX, locationY);
 
         reset(ship);
 
@@ -54,18 +49,19 @@ public class Obstacle {
 
         if (randomBoolean) {
 
-            locationX = ((randomFloat * 0.3f) + 0.1f) * gameViewCanvasWidth;
+            locationX = ((randomFloat * 0.3f) + 0.1f) * GameView.canvasWidth;
 
         } else {
 
-            locationX = ((randomFloat * 0.3f) + 0.6f) * gameViewCanvasWidth;
+            locationX = ((randomFloat * 0.3f) + 0.6f) * GameView.canvasWidth;
 
         }
 
         locationX += (ship.getAngle() / ship.getMaxRotation()) *
-                MAX_HORIZONTAL_LOCATION_SHIFT * gameViewCanvasWidth;
+                MAX_HORIZONTAL_LOCATION_SHIFT * GameView.canvasWidth;
 
-        locationY = -(gameViewCanvasHeight * OBSTACLE_KILL_HEIGHT_RATIO) / (NUMBER_OF_OBSTACLES - 1);
+        locationY = -(GameView.canvasHeight * ObstacleManager.OBSTACLE_KILL_HEIGHT_RATIO) /
+                (ObstacleManager.NUMBER_OF_OBSTACLES - 1);
 
         speedX = BASE_SPEEDX;
 
@@ -109,7 +105,7 @@ public class Obstacle {
 
         }
 
-        if ((locationY) > (gameViewCanvasHeight * OBSTACLE_KILL_HEIGHT_RATIO)) {
+        if ((locationY) > (GameView.canvasHeight * ObstacleManager.OBSTACLE_KILL_HEIGHT_RATIO)) {
 
             reset(ship);
 
@@ -145,8 +141,8 @@ public class Obstacle {
 
     public void draw(Canvas canvas, Paint paint) {
 
-        if(((locationX + radius) > 0) && ((locationX - radius) < gameViewCanvasWidth) &&
-                ((locationY + radius) > 0) && ((locationY - radius) < gameViewCanvasHeight)) {
+        if(((locationX + radius) > 0) && ((locationX - radius) < GameView.canvasWidth) &&
+                ((locationY + radius) > 0) && ((locationY - radius) < GameView.canvasHeight)) {
 
             paint.setColor(Color.parseColor(colour));
 
@@ -177,13 +173,13 @@ public class Obstacle {
         float closestX, closestY;
 
         // Find the unrotated closest X point from center of circle rotated backwards (unrotated)
-        if (unrotatedLocationX < (shipLocationX - (shipWidth / 2))) {
+        if (unrotatedLocationX < (shipLocationX - (shipWidth * 0.5f))) {
 
-            closestX = shipLocationX - (shipWidth / 2);
+            closestX = shipLocationX - (shipWidth * 0.5f);
 
-        } else if (unrotatedLocationX > (shipLocationX + (shipWidth / 2))) {
+        } else if (unrotatedLocationX > (shipLocationX + (shipWidth * 0.5f))) {
 
-            closestX = shipLocationX + (shipWidth / 2);
+            closestX = shipLocationX + (shipWidth * 0.5f);
 
         } else {
 
@@ -192,13 +188,13 @@ public class Obstacle {
         }
 
         // Find the unrotated closest Y point from center of circle rotated backwards (unrotated)
-        if (unrotatedLocationY < (shipLocationY - (shipHeight / 2))) {
+        if (unrotatedLocationY < (shipLocationY - (shipHeight * 0.5f))) {
 
-            closestY = shipLocationY - (shipHeight / 2);
+            closestY = shipLocationY - (shipHeight * 0.5f);
 
-        } else if (unrotatedLocationY > (shipLocationY + (shipHeight / 2))) {
+        } else if (unrotatedLocationY > (shipLocationY + (shipHeight * 0.5f))) {
 
-            closestY = shipLocationY + (shipHeight / 2);
+            closestY = shipLocationY + (shipHeight * 0.5f);
 
         } else {
 
@@ -233,11 +229,11 @@ public class Obstacle {
 
             speedX += (collectiveSpeedX * verticalDampening);
 
-            locationX += (speedX - ship.getSpeedX()) * gameViewCanvasWidth;
+            locationX += (speedX - ship.getSpeedX()) * GameView.canvasWidth;
 
             if(linkedWithSpeedBoost) {
 
-                speedBoostItem.updateLocationX((speedX - ship.getSpeedX()) * gameViewCanvasWidth);
+                speedBoostItem.updateLocationX((speedX - ship.getSpeedX()) * GameView.canvasWidth);
 
             }
 
@@ -247,11 +243,11 @@ public class Obstacle {
 
     private void updateLocationY() {
 
-        locationY += speedY * gameViewCanvasHeight;
+        locationY += speedY * GameView.canvasHeight;
 
         if(linkedWithSpeedBoost) {
 
-            speedBoostItem.updateLocationY(speedY * gameViewCanvasHeight);
+            speedBoostItem.updateLocationY(speedY * GameView.canvasHeight);
 
         }
 
@@ -310,15 +306,15 @@ public class Obstacle {
     public float getNewSpeedX() {
 
         if (((locationY + radius) > 0) &&
-                ((locationY - radius) < gameViewCanvasHeight) &&
+                ((locationY - radius) < GameView.canvasHeight) &&
                 ((locationX + radius) > 0) &&
-                ((locationX - radius) < gameViewCanvasWidth)) {
+                ((locationX - radius) < GameView.canvasWidth)) {
 
             float distanceX = Math.abs(locationX - shipLocationX) /
                     shipLocationX;
 
             float newSpeedX = (float) ((1 - (0.9f * (mass / (BASE_MASS + MAX_ADDITIONAL_MASS)))) *
-                    (((-1 * (Math.pow(distanceX, 4))) + 1) / 2000));
+                    (((-1 * (Math.pow(distanceX, 4))) + 1) * 0.0005f));
 
             if (locationX < shipLocationX) {
 
@@ -337,7 +333,7 @@ public class Obstacle {
         } else {
 
             float distanceY = (Math.abs(locationY - shipLocationY) /
-                    ((gameViewCanvasHeight * OBSTACLE_KILL_HEIGHT_RATIO) - shipLocationY));
+                    ((GameView.canvasHeight * ObstacleManager.OBSTACLE_KILL_HEIGHT_RATIO) - shipLocationY));
 
             if (distanceY <= 1) {
 
@@ -379,36 +375,31 @@ public class Obstacle {
 
     private SpeedBoostItem speedBoostItem;
 
-    private float gameViewCanvasWidth, gameViewCanvasHeight,
-            shipLocationX, shipLocationY, shipWidth, shipHeight,
+    private float shipLocationX, shipLocationY, shipWidth, shipHeight,
             mass, radius, locationX, locationY, speedX, speedY, oldSpeedX;
 
     private boolean scored, linkedWithSpeedBoost;
 
     private String colour;
 
-    private final int COLOUR_CHANGE_SCORE_INCREMENT = 10;
-
-    private final int NUMBER_OF_COLOURS = 5;
-
-    private final int BASE_MASS = 10;
-
-    private final int MAX_ADDITIONAL_MASS = 5;
-
     private final float RADIUS_TO_MASS_RATIO;
 
     private final float MAX_RADIUS;
 
-    private final float BASE_SPEEDX = 0f;
+    private static final int COLOUR_CHANGE_SCORE_INCREMENT = 10;
 
-    private final float BASE_SPEEDY = 0.006f;
+    private static final int NUMBER_OF_COLOURS = 5;
 
-    private final float MAX_HORIZONTAL_LOCATION_SHIFT = 0.3f;
+    private static final int BASE_MASS = 10;
 
-    private final float CHANCE_FOR_SPEED_BOOST_ITEM = 0.2f;
+    private static final int MAX_ADDITIONAL_MASS = 5;
 
-    private final int NUMBER_OF_OBSTACLES = ObstacleManager.NUMBER_OF_OBSTACLES;
+    private static final float BASE_SPEEDX = 0f;
 
-    private final float OBSTACLE_KILL_HEIGHT_RATIO = ObstacleManager.OBSTACLE_KILL_HEIGHT_RATIO;
+    private static final float BASE_SPEEDY = 0.006f;
+
+    private static final float MAX_HORIZONTAL_LOCATION_SHIFT = 0.3f;
+
+    private static final float CHANCE_FOR_SPEED_BOOST_ITEM = 0.2f;
 
 }
