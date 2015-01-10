@@ -257,8 +257,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         bitmap_arrow_right = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.arrow_right);
 
-        bitmap_arrow_up = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.arrow_up);
-
     }
 
     public void update() {
@@ -928,7 +926,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private ScoreManager scoreManager;
 
     private Bitmap bitmap_replay, bitmap_twitter, bitmap_leaderboard, bitmap_leaderboard_dismissed,
-            bitmap_share, bitmap_rate, bitmap_arrow_left, bitmap_arrow_right, bitmap_arrow_up;
+            bitmap_share, bitmap_rate, bitmap_arrow_left, bitmap_arrow_right;
 
     private float bitmap_rowOne, bitmap_rowTwo, bitmap_replayLocationX,
             bitmap_twitterLocationX, bitmap_leaderboardLocationX, bitmap_shareLocationX,
@@ -942,39 +940,39 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private static boolean controlInverted, soundEnabled, vibrationEnabled;
 
-    private final int AMOUNT_OF_EXHAUST = 30;
+    private static final int AMOUNT_OF_EXHAUST = 30;
 
-    private final int AMOUNT_OF_EXPLOSION = 300;
+    private static final int AMOUNT_OF_EXPLOSION = 300;
 
-    private final int AMOUNT_OF_STARS = 100;
+    private static final int AMOUNT_OF_STARS = 100;
 
-    private final int TUTORIAL_ALPHA_FADE_RATE = 5;
+    private static final int TUTORIAL_ALPHA_FADE_RATE = 5;
 
-    private final int EXPERIENCE_CONSTANT = 333;
+    private static final int EXPERIENCE_CONSTANT = 333;
 
-    private final int LEVEL_RELATIVE_FONT_SIZE = 18;
+    private static final int LEVEL_RELATIVE_FONT_SIZE = 18;
 
-    private final float EXPERIENCE_POWER = 1.8f;
+    private static final float EXPERIENCE_POWER = 1.8f;
 
-    private final float RELATIVE_FONT_SIZE_TUTORIAL = 14;
+    private static final float RELATIVE_FONT_SIZE_TUTORIAL = 14;
 
-    private final float ROW_ONE_LOCATION_Y = 0.65f;
+    private static final float ROW_ONE_LOCATION_Y = 0.65f;
 
-    private final float ROW_TWO_LOCATION_Y = 0.85f;
+    private static final float ROW_TWO_LOCATION_Y = 0.85f;
 
-    private final String SHARED_PREFERENCES_BEST_SCORE_KEY = "8V3JT";
+    private static final String SHARED_PREFERENCES_BEST_SCORE_KEY = "8V3JT";
 
-    private final String SHARED_PREFERENCES_TOTAL_EXPERIENCE_KEY = "HD61J";
+    private static final String SHARED_PREFERENCES_TOTAL_EXPERIENCE_KEY = "HD61J";
 
-    private final String ACHIEVEMENT_0_SCORE = "CgkI8bfIso0dEAIQAQ";
+    private static final String ACHIEVEMENT_0_SCORE = "CgkI8bfIso0dEAIQAQ";
 
-    private final String ACHIEVEMENT_10_SCORE = "CgkI8bfIso0dEAIQAg";
+    private static final String ACHIEVEMENT_10_SCORE = "CgkI8bfIso0dEAIQAg";
 
-    private final String ACHIEVEMENT_25_SCORE = "CgkI8bfIso0dEAIQAw";
+    private static final String ACHIEVEMENT_25_SCORE = "CgkI8bfIso0dEAIQAw";
 
-    private final String ACHIEVEMENT_50_SCORE = "CgkI8bfIso0dEAIQBA";
+    private static final String ACHIEVEMENT_50_SCORE = "CgkI8bfIso0dEAIQBA";
 
-    private final String ACHIEVEMENT_100_SCORE = "CgkI8bfIso0dEAIQBQ";
+    private static final String ACHIEVEMENT_100_SCORE = "CgkI8bfIso0dEAIQBQ";
 
     private final static String TAG = GameView.class.getSimpleName();
 
