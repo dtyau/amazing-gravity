@@ -82,7 +82,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         createPaint();
 
-        scoreManager = new ScoreManager(canvasWidth, canvasHeight, getBestScoreFromPreferences());
+        scoreManager = new ScoreManager(getBestScoreFromPreferences());
 
         ship = new Ship(getContext(), controlInverted);
 
@@ -263,9 +263,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     public void update() {
 
-        for (int i = 0; i < AMOUNT_OF_STARS; i++) {
+        for (Star star : stars) {
 
-            stars.get(i).update(ship);
+            star.update(ship);
 
         }
 
@@ -285,9 +285,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             ship.update();
 
-            for (int i = 0; i < AMOUNT_OF_EXHAUST; i++) {
+            for (ExhaustParticle exhaustParticle : exhaustParticles) {
 
-                exhaustParticles.get(i).update(ship, obstacleManager);
+                exhaustParticle.update(ship, obstacleManager);
 
             }
 
@@ -319,9 +319,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             }
 
-            for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) {
+            for (ExplosionParticle explosionParticle : explosionParticles) {
 
-                explosionParticles.get(i).update();
+                explosionParticle.update();
 
             }
 
@@ -335,9 +335,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         paint.setColor(Color.WHITE); // For stars and tutorial
 
-        for (int i = 0; i < AMOUNT_OF_STARS; i++) {
+        for (Star star : stars) {
 
-            stars.get(i).draw(canvas, paint);
+            star.draw(canvas, paint);
 
         }
 
@@ -351,19 +351,19 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                 paint.setAlpha(tutorialAlpha);
 
-                canvas.drawText("slide left or right", canvasWidth / 2, canvasHeight * 0.21f, paint);
+                canvas.drawText("slide left or right", canvasWidth * 0.5f, canvasHeight * 0.21f, paint);
 
-                canvas.drawText("to avoid wormholes", canvasWidth / 2, canvasHeight * 0.25f, paint);
+                canvas.drawText("to avoid wormholes", canvasWidth * 0.5f, canvasHeight * 0.25f, paint);
 
-                canvas.drawBitmap(bitmap_arrow_left, canvasWidth * 0.25f - bitmap_arrow_left.getWidth() / 2,
-                        canvasHeight * 0.75f - bitmap_arrow_left.getHeight() / 2, paint);
+                canvas.drawBitmap(bitmap_arrow_left, canvasWidth * 0.25f - bitmap_arrow_left.getWidth() * 0.5f,
+                        canvasHeight * 0.75f - bitmap_arrow_left.getHeight() * 0.5f, paint);
 
-                canvas.drawBitmap(bitmap_arrow_right, canvasWidth * 0.75f - bitmap_arrow_right.getWidth() / 2,
-                        canvasHeight * 0.75f - bitmap_arrow_right.getHeight() / 2, paint);
+                canvas.drawBitmap(bitmap_arrow_right, canvasWidth * 0.75f - bitmap_arrow_right.getWidth() * 0.5f,
+                        canvasHeight * 0.75f - bitmap_arrow_right.getHeight() * 0.5f, paint);
 
-                canvas.drawText("tap while turning", canvasWidth / 2, canvasHeight * 0.48f, paint);
+                canvas.drawText("tap while turning", canvasWidth * 0.5f, canvasHeight * 0.48f, paint);
 
-                canvas.drawText("for speed boost", canvasWidth / 2, canvasHeight * 0.52f, paint);
+                canvas.drawText("for speed boost", canvasWidth * 0.5f, canvasHeight * 0.52f, paint);
 
             }
 
@@ -387,9 +387,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             }
 
-            for (int i = 0; i < AMOUNT_OF_EXHAUST; i++) {
+            for (ExhaustParticle exhaustParticle : exhaustParticles) {
 
-                exhaustParticles.get(i).draw(canvas, paint);
+                exhaustParticle.draw(canvas, paint);
 
             }
 
@@ -401,9 +401,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         if (gameState == GameState.GAMEOVER) {
 
-            for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) { // For explosion
+            for (ExplosionParticle explosionParticle : explosionParticles) { // For explosion
 
-                explosionParticles.get(i).draw(canvas, paint);
+                explosionParticle.draw(canvas, paint);
 
             }
 
@@ -443,29 +443,29 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private void drawButtons(Canvas canvas) {
 
-        canvas.drawBitmap(bitmap_replay, (bitmap_replayLocationX) - (bitmap_replay.getWidth() / 2),
-                (bitmap_rowOne) - (bitmap_replay.getHeight() / 2), paint);
+        canvas.drawBitmap(bitmap_replay, (bitmap_replayLocationX) - (bitmap_replay.getWidth() * 0.5f),
+                (bitmap_rowOne) - (bitmap_replay.getHeight() * 0.5f), paint);
 
         if (MainActivity.isGooglePlaySignedIn()) {
 
-            canvas.drawBitmap(bitmap_leaderboard, (bitmap_leaderboardLocationX) - (bitmap_leaderboard.getWidth() / 2),
-                    (bitmap_rowOne) - (bitmap_leaderboard.getHeight() / 2), paint);
+            canvas.drawBitmap(bitmap_leaderboard, (bitmap_leaderboardLocationX) - (bitmap_leaderboard.getWidth() * 0.5f),
+                    (bitmap_rowOne) - (bitmap_leaderboard.getHeight() * 0.5f), paint);
 
         } else {
 
-            canvas.drawBitmap(bitmap_leaderboard_dismissed, (bitmap_leaderboardLocationX) - (bitmap_leaderboard_dismissed.getWidth() / 2),
-                    (bitmap_rowOne) - (bitmap_leaderboard_dismissed.getHeight() / 2), paint);
+            canvas.drawBitmap(bitmap_leaderboard_dismissed, (bitmap_leaderboardLocationX) - (bitmap_leaderboard_dismissed.getWidth() * 0.5f),
+                    (bitmap_rowOne) - (bitmap_leaderboard_dismissed.getHeight() * 0.5f), paint);
 
         }
 
-        canvas.drawBitmap(bitmap_share, (bitmap_shareLocationX) - (bitmap_share.getWidth() / 2),
-                (bitmap_rowTwo) - (bitmap_share.getHeight() / 2), paint);
+        canvas.drawBitmap(bitmap_share, (bitmap_shareLocationX) - (bitmap_share.getWidth() * 0.5f),
+                (bitmap_rowTwo) - (bitmap_share.getHeight() * 0.5f), paint);
 
-        canvas.drawBitmap(bitmap_twitter, (bitmap_twitterLocationX) - (bitmap_twitter.getWidth() / 2),
-                (bitmap_rowTwo) - (bitmap_twitter.getHeight() / 2), paint);
+        canvas.drawBitmap(bitmap_twitter, (bitmap_twitterLocationX) - (bitmap_twitter.getWidth() * 0.5f),
+                (bitmap_rowTwo) - (bitmap_twitter.getHeight() * 0.5f), paint);
 
-        canvas.drawBitmap(bitmap_rate, (bitmap_rateLocationX) - (bitmap_rate.getWidth() / 2),
-                (bitmap_rowTwo) - (bitmap_rate.getHeight() / 2), paint);
+        canvas.drawBitmap(bitmap_rate, (bitmap_rateLocationX) - (bitmap_rate.getWidth() * 0.5f),
+                (bitmap_rowTwo) - (bitmap_rate.getHeight() * 0.5f), paint);
 
     }
 
@@ -522,19 +522,19 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             if (actionType == MotionEvent.ACTION_DOWN) {
 
-                if ((eventX > (bitmap_replayLocationX - (bitmap_replay.getWidth() / 2))) &&
-                        eventX < (bitmap_replayLocationX + (bitmap_replay.getWidth() / 2)) &&
-                        eventY > bitmap_rowOne - (bitmap_replay.getHeight() / 2) &&
-                        eventY < bitmap_rowOne + (bitmap_replay.getHeight() / 2)) {
+                if ((eventX > (bitmap_replayLocationX - (bitmap_replay.getWidth() * 0.5f))) &&
+                        eventX < (bitmap_replayLocationX + (bitmap_replay.getWidth() * 0.5f)) &&
+                        eventY > bitmap_rowOne - (bitmap_replay.getHeight() * 0.5f) &&
+                        eventY < bitmap_rowOne + (bitmap_replay.getHeight() * 0.5f)) {
 
                     actionsOnPress();
 
                     reset(ship);
 
-                } else if ((eventX > (bitmap_leaderboardLocationX - (bitmap_leaderboard.getWidth() / 2))) &&
-                        eventX < (bitmap_leaderboardLocationX + (bitmap_leaderboard.getWidth() / 2)) &&
-                        eventY > bitmap_rowOne - (bitmap_leaderboard.getHeight() / 2) &&
-                        eventY < bitmap_rowOne + (bitmap_leaderboard.getHeight() / 2)) {
+                } else if ((eventX > (bitmap_leaderboardLocationX - (bitmap_leaderboard.getWidth() * 0.5f))) &&
+                        eventX < (bitmap_leaderboardLocationX + (bitmap_leaderboard.getWidth() * 0.5f)) &&
+                        eventY > bitmap_rowOne - (bitmap_leaderboard.getHeight() * 0.5f) &&
+                        eventY < bitmap_rowOne + (bitmap_leaderboard.getHeight() * 0.5f)) {
 
                     if (MainActivity.isGooglePlaySignedIn()) {
 
@@ -550,28 +550,28 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                     }
 
-                } else if ((eventX > (bitmap_shareLocationX - (bitmap_share.getWidth() / 2))) &&
-                        eventX < (bitmap_shareLocationX + (bitmap_share.getWidth() / 2)) &&
-                        eventY > bitmap_rowTwo - (bitmap_share.getHeight() / 2) &&
-                        eventY < bitmap_rowTwo + (bitmap_share.getHeight() / 2)) {
+                } else if ((eventX > (bitmap_shareLocationX - (bitmap_share.getWidth() * 0.5f))) &&
+                        eventX < (bitmap_shareLocationX + (bitmap_share.getWidth() * 0.5f)) &&
+                        eventY > bitmap_rowTwo - (bitmap_share.getHeight() * 0.5f) &&
+                        eventY < bitmap_rowTwo + (bitmap_share.getHeight() * 0.5f)) {
 
                     actionsOnPress();
 
                     share();
 
-                } else if ((eventX > (bitmap_twitterLocationX - (bitmap_twitter.getWidth() / 2))) &&
-                        eventX < (bitmap_twitterLocationX + (bitmap_twitter.getWidth() / 2)) &&
-                        eventY > bitmap_rowTwo - (bitmap_twitter.getHeight() / 2) &&
-                        eventY < bitmap_rowTwo + (bitmap_twitter.getHeight() / 2)) {
+                } else if ((eventX > (bitmap_twitterLocationX - (bitmap_twitter.getWidth() * 0.5f))) &&
+                        eventX < (bitmap_twitterLocationX + (bitmap_twitter.getWidth() * 0.5f)) &&
+                        eventY > bitmap_rowTwo - (bitmap_twitter.getHeight() * 0.5f) &&
+                        eventY < bitmap_rowTwo + (bitmap_twitter.getHeight() * 0.5f)) {
 
                     actionsOnPress();
 
                     tweet();
 
-                } else if ((eventX > (bitmap_rateLocationX - (bitmap_rate.getWidth() / 2))) &&
-                        eventX < (bitmap_rateLocationX + (bitmap_rate.getWidth() / 2)) &&
-                        eventY > bitmap_rowTwo - (bitmap_rate.getHeight() / 2) &&
-                        eventY < bitmap_rowTwo + (bitmap_rate.getHeight() / 2)) {
+                } else if ((eventX > (bitmap_rateLocationX - (bitmap_rate.getWidth() * 0.5f))) &&
+                        eventX < (bitmap_rateLocationX + (bitmap_rate.getWidth() * 0.5f)) &&
+                        eventY > bitmap_rowTwo - (bitmap_rate.getHeight() * 0.5f) &&
+                        eventY < bitmap_rowTwo + (bitmap_rate.getHeight() * 0.5f)) {
 
                     actionsOnPress();
 
@@ -603,15 +603,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         obstacleManager.reset(ship);
 
-        for (int i = 0; i < AMOUNT_OF_EXHAUST; i++) {
+        for (ExhaustParticle exhaustParticle : exhaustParticles) {
 
-            exhaustParticles.get(i).reset(ship);
+            exhaustParticle.reset(ship);
 
         }
 
-        for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) {
+        for (ExplosionParticle explosionParticle : explosionParticles) {
 
-            explosionParticles.get(i).reset();
+            explosionParticle.reset();
 
         }
 

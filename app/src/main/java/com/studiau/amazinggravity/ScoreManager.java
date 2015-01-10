@@ -9,25 +9,23 @@ import android.graphics.Paint;
 
 public class ScoreManager {
 
-    public ScoreManager(float canvasWidth, float canvasHeight, int sharedPreferencesBestScore) {
+    public ScoreManager(int sharedPreferencesBestScore) {
 
-        this.canvasWidth = canvasWidth;
+        scorePlayPositionX = GameView.canvasWidth * SCORE_PLAY_POSITION_X;
 
-        scorePlayPositionX = canvasWidth * SCORE_PLAY_POSITION_X;
+        scorePlayPositionY = GameView.canvasHeight * SCORE_PLAY_POSITION_Y;
 
-        scorePlayPositionY = canvasHeight * SCORE_PLAY_POSITION_Y;
+        scoreOverPositionX = GameView.canvasWidth * SCORE_OVER_POSITION_X;
 
-        scoreOverPositionX = canvasWidth * SCORE_OVER_POSITION_X;
+        scoreOverPositionY = GameView.canvasHeight * SCORE_OVER_POSITION_Y;
 
-        scoreOverPositionY = canvasHeight * SCORE_OVER_POSITION_Y;
+        bestScoreOverPositionX = GameView.canvasWidth * BEST_SCORE_OVER_POSITION_X;
 
-        bestScoreOverPositionX = canvasWidth * BEST_SCORE_OVER_POSITION_X;
+        textScoreOverPositionY = GameView.canvasHeight * TEXT_OVER_POSITION_Y;
 
-        textScoreOverPositionY = canvasHeight * TEXT_OVER_POSITION_Y;
+        textGameOverPositionX = GameView.canvasWidth * TEXT_GAME_OVER_POSITION_X;
 
-        textGameOverPositionX = canvasWidth * TEXT_GAME_OVER_POSITION_X;
-
-        textGameOverPositionY = canvasHeight * TEXT_GAME_OVER_POSITION_Y;
+        textGameOverPositionY = GameView.canvasHeight * TEXT_GAME_OVER_POSITION_Y;
 
         bestScore = sharedPreferencesBestScore;
 
@@ -49,7 +47,7 @@ public class ScoreManager {
 
     public void drawWhenPlay(Canvas canvas, Paint paint) {
 
-        paint.setTextSize(canvasWidth / RELATIVE_FONT_SIZE);
+        paint.setTextSize(GameView.canvasWidth / RELATIVE_FONT_SIZE);
 
         paint.setTextAlign(Paint.Align.RIGHT);
 
@@ -61,11 +59,11 @@ public class ScoreManager {
 
         paint.setTextAlign(Paint.Align.CENTER);
 
-        paint.setTextSize(canvasWidth / RELATIVE_FONT_SIZE_GAME_OVER);
+        paint.setTextSize(GameView.canvasWidth / RELATIVE_FONT_SIZE_GAME_OVER);
 
         canvas.drawText("Game Over", textGameOverPositionX, textGameOverPositionY, paint);
 
-        paint.setTextSize(canvasWidth / RELATIVE_FONT_SIZE);
+        paint.setTextSize(GameView.canvasWidth / RELATIVE_FONT_SIZE);
 
         canvas.drawText("score", scoreOverPositionX, textScoreOverPositionY, paint);
 
@@ -103,7 +101,7 @@ public class ScoreManager {
 
     }
 
-    private float canvasWidth, scorePlayPositionX, scorePlayPositionY, scoreOverPositionX, scoreOverPositionY,
+    private float scorePlayPositionX, scorePlayPositionY, scoreOverPositionX, scoreOverPositionY,
             bestScoreOverPositionX, textScoreOverPositionY, textGameOverPositionX,
             textGameOverPositionY;
 
@@ -127,8 +125,8 @@ public class ScoreManager {
 
     private final static float TEXT_OVER_POSITION_Y = 0.44f;
 
-    private final float RELATIVE_FONT_SIZE = 12;
+    private static final float RELATIVE_FONT_SIZE = 12;
 
-    private final float RELATIVE_FONT_SIZE_GAME_OVER = 8;
+    private static final float RELATIVE_FONT_SIZE_GAME_OVER = 8;
 
 }
