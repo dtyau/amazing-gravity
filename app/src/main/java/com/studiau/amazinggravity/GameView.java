@@ -249,7 +249,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         bitmap_twitterLocationX = 0.5f * canvasWidth;
 
-        bitmap_rate = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.rate );
+        bitmap_rate = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.rate);
 
         bitmap_rateLocationX = 0.75f * canvasWidth;
 
@@ -377,7 +377,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             ship.draw(canvas, paint);
 
-            if(ship.isBoosting()) {
+            if (ship.isBoosting()) {
 
                 paint.setColor(Color.parseColor("#2196F3")); // For boosting exhaust particles
 
@@ -862,7 +862,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         try {
 
-             getContext().startActivity(goToMarket);
+            getContext().startActivity(goToMarket);
 
         } catch (ActivityNotFoundException e) {
 

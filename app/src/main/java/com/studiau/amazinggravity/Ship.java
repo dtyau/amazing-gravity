@@ -19,11 +19,11 @@ public class Ship {
 
         bitmap_speedBoost = BitmapFactory.decodeResource(context.getResources(), R.drawable.speed_boost);
 
-        bitmap_speedBoostLocationX = 0.03f * GameView.canvasWidth;
+        bitmap_speedBoostLocationX = (int) (0.03f * GameView.canvasWidth);
 
-        bitmap_speedBoostDefaultLocationY = BITMAP_SPEED_BOOST_DEFAULT_LOCATION_Y * GameView.canvasHeight;
+        bitmap_speedBoostDefaultLocationY = (int) (BITMAP_SPEED_BOOST_DEFAULT_LOCATION_Y * GameView.canvasHeight);
 
-        bitmap_speedBoostLocationYIncrement = BITMAP_SPEED_BOOST_LOCATION_Y_INCREMENT * GameView.canvasHeight;
+        bitmap_speedBoostLocationYIncrement = (int) (BITMAP_SPEED_BOOST_LOCATION_Y_INCREMENT * GameView.canvasHeight);
 
         matrix = new Matrix();
 
@@ -31,21 +31,21 @@ public class Ship {
 
         matrix.postTranslate(locationX, locationY);
 
-        locationX = GameView.canvasWidth * BASE_LOCATIONX;
+        locationX = (int) (GameView.canvasWidth * BASE_LOCATIONX);
 
-        locationY = GameView.canvasHeight * BASE_LOCATIONY;
+        locationY = (int) (GameView.canvasHeight * BASE_LOCATIONY);
 
         width = bitmap.getWidth();
 
         height = bitmap.getHeight();
 
-        leftEdge = locationX - (width * 0.5f);
+        leftEdge = locationX - (int) (width * 0.5f);
 
-        rightEdge = locationX + (width * 0.5f);
+        rightEdge = locationX + (int) (width * 0.5f);
 
-        topEdge = locationY - (height * 0.5f);
+        topEdge = locationY - (int) (height * 0.5f);
 
-        bottomEdge = locationY + (height * 0.5f);
+        bottomEdge = locationY + (int) (height * 0.5f);
 
         this.controlInverted = controlInverted;
 
@@ -133,11 +133,11 @@ public class Ship {
 
             if(controlInverted) {
 
-                desiredRotation = -MAX_ROTATION * (modifierX);
+                desiredRotation = (int) (-MAX_ROTATION * (modifierX));
 
             } else {
 
-                desiredRotation = MAX_ROTATION * (modifierX);
+                desiredRotation = (int) (MAX_ROTATION * (modifierX));
 
             }
 
@@ -147,11 +147,11 @@ public class Ship {
 
             if(controlInverted) {
 
-                desiredRotation = MAX_ROTATION * (modifierX);
+                desiredRotation = (int) (MAX_ROTATION * (modifierX));
 
             } else {
 
-                desiredRotation = -MAX_ROTATION * (modifierX);
+                desiredRotation = (int) (-MAX_ROTATION * (modifierX));
 
             }
 
@@ -256,20 +256,18 @@ public class Ship {
 
     private boolean controlInverted, boosting;
 
-    private int speedBoostCounter;
-
-    private float speedX, desiredRotation, rotation, speedBoost, bitmap_speedBoostLocationX,
+    private int speedBoostCounter, desiredRotation, rotation, bitmap_speedBoostLocationX,
             bitmap_speedBoostDefaultLocationY, bitmap_speedBoostLocationYIncrement;
 
-    public static float locationX, locationY, leftEdge, rightEdge, topEdge, bottomEdge, width, height;
+    private float speedX, speedBoost;
+
+    public static int locationX, locationY, leftEdge, rightEdge, topEdge, bottomEdge, width, height;
 
     private static final float BITMAP_SPEED_BOOST_DEFAULT_LOCATION_Y = 0.01f;
 
     private static final float BITMAP_SPEED_BOOST_LOCATION_Y_INCREMENT = 0.05f;
 
-    private static final float SPEED_BOOST_TRIGGER = 0.10f;
-
-    private static final float INITIAL_SPEED_BOOST = 3;
+    private static final int INITIAL_SPEED_BOOST = 3;
 
     private static final float SPEED_BOOST_DECREMENT = 0.1f;
 
@@ -283,9 +281,9 @@ public class Ship {
 
     private static final float BASE_LOCATIONY = 0.75f;
 
-    private static final float MAX_ROTATION = 60;
+    private static final int MAX_ROTATION = 60;
 
-    private static final float ROTATION_SPEED = 10;
+    private static final int ROTATION_SPEED = 10;
 
     private static final float MAX_HORIZONTAL_TOUCH = 0.6f;
 
