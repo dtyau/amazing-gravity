@@ -14,15 +14,17 @@ import java.util.ArrayList;
 
 public class ObstacleManager {
 
-    public ObstacleManager(Context context, float gameViewCanvasWidth, float gameViewCanvasHeight, Ship ship) {
+    public ObstacleManager(Context context, int gameViewCanvasWidth, int gameViewCanvasHeight, Ship ship) {
 
         this.context = context;
 
         blurMaskFilter = new BlurMaskFilter(42, BlurMaskFilter.Blur.OUTER);
 
-        this.gameViewCanvasWidth = gameViewCanvasWidth;
+        ObstacleManager.gameViewCanvasWidth = gameViewCanvasWidth;
 
-        this.gameViewCanvasHeight = gameViewCanvasHeight;
+        ObstacleManager.gameViewCanvasHeight = gameViewCanvasHeight;
+
+        obstacles = new ArrayList<>();
 
         reset(ship);
 
@@ -56,27 +58,19 @@ public class ObstacleManager {
 
     public void reset(Ship ship) {
 
-        obstacles = null;
-
-        obstacles = new ArrayList<>();
+        obstacles.clear();
 
         float locationY = 0;
 
         for (int i = 0; i < NUMBER_OF_OBSTACLES; i++) {
 
-            addObstacle(ship);
+            obstacles.add(new Obstacle(context, gameViewCanvasWidth, gameViewCanvasHeight, ship));
 
             obstacles.get(i).setBottomEdgeToLocationYWithMaxRadius(locationY);
 
             locationY -= ((gameViewCanvasHeight * OBSTACLE_KILL_HEIGHT_RATIO) / (NUMBER_OF_OBSTACLES - 1));
 
         }
-
-    }
-
-    private void addObstacle(Ship ship) {
-
-        obstacles.add(new Obstacle(context, gameViewCanvasWidth, gameViewCanvasHeight, ship));
 
     }
 
@@ -124,52 +118,13 @@ public class ObstacleManager {
 
     }
 
-    public float giveSpeedXForParticles(Ship ship, float particle_LocationX) {
-
-        float newSpeedX = 0;
-
-        for (Obstacle obstacle: obstacles) {
-
-            if ((obstacle.getLocationY() > (PARTICLE_AFFECTED_Y * gameViewCanvasHeight)) &&
-                    (obstacle.getLocationY() < gameViewCanvasHeight)) {
-
-                float distanceX = Math.abs(particle_LocationX - obstacle.getLocationX()) / gameViewCanvasWidth;
-
-                if (distanceX > 1) {
-
-                    distanceX = 1;
-
-                }
-
-                newSpeedX = (float) ((((-1 * (Math.pow(distanceX, 2))) + 1)) / 200);
-
-                if ((particle_LocationX - obstacle.getLocationX()) > 0) {
-
-                    return -newSpeedX;
-
-                } else {
-
-                    return newSpeedX;
-
-                }
-
-            }
-
-        }
-
-        return newSpeedX;
-
-    }
-
     private Context context;
 
     private BlurMaskFilter blurMaskFilter;
 
     private ArrayList<Obstacle> obstacles;
 
-    private float gameViewCanvasWidth, gameViewCanvasHeight;
-
-    private final float PARTICLE_AFFECTED_Y = 0.5f;
+    private static int gameViewCanvasWidth, gameViewCanvasHeight;
 
     public static final int NUMBER_OF_OBSTACLES = 5;
 

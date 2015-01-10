@@ -930,11 +930,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private Bitmap bitmap_replay, bitmap_twitter, bitmap_leaderboard, bitmap_leaderboard_dismissed,
             bitmap_share, bitmap_rate, bitmap_arrow_left, bitmap_arrow_right, bitmap_arrow_up;
 
-    private float canvasWidth, canvasHeight, bitmap_rowOne, bitmap_rowTwo, bitmap_replayLocationX,
+    private float bitmap_rowOne, bitmap_rowTwo, bitmap_replayLocationX,
             bitmap_twitterLocationX, bitmap_leaderboardLocationX, bitmap_shareLocationX,
             bitmap_rateLocationX, experienceForDraw;
 
-    private int tutorialAlpha, level, experienceInLevel, experienceForNextLevel;
+    private int canvasWidth, canvasHeight, tutorialAlpha, level, experienceInLevel, experienceForNextLevel;
 
     private static GameState gameState;
 
