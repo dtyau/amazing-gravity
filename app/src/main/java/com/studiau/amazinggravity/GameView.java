@@ -96,7 +96,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             for (int i = 0; i < AMOUNT_OF_EXHAUST; i++) {
 
-                exhaustParticles.add(new ExhaustParticle(ship, canvasWidth, canvasHeight));
+                exhaustParticles.add(new ExhaustParticle(ship));
 
             }
 
@@ -108,7 +108,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) {
 
-                explosionParticles.add(new ExplosionParticle(canvasWidth, canvasHeight));
+                explosionParticles.add(new ExplosionParticle());
 
             }
 
@@ -120,7 +120,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             for (int i = 0; i < AMOUNT_OF_STARS; i++) {
 
-                stars.add(new Star(canvasWidth, canvasHeight));
+                stars.add(new Star());
 
             }
 

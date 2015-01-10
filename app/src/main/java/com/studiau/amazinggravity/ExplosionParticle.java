@@ -12,25 +12,17 @@ import java.util.Random;
 
 public class ExplosionParticle {
 
-    public ExplosionParticle(float canvasWidth, float canvasHeight) {
+    public ExplosionParticle() {
 
         random = new Random();
-
-        gameViewCanvasWidth = canvasWidth;
-
-        gameViewCanvasHeight = canvasHeight;
 
         reset();
 
     }
 
-    public ExplosionParticle(String colour, int radius, float locationX, float locationY, float canvasWidth, float canvasHeight) {
+    public ExplosionParticle(String colour, int radius, float locationX, float locationY) {
 
         random = new Random();
-
-        gameViewCanvasWidth = canvasWidth;
-
-        gameViewCanvasHeight = canvasHeight;
 
         this.radius = radius;
 
@@ -102,9 +94,9 @@ public class ExplosionParticle {
 
         if (alpha >= ALPHA_FADE) {
 
-            locationX += speedX * gameViewCanvasWidth;
+            locationX += speedX * GameView.canvasWidth;
 
-            locationY += speedY * gameViewCanvasHeight;
+            locationY += speedY * GameView.canvasHeight;
 
             if (radius > RADIUS_CHANGE && updateCounter > RADIUS_CHANGE_COUNTER) {
 
@@ -200,7 +192,7 @@ public class ExplosionParticle {
 
     private Random random;
 
-    private float gameViewCanvasWidth, gameViewCanvasHeight, radius, locationX, locationY, speedX, speedY, angle;
+    private float radius, locationX, locationY, speedX, speedY, angle;
 
     private int speedZ, updateCounter, alpha;
 

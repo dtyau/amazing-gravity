@@ -12,17 +12,13 @@ import java.util.Random;
 
 public class Star {
 
-    public Star(float canvasWidth, float canvasHeight) {
+    public Star() {
 
         random = new Random();
 
         blurMaskFilter = new BlurMaskFilter(2, BlurMaskFilter.Blur.NORMAL);
 
-        gameViewCanvasWidth = canvasWidth;
-
-        gameViewCanvasHeight = canvasHeight;
-
-        radiusModifier = gameViewCanvasWidth / RADIUS_TO_SCREEN_RATIO;
+        radiusModifier = GameView.canvasWidth / RADIUS_TO_SCREEN_RATIO;
 
         reset();
 
@@ -32,11 +28,11 @@ public class Star {
 
         radius = (random.nextInt(MAX_RADIUS) + BASE_RADIUS) * radiusModifier;
 
-        locationX = random.nextFloat() * gameViewCanvasWidth;
+        locationX = random.nextFloat() * GameView.canvasWidth;
 
-        locationY = random.nextFloat() * gameViewCanvasHeight;
+        locationY = random.nextFloat() * GameView.canvasHeight;
 
-        speedX = ((random.nextFloat() - 0.5f) / 0.5f) * BASE_SPEEDX;
+        speedX = ((random.nextFloat() - 0.5f) * 2) * BASE_SPEEDX;
 
         speedY = (radius / (BASE_RADIUS + MAX_RADIUS)) * BASE_SPEEDY;
 
@@ -44,7 +40,7 @@ public class Star {
 
     public void update(Ship ship) {
 
-        if (locationY > gameViewCanvasHeight) {
+        if (locationY > GameView.canvasHeight) {
 
             reset();
 
@@ -52,19 +48,19 @@ public class Star {
 
         if (locationX < 0) {
 
-            locationX = gameViewCanvasWidth;
+            locationX = GameView.canvasWidth;
 
-        } else if (locationX > gameViewCanvasWidth) {
+        } else if (locationX > GameView.canvasWidth) {
 
             locationX = 0;
 
         } else {
 
-            locationX -= (speedX + (ship.getSpeedX() * SHIP_SPEEDX_DAMPENER) * gameViewCanvasWidth);
+            locationX -= (speedX + (ship.getSpeedX() * SHIP_SPEEDX_DAMPENER) * GameView.canvasWidth);
 
         }
 
-        locationY += (speedY + Ship.BASE_SPEEDY) * gameViewCanvasHeight;
+        locationY += (speedY + Ship.BASE_SPEEDY) * GameView.canvasHeight;
 
     }
 
@@ -82,13 +78,13 @@ public class Star {
 
     private BlurMaskFilter blurMaskFilter;
 
-    private float gameViewCanvasWidth, gameViewCanvasHeight, radius, locationX, locationY, speedX, speedY, radiusModifier;
+    private float radius, locationX, locationY, speedX, speedY, radiusModifier;
 
-    private final int MAX_RADIUS = 3;
+    private static final int MAX_RADIUS = 3;
 
-    private final int BASE_RADIUS = 2;
+    private static final int BASE_RADIUS = 2;
 
-    private final int RADIUS_TO_SCREEN_RATIO = 1080;
+    private static final int RADIUS_TO_SCREEN_RATIO = 1080;
 
     private final static float BASE_SPEEDX = 0.0004f;
 

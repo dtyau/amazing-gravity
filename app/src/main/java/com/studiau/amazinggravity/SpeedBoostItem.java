@@ -28,7 +28,7 @@ public class SpeedBoostItem {
             for (int i = 0; i < AMOUNT_OF_EXPLOSION; i++) {
 
                 explosionParticles.add(new ExplosionParticle(colour, SPEED_BOOST_ITEM_EXPLOSION_RADIUS,
-                        locationX, locationY, GameView.canvasWidth, GameView.canvasHeight));
+                        locationX, locationY));
 
             }
 

@@ -11,13 +11,9 @@ import java.util.Random;
 
 public class ExhaustParticle {
 
-    public ExhaustParticle(Ship ship, float canvasWidth, float canvasHeight) {
+    public ExhaustParticle(Ship ship) {
 
         random = new Random();
-
-        gameViewCanvasWidth = canvasWidth;
-
-        gameViewCanvasHeight = canvasHeight;
 
         reset(ship);
 
@@ -33,7 +29,7 @@ public class ExhaustParticle {
 
         locationY = ship.getExhaustLocationY();
 
-        speedX = ((randomFloat - 0.5f) / 0.5f) * BASE_SPEEDX;
+        speedX = ((randomFloat - 0.5f) * 2) * BASE_SPEEDX;
 
         speedY = BASE_SPEEDY + (randomFloat * MAX_ADDITIONAL_SPEEDY);
 
@@ -41,16 +37,16 @@ public class ExhaustParticle {
 
     public void update(Ship ship, ObstacleManager obstacleManager) {
 
-        if ((locationX < 0) || (locationX > gameViewCanvasWidth) || (locationY > gameViewCanvasHeight) ||
+        if ((locationX < 0) || (locationX > GameView.canvasWidth) || (locationY > GameView.canvasHeight) ||
                 (obstacleManager.checkCollisionForParticles(locationX, locationY))) {
 
             reset(ship);
 
         }
 
-        locationX += (speedX - ship.getSpeedX() * SPEEDX_MODIFIER) * gameViewCanvasWidth;
+        locationX += (speedX - ship.getSpeedX() * SPEEDX_MODIFIER) * GameView.canvasWidth;
 
-        locationY += speedY * gameViewCanvasHeight;
+        locationY += speedY * GameView.canvasHeight;
 
     }
 
@@ -62,7 +58,7 @@ public class ExhaustParticle {
 
     private Random random;
 
-    private float gameViewCanvasWidth, gameViewCanvasHeight, radius, locationX, locationY, speedX, speedY;
+    private float radius, locationX, locationY, speedX, speedY;
 
     private static final int BASE_RADIUS = 2;
 
