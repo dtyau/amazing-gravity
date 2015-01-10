@@ -122,9 +122,14 @@ public class Obstacle {
         if(((locationY + radius) > (shipLocationY - shipHeight)) &&
                 ((locationY - radius) < (shipLocationY + shipHeight))) {
 
-            if (checkCollision(ship)) {
+            if(((locationX + radius) > (shipLocationX - shipWidth)) &&
+                    ((locationX - radius) < (shipLocationX + shipWidth))) {
 
-                GameView.setGameState(GameView.GameState.GAMEOVER);
+                if (checkCollision(ship)) {
+
+                    GameView.setGameState(GameView.GameState.GAMEOVER);
+
+                }
 
             }
 
