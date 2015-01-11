@@ -78,7 +78,7 @@ public class Star {
 
     private BlurMaskFilter blurMaskFilter;
 
-    private float radius, locationX, locationY, speedX, speedY, radiusModifier;
+    private volatile float radius, locationX, locationY, speedX, speedY, radiusModifier;
 
     private static final int MAX_RADIUS = 3;
 
@@ -86,10 +86,10 @@ public class Star {
 
     private static final int RADIUS_TO_SCREEN_RATIO = 1080;
 
-    private final static float BASE_SPEEDX = 0.0004f;
+    private static final float BASE_SPEEDX = 0.0004f;
 
-    private final static float BASE_SPEEDY = 0.0004f;
+    private static final float BASE_SPEEDY = 0.0004f;
 
-    private final static float SHIP_SPEEDX_DAMPENER = 0.3f;
+    private static final float SHIP_SPEEDX_DAMPENER = 0.3f;
 
 }

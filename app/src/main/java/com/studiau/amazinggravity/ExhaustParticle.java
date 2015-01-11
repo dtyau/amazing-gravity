@@ -58,7 +58,7 @@ public class ExhaustParticle {
 
     private Random random;
 
-    private float radius, locationX, locationY, speedX, speedY;
+    private volatile float radius, locationX, locationY, speedX, speedY;
 
     private static final int BASE_RADIUS = 2;
 

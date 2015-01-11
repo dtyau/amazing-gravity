@@ -192,25 +192,25 @@ public class ExplosionParticle {
 
     private Random random;
 
-    private float radius, locationX, locationY, speedX, speedY, angle;
-
-    private int speedZ, updateCounter, alpha;
-
     private String colour;
 
-    private final int BASE_RADIUS = 2;
+    private volatile float radius, locationX, locationY, speedX, speedY, angle;
 
-    private final int MAX_ADDITIONAL_RADIUS = 10;
+    private volatile int speedZ, updateCounter, alpha;
 
-    private final int RADIUS_CHANGE = 3;
+    private static final int BASE_RADIUS = 2;
 
-    private final int RADIUS_CHANGE_COUNTER = 10;
+    private static final int MAX_ADDITIONAL_RADIUS = 10;
 
-    private final int ALPHA_FADE = 6;
+    private static final int RADIUS_CHANGE = 3;
 
-    private final int NUMBER_OF_COLOURS = 4;
+    private static final int RADIUS_CHANGE_COUNTER = 10;
 
-    private final float BASE_SPEEDX = 0.02f;
+    private static final int ALPHA_FADE = 4;
+
+    private static final int NUMBER_OF_COLOURS = 4;
+
+    private static final float BASE_SPEEDX = 0.02f;
 
     private final float BASE_SPEEDY = 0.02f;
 
