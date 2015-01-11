@@ -16,8 +16,6 @@ public class Star {
 
         random = new Random();
 
-        blurMaskFilter = new BlurMaskFilter(2, BlurMaskFilter.Blur.NORMAL);
-
         radiusModifier = GameView.canvasWidth / RADIUS_TO_SCREEN_RATIO;
 
         reset();
@@ -66,23 +64,17 @@ public class Star {
 
     public void draw(Canvas canvas, Paint paint) {
 
-        paint.setMaskFilter(blurMaskFilter);
-
         canvas.drawCircle(locationX, locationY, radius, paint);
-
-        paint.setMaskFilter(null);
 
     }
 
     private Random random;
 
-    private BlurMaskFilter blurMaskFilter;
-
     private volatile float radius, locationX, locationY, speedX, speedY, radiusModifier;
 
-    private static final int MAX_RADIUS = 3;
+    private static final int MAX_RADIUS = 2;
 
-    private static final int BASE_RADIUS = 2;
+    private static final int BASE_RADIUS = 1;
 
     private static final int RADIUS_TO_SCREEN_RATIO = 1080;
 
