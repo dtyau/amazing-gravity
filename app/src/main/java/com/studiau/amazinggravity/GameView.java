@@ -48,6 +48,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         paused = false;
 
+        skipMe = true;
+
         tutoring = true;
 
         tutorialAlpha = 255;
@@ -326,6 +328,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         }
 
+        if(!skipMe) {
+
+            skipMe = true;
+
+        } else {
+
+            skipMe = false;
+
+        }
+
     }
 
     public void render(Canvas canvas) {
@@ -529,6 +541,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                     actionsOnPress();
 
+                    System.gc();
+
                     reset(ship);
 
                 } else if ((eventX > (bitmap_leaderboardLocationX - (bitmap_leaderboard.getWidth() * 0.5f))) &&
@@ -590,6 +604,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private void reset(Ship ship) {
 
         gameState = GameState.RUNNING;
+
+        skipMe = true;
 
         tutoring = true;
 
@@ -939,6 +955,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private volatile int tutorialAlpha, level, experienceInLevel, experienceForNextLevel;
 
     public static volatile int canvasWidth, canvasHeight;
+
+    public static volatile boolean skipMe;
 
     private static volatile boolean controlInverted, soundEnabled, vibrationEnabled;
 

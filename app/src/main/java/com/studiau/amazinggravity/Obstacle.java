@@ -107,23 +107,27 @@ public class Obstacle {
 
         updateLocationY();
 
-        if (((locationY + radius) > (Ship.locationY - Ship.height)) &&
-                ((locationY - radius) < (Ship.locationY + Ship.height))) {
+        if(!GameView.skipMe) {
 
-            if (((locationX + radius) > (Ship.locationX - Ship.width)) &&
-                    ((locationX - radius) < (Ship.locationX + Ship.width))) {
+            if (((locationY + radius) > (Ship.locationY - Ship.height)) &&
+                    ((locationY - radius) < (Ship.locationY + Ship.height))) {
 
-                if (checkCollision(ship)) {
+                if (((locationX + radius) > (Ship.locationX - Ship.width)) &&
+                        ((locationX - radius) < (Ship.locationX + Ship.width))) {
 
-                    GameView.setGameState(GameView.GameState.GAMEOVER);
+                    if (checkCollision(ship)) {
+
+                        GameView.setGameState(GameView.GameState.GAMEOVER);
+
+                    }
 
                 }
 
-            }
+                if (linkedWithSpeedBoost && !speedBoostItem.isCollided()) {
 
-            if (linkedWithSpeedBoost && !speedBoostItem.isCollided()) {
+                    speedBoostItem.checkCollision(ship);
 
-                speedBoostItem.checkCollision(ship);
+                }
 
             }
 
