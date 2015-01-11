@@ -74,7 +74,7 @@ public class Star {
 
     private static final int MAX_RADIUS = 2;
 
-    private static final int BASE_RADIUS = 1;
+    private static final int BASE_RADIUS = 2;
 
     private static final int RADIUS_TO_SCREEN_RATIO = 1080;
 
