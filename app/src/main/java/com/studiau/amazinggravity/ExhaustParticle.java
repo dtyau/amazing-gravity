@@ -29,7 +29,7 @@ public class ExhaustParticle {
 
         locationY = ship.getExhaustLocationY();
 
-        speedX = ((randomFloat - 0.5f) * 2) * BASE_SPEEDX;
+        speedX = ((random.nextFloat() - 0.5f) * 2) * BASE_SPEEDX;
 
         speedY = BASE_SPEEDY + (randomFloat * MAX_ADDITIONAL_SPEEDY);
 
