@@ -88,13 +88,14 @@ public class ObstacleManager {
 
     public boolean checkCollisionForParticles(float particleLocationX, float particleLocationY) {
 
-        for (Obstacle obstacle: obstacles) {
+        // We don't use an advanced for loop here to minimize memory allocation
+        for (int i = 0; i < obstacles.size(); i++) {
 
-            float radius = obstacle.getRadius();
+            float radius = obstacles.get(i).getRadius();
 
-            float locationX = obstacle.getLocationX();
+            float locationX = obstacles.get(i).getLocationX();
 
-            float locationY = obstacle.getLocationY();
+            float locationY = obstacles.get(i).getLocationY();
 
             if (((locationY + radius) > Ship.locationY) &&
                     ((locationX + radius) > 0) && ((locationX - radius) < GameView.canvasWidth)) {
