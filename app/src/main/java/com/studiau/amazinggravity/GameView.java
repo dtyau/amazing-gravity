@@ -48,6 +48,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         paused = false;
 
+        skipMe = false;
+
         tutoring = true;
 
         tutorialAlpha = 255;
@@ -261,9 +263,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     public void update() {
 
-        for (Star star : stars) {
+        if (skipMe) {
 
-            star.update(ship);
+            for (Star star : stars) {
+
+                star.update(ship);
+
+            }
 
         }
 
@@ -322,6 +328,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 explosionParticle.update();
 
             }
+
+        }
+
+        if (skipMe) {
+
+            skipMe = false;
+
+        } else {
+
+            skipMe = true;
 
         }
 
@@ -588,6 +604,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private void reset(Ship ship) {
 
         gameState = GameState.RUNNING;
+
+        skipMe = false;
 
         tutoring = true;
 
@@ -935,6 +953,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             bitmap_rateLocationX, experienceForDraw;
 
     private volatile int tutorialAlpha, level, experienceInLevel, experienceForNextLevel;
+
+    public static volatile boolean skipMe;
 
     public static volatile int canvasWidth, canvasHeight;
 
