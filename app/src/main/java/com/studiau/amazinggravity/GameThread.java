@@ -30,6 +30,10 @@ public class GameThread extends Thread {
 
         this.setPriority(Thread.MAX_PRIORITY);
 
+        long next_game_tick = System.nanoTime();
+
+        long current_game_tick;
+
         Canvas canvas;
 
         while (running) {
@@ -44,9 +48,29 @@ public class GameThread extends Thread {
 
                     synchronized (surfaceHolder) {
 
-                        this.gameView.update();
+                        current_game_tick = System.nanoTime();
 
-                        this.gameView.render(canvas);
+                        if (current_game_tick > next_game_tick) {
+
+                            this.gameView.update();
+
+                            this.gameView.render(canvas);
+
+                            next_game_tick += SKIP_TICKS;
+
+                        } else {
+
+                            try {
+
+                                sleep(next_game_tick - current_game_tick);
+
+                            } catch (InterruptedException e) {
+
+                                e.printStackTrace();
+
+                            }
+
+                        }
 
                     }
 
@@ -67,5 +91,9 @@ public class GameThread extends Thread {
     private GameView gameView;
 
     private Boolean running;
+
+    private static final int UPDATES_PER_SECOND = 60;
+
+    private static final int SKIP_TICKS = 1000000000 / UPDATES_PER_SECOND;
 
 }
