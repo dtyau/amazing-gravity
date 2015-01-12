@@ -275,17 +275,29 @@ public class Obstacle {
 
             case 2:
 
-                return "#4FC3F7"; // light blue
+                return "#FF8A65"; // deep orange
 
             case 3:
 
-                return "#F06292"; // pink
+                return "#4FC3F7"; // light blue
 
             case 4:
 
-                return "#4DB6AC"; // teal
+                return "#DCE775"; // lime
 
             case 5:
+
+                return "#F06292"; // pink
+
+            case 6:
+
+                return "#4DB6AC"; // teal
+
+            case 7:
+
+                return "#FFB74D"; // orange
+
+            case 8:
 
                 return "#9575CD"; // deep purple
 
@@ -383,7 +395,7 @@ public class Obstacle {
 
     private static final int COLOUR_CHANGE_SCORE_INCREMENT = 10;
 
-    private static final int NUMBER_OF_COLOURS = 5;
+    private static final int NUMBER_OF_COLOURS = 8;
 
     private static final int BASE_MASS = 10;
 
