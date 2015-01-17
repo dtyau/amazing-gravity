@@ -532,7 +532,7 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
 
                     actionsOnPress();
 
-                    //System.gc();
+                    System.gc();
 
                     reset(ship);
 
