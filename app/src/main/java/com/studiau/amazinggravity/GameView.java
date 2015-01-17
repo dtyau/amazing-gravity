@@ -15,6 +15,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.opengl.GLSurfaceView;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -34,7 +35,7 @@ import java.util.List;
  * @Author: Daniel Au
  */
 
-public class GameView extends SurfaceView implements SurfaceHolder.Callback {
+public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
 
     public GameView(Context context) {
 
@@ -327,15 +328,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         }
 
-        if(!skipMe) {
-
-            skipMe = true;
-
-        } else {
-
-            skipMe = false;
-
-        }
+        skipMe =! skipMe;
 
     }
 
@@ -944,13 +937,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private Bitmap bitmap_replay, bitmap_twitter, bitmap_leaderboard, bitmap_leaderboard_dismissed,
             bitmap_share, bitmap_rate, bitmap_arrow_left, bitmap_arrow_right;
 
-    private volatile boolean started, paused, gameOverProcessed, tutoring;
+    private boolean started, paused, gameOverProcessed, tutoring;
 
-    private volatile float bitmap_rowOne, bitmap_rowTwo, bitmap_replayLocationX,
+    private float bitmap_rowOne, bitmap_rowTwo, bitmap_replayLocationX,
             bitmap_twitterLocationX, bitmap_leaderboardLocationX, bitmap_shareLocationX,
             bitmap_rateLocationX, experienceForDraw;
 
-    private volatile int tutorialAlpha, level, experienceInLevel, experienceForNextLevel;
+    private int tutorialAlpha, level, experienceInLevel, experienceForNextLevel;
 
     public static volatile int canvasWidth, canvasHeight;
 

@@ -70,7 +70,7 @@ public class Star {
 
     private Random random;
 
-    private volatile float radius, locationX, locationY, speedX, speedY, radiusModifier;
+    private float radius, locationX, locationY, speedX, speedY, radiusModifier;
 
     private static final int MAX_RADIUS = 2;
 
