@@ -28,11 +28,9 @@ public class GameThread extends Thread {
     @Override
     public void run() {
 
-        this.setPriority(Thread.MAX_PRIORITY);
-
         Canvas canvas;
 
-        while (running) {
+        while (running && !interrupted()) {
 
             canvas = null;
 
