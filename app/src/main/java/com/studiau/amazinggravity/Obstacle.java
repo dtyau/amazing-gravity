@@ -65,7 +65,7 @@ public class Obstacle {
 
         scored = false;
 
-        if (ScoreManager.getScore() > 1) {
+        if(ScoreManager.getScore() > 1) {
 
             if (randomFloat < CHANCE_FOR_SPEED_BOOST_ITEM) {
 
@@ -107,23 +107,27 @@ public class Obstacle {
 
         updateLocationY();
 
-        if (((locationY + radius) > (Ship.locationY - Ship.height)) &&
-                ((locationY - radius) < (Ship.locationY + Ship.height))) {
+        if(GameView.skipMe) {
 
-            if (((locationX + radius) > (Ship.locationX - Ship.width)) &&
-                    ((locationX - radius) < (Ship.locationX + Ship.width))) {
+            if (((locationY + radius) > (Ship.locationY - Ship.height)) &&
+                    ((locationY - radius) < (Ship.locationY + Ship.height))) {
 
-                if (checkCollision(ship)) {
+                if (((locationX + radius) > (Ship.locationX - Ship.width)) &&
+                        ((locationX - radius) < (Ship.locationX + Ship.width))) {
 
-                    GameView.setGameState(GameView.GameState.GAMEOVER);
+                    if (checkCollision(ship)) {
+
+                        GameView.setGameState(GameView.GameState.GAMEOVER);
+
+                    }
 
                 }
 
-            }
+                if (linkedWithSpeedBoost && !speedBoostItem.isCollided()) {
 
-            if (linkedWithSpeedBoost && !speedBoostItem.isCollided()) {
+                    speedBoostItem.checkCollision(ship);
 
-                speedBoostItem.checkCollision(ship);
+                }
 
             }
 
@@ -133,7 +137,7 @@ public class Obstacle {
 
     public void draw(Canvas canvas, Paint paint) {
 
-        if (((locationX + radius) > 0) && ((locationX - radius) < GameView.canvasWidth) &&
+        if(((locationX + radius) > 0) && ((locationX - radius) < GameView.canvasWidth) &&
                 ((locationY + radius) > 0) && ((locationY - radius) < GameView.canvasHeight)) {
 
             paint.setColor(Color.parseColor(colour));
@@ -142,7 +146,7 @@ public class Obstacle {
 
         }
 
-        if (linkedWithSpeedBoost) {
+        if(linkedWithSpeedBoost) {
 
             speedBoostItem.draw(canvas, paint);
 
@@ -223,7 +227,7 @@ public class Obstacle {
 
             locationX += (speedX - ship.getSpeedX()) * GameView.canvasWidth;
 
-            if (linkedWithSpeedBoost) {
+            if(linkedWithSpeedBoost) {
 
                 speedBoostItem.updateLocationX((speedX - ship.getSpeedX()) * GameView.canvasWidth);
 
@@ -237,7 +241,7 @@ public class Obstacle {
 
         locationY += speedY * GameView.canvasHeight;
 
-        if (linkedWithSpeedBoost) {
+        if(linkedWithSpeedBoost) {
 
             speedBoostItem.updateLocationY(speedY * GameView.canvasHeight);
 
@@ -247,7 +251,7 @@ public class Obstacle {
 
     private String setObstacleColour() {
 
-        int scoreTier = (ScoreManager.getScore() + 2) / COLOUR_CHANGE_SCORE_INCREMENT;
+        int scoreTier = (ScoreManager.getScore() + 2 ) / COLOUR_CHANGE_SCORE_INCREMENT;
 
         if (scoreTier > NUMBER_OF_COLOURS) {
 
@@ -329,7 +333,7 @@ public class Obstacle {
 
             if (distanceY <= 1) {
 
-                float verticalDampening = (float) (1 - Math.pow((distanceY - 1), 2));
+                float verticalDampening = (float) ( 1 - Math.pow((distanceY - 1), 2) );
 
                 oldSpeedX -= oldSpeedX * verticalDampening;
 
