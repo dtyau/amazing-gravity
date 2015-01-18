@@ -254,14 +254,14 @@ public class Ship {
 
     private Matrix matrix;
 
-    private boolean controlInverted, boosting;
+    private volatile boolean controlInverted, boosting;
 
-    private int speedBoostCounter, desiredRotation, rotation, bitmap_speedBoostLocationX,
+    private volatile int speedBoostCounter, desiredRotation, rotation, bitmap_speedBoostLocationX,
             bitmap_speedBoostDefaultLocationY, bitmap_speedBoostLocationYIncrement;
 
-    private float speedX, speedBoost;
+    private volatile float speedX, speedBoost;
 
-    public static int locationX, locationY, leftEdge, rightEdge, topEdge, bottomEdge, width, height;
+    public volatile static int locationX, locationY, leftEdge, rightEdge, topEdge, bottomEdge, width, height;
 
     private static final float BITMAP_SPEED_BOOST_DEFAULT_LOCATION_Y = 0.01f;
 

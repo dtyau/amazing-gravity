@@ -194,9 +194,9 @@ public class ExplosionParticle {
 
     private String colour;
 
-    private float radius, locationX, locationY, speedX, speedY, angle;
+    private volatile float radius, locationX, locationY, speedX, speedY, angle;
 
-    private int speedZ, updateCounter, alpha;
+    private volatile int speedZ, updateCounter, alpha;
 
     private static final int BASE_RADIUS = 2;
 

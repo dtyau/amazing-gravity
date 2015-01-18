@@ -212,9 +212,9 @@ public class SpeedBoostItem {
 
     private LightingColorFilter lightingColorFilter;
 
-    private boolean collided;
+    private volatile boolean collided;
 
-    private float locationX, locationY;
+    private volatile float locationX, locationY;
 
     private static final int DISTANCE_FROM_OBSTACLE_MULTIPLIER = 2;
 

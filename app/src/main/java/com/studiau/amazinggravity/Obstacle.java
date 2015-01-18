@@ -383,9 +383,9 @@ public class Obstacle {
 
     private SpeedBoostItem speedBoostItem;
 
-    private float mass, radius, locationX, locationY, speedX, speedY, oldSpeedX;
+    private volatile float mass, radius, locationX, locationY, speedX, speedY, oldSpeedX;
 
-    private boolean scored, linkedWithSpeedBoost;
+    private volatile boolean scored, linkedWithSpeedBoost;
 
     private String colour;
 
