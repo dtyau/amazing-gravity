@@ -101,13 +101,13 @@ public class ScoreManager {
 
     }
 
-    private volatile float scorePlayPositionX, scorePlayPositionY, scoreOverPositionX, scoreOverPositionY,
+    private float scorePlayPositionX, scorePlayPositionY, scoreOverPositionX, scoreOverPositionY,
             bestScoreOverPositionX, textScoreOverPositionY, textGameOverPositionX,
             textGameOverPositionY;
 
-    private volatile boolean newBest;
+    private boolean newBest;
 
-    private volatile static int score, bestScore;
+    private static int score, bestScore;
 
     private final static float TEXT_GAME_OVER_POSITION_X = 0.5f;
 

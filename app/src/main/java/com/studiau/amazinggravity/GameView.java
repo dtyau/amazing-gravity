@@ -909,9 +909,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private GameThread gameThread;
 
-    private static GameState gameState;
-
     private Paint paint;
+
+    private Boolean started, paused, gameOverProcessed, tutoring;
 
     private Ship ship;
 
@@ -928,17 +928,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private Bitmap bitmap_replay, bitmap_twitter, bitmap_leaderboard, bitmap_leaderboard_dismissed,
             bitmap_share, bitmap_rate, bitmap_arrow_left, bitmap_arrow_right;
 
-    private volatile boolean started, paused, gameOverProcessed, tutoring;
-
-    private volatile float bitmap_rowOne, bitmap_rowTwo, bitmap_replayLocationX,
+    private float bitmap_rowOne, bitmap_rowTwo, bitmap_replayLocationX,
             bitmap_twitterLocationX, bitmap_leaderboardLocationX, bitmap_shareLocationX,
             bitmap_rateLocationX, experienceForDraw;
 
-    private volatile int tutorialAlpha, level, experienceInLevel, experienceForNextLevel;
+    private int tutorialAlpha, level, experienceInLevel, experienceForNextLevel;
 
-    public static volatile int canvasWidth, canvasHeight;
+    public static int canvasWidth, canvasHeight;
 
-    private static volatile boolean controlInverted, soundEnabled, vibrationEnabled;
+    private static GameState gameState;
+
+    private static boolean controlInverted, soundEnabled, vibrationEnabled;
 
     private static final int AMOUNT_OF_EXHAUST = 30;
 
