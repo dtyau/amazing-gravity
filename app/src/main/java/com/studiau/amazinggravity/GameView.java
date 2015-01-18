@@ -501,23 +501,23 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
 
                     ship.handleActionDownAndMove(eventX);
 
-                    return true;
+                    return false;
 
                 case (MotionEvent.ACTION_UP):
 
                     ship.handleActionUp();
 
-                    return true;
+                    return false;
 
                 case (MotionEvent.ACTION_POINTER_DOWN):
 
                     ship.activateSpeedBoost();
 
-                    return true;
+                    return false;
 
                 default:
 
-                    return super.onTouchEvent(event);
+                    return false;
 
             }
 
@@ -532,7 +532,7 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
 
                     actionsOnPress();
 
-                    //System.gc();
+                    System.gc();
 
                     reset(ship);
 
@@ -586,7 +586,7 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
 
             }
 
-            return super.onTouchEvent(event);
+            return false;
 
         }
 
@@ -945,11 +945,11 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
 
     private int tutorialAlpha, level, experienceInLevel, experienceForNextLevel;
 
-    public static int canvasWidth, canvasHeight;
+    public static volatile int canvasWidth, canvasHeight;
 
-    public static boolean skipMe;
+    public static volatile boolean skipMe;
 
-    private static boolean controlInverted, soundEnabled, vibrationEnabled;
+    private static volatile boolean controlInverted, soundEnabled, vibrationEnabled;
 
     private static final int AMOUNT_OF_EXHAUST = 20;
 
