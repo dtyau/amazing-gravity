@@ -261,10 +261,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     public void update() {
 
-        // We don't use an advanced for loop here to minimize memory allocation
-        for(int i = 0; i < stars.size(); i++) {
+        for (Star star : stars) {
 
-            stars.get(i).update(ship);
+            star.update(ship);
 
         }
 
@@ -334,10 +333,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         paint.setColor(Color.WHITE); // For stars and tutorial
 
-        // We don't use an advanced for loop here to minimize memory allocation
-        for(int i = 0; i < stars.size(); i++) {
+        for (Star star : stars) {
 
-            stars.get(i).draw(canvas, paint);
+            star.draw(canvas, paint);
 
         }
 
