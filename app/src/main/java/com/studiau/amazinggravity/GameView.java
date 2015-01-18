@@ -960,11 +960,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private static volatile boolean controlInverted, soundEnabled, vibrationEnabled;
 
-    private static final int AMOUNT_OF_EXHAUST = 20;
+    private static final int AMOUNT_OF_EXHAUST = 30;
 
     private static final int AMOUNT_OF_EXPLOSION = 200;
 
-    private static final int AMOUNT_OF_STARS = 60;
+    private static final int AMOUNT_OF_STARS = 80;
 
     private static final int TUTORIAL_ALPHA_FADE_RATE = 5;
 
