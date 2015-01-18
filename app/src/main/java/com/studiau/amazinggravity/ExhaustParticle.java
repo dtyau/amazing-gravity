@@ -37,14 +37,10 @@ public class ExhaustParticle {
 
     public void update(Ship ship, ObstacleManager obstacleManager) {
 
-        if(!GameView.skipMe) {
+        if ((locationX < 0) || (locationX > GameView.canvasWidth) || (locationY > GameView.canvasHeight) ||
+                (obstacleManager.checkCollisionForParticles(locationX, locationY))) {
 
-            if ((locationX < 0) || (locationX > GameView.canvasWidth) || (locationY > GameView.canvasHeight) ||
-                    (obstacleManager.checkCollisionForParticles(locationX, locationY))) {
-
-                reset(ship);
-
-            }
+            reset(ship);
 
         }
 
