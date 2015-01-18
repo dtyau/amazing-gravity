@@ -3,7 +3,6 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Black">
         <!-- Customize your theme here. -->
-        <item name="android:windowBackground">@null</item>
     </style>
 
 </resources>
