@@ -206,7 +206,7 @@ public class ExplosionParticle {
 
     private static final int RADIUS_CHANGE_COUNTER = 10;
 
-    private static final int ALPHA_FADE = 5;
+    private static final int ALPHA_FADE = 4;
 
     private static final int NUMBER_OF_COLOURS = 4;
 
