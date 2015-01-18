@@ -24,7 +24,7 @@ public class Star {
 
     }
 
-    private void reset() {
+    public void reset() {
 
         radius = (random.nextInt(MAX_RADIUS) + BASE_RADIUS) * radiusModifier;
 

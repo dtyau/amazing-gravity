@@ -599,6 +599,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         ship.reset();
 
+        for (Star star : stars) {
+
+            star.reset();
+
+        }
+
         obstacleManager.reset(ship);
 
         for (ExhaustParticle exhaustParticle : exhaustParticles) {
