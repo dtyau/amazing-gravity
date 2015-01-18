@@ -36,7 +36,7 @@ public class Star {
 
     }
 
-    public void update(float shipSpeedX) {
+    public void update(Ship ship) {
 
         if (locationY > GameView.canvasHeight) {
 
@@ -54,7 +54,7 @@ public class Star {
 
         } else {
 
-            locationX -= (speedX + (shipSpeedX * SHIP_SPEEDX_DAMPENER) * GameView.canvasWidth);
+            locationX -= (speedX + (ship.getSpeedX() * SHIP_SPEEDX_DAMPENER) * GameView.canvasWidth);
 
         }
 
