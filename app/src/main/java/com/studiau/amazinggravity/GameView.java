@@ -74,9 +74,11 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
 
         setFocusable(true);
 
+        /*// For FPS
         times = new LinkedList<Long>();
 
         fps = 0.0;
+        //*/
 
     }
 
@@ -428,7 +430,8 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
 
         }
 
-        paint.setColor(Color.WHITE); // For FPS
+        /*// For FPS
+        paint.setColor(Color.WHITE);
 
         fps = fps();
 
@@ -437,6 +440,7 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
         paint.setTextSize(GameView.canvasWidth / 18);
 
         canvas.drawText(Double.toString(fps), canvasWidth * 0.03f, canvasHeight * 0.04f, paint);
+        //*/
 
 
     }
@@ -929,6 +933,7 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
 
     }
 
+    /*// For FPS
     private double fps() {
 
         long lastTime = System.nanoTime();
@@ -954,6 +959,7 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
         return difference > 0 ? times.size() / difference : 0.0;
 
     }
+    //*/
 
     enum GameState {
 
@@ -961,7 +967,7 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
 
     }
 
-    // For FPS
+    /*// For FPS
     private LinkedList<Long> times;
 
     private final int MAX_SIZE = 100;
@@ -969,7 +975,7 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
     private final double NANOS = 1000000000.0;
 
     private double fps;
-    //
+    //*/
 
     private GoogleApiClient googleApiClient;
 
