@@ -269,9 +269,9 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
 
     public void update() {
 
-        for (Star star : stars) {
+        for (int i = 0; i < stars.size(); i++) {
 
-            star.update(ship.getSpeedX());
+            stars.get(i).update(ship.getSpeedX());
 
         }
 
@@ -291,9 +291,9 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
 
             ship.update();
 
-            for (ExhaustParticle exhaustParticle : exhaustParticles) {
+            for (int i = 0; i < exhaustParticles.size(); i++) {
 
-                exhaustParticle.update(ship, obstacleManager);
+                exhaustParticles.get(i).update(ship, obstacleManager);
 
             }
 
@@ -341,9 +341,9 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
 
         paint.setColor(Color.WHITE); // For stars and tutorial
 
-        for (Star star : stars) {
+        for (int i = 0; i < stars.size(); i++) {
 
-            star.draw(canvas, paint);
+            stars.get(i).draw(canvas, paint);
 
         }
 
@@ -383,9 +383,9 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
 
             ship.draw(canvas, paint);
 
-            for (ExhaustParticle exhaustParticle : exhaustParticles) {
+            for (int i = 0; i < exhaustParticles.size(); i++) {
 
-                exhaustParticle.draw(canvas, paint);
+                exhaustParticles.get(i).draw(canvas, paint);
 
             }
 
