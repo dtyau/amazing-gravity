@@ -80,7 +80,7 @@ public class Star {
 
     private float radius, locationX, locationY, speedX, speedY, radiusModifier;
 
-    private static final int MAX_RADIUS = 2;
+    private static final int MAX_RADIUS = 3;
 
     private static final int BASE_RADIUS = 2;
 
