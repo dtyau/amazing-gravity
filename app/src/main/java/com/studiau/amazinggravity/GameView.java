@@ -28,6 +28,7 @@ import com.google.android.gms.plus.Plus;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -68,6 +69,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         loadSharedPreferences();
 
         setFocusable(true);
+
+        times = new LinkedList<Long>();
+
+        fps = 0.0;
 
     }
 
@@ -414,6 +419,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             drawButtons(canvas);
 
         }
+
+        paint.setColor(Color.WHITE); // For FPS
+
+        fps = fps();
+
+        paint.setTextAlign(Paint.Align.LEFT);
+
+        paint.setTextSize(GameView.canvasWidth / 18);
+
+        canvas.drawText(Double.toString(fps), canvasWidth * 0.03f, canvasHeight * 0.04f, paint);
+
 
     }
 
@@ -905,11 +921,47 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
+    private double fps() {
+
+        long lastTime = System.nanoTime();
+
+        double difference = 0.0;
+
+        if(times.size() > 0) {
+
+            difference = (lastTime - times.getFirst()) / NANOS;
+
+        }
+
+        times.addLast(lastTime);
+
+        int size = times.size();
+
+        if (size > MAX_SIZE) {
+
+            times.removeFirst();
+
+        }
+
+        return difference > 0 ? times.size() / difference : 0.0;
+
+    }
+
     enum GameState {
 
         RUNNING, GAMEOVER
 
     }
+
+    // For FPS
+    private LinkedList<Long> times;
+
+    private final int MAX_SIZE = 100;
+
+    private final double NANOS = 1000000000.0;
+
+    private double fps;
+    //
 
     private GoogleApiClient googleApiClient;
 
