@@ -103,7 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="©2014 StudiAu"
+        android:text="@string/copyright"
         android:textAlignment="center"
         android:textSize="12dp" />
 
