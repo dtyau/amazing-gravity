@@ -268,7 +268,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         for (Star star : stars) {
 
-            star.update(ship);
+            star.update(ship.getSpeedX());
 
         }
 
@@ -1002,7 +1002,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private static final int AMOUNT_OF_EXPLOSION = 300;
 
-    private static final int AMOUNT_OF_STARS = 100;
+    private static final int AMOUNT_OF_STARS = 60;
 
     private static final int TUTORIAL_ALPHA_FADE_RATE = 5;
 

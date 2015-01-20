@@ -62,7 +62,7 @@ public class ExhaustParticle {
 
     private static final int BASE_RADIUS = 2;
 
-    private static final int MAX_ADDITIONAL_RADIUS = 2;
+    private static final int MAX_ADDITIONAL_RADIUS = 1;
 
     private static final float BASE_SPEEDX = 0.003f;
 

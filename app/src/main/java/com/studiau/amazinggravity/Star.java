@@ -38,11 +38,11 @@ public class Star {
 
     }
 
-    public void update(Ship ship) {
+    public void update(float shipSpeedX) {
 
         if (locationY > GameView.canvasHeight) {
 
-            reset();
+            locationY = 0;
 
         }
 
@@ -56,7 +56,7 @@ public class Star {
 
         } else {
 
-            locationX -= (speedX + (ship.getSpeedX() * SHIP_SPEEDX_DAMPENER) * GameView.canvasWidth);
+            locationX -= (speedX + (shipSpeedX * SHIP_SPEEDX_DAMPENER) * GameView.canvasWidth);
 
         }
 
@@ -80,7 +80,7 @@ public class Star {
 
     private float radius, locationX, locationY, speedX, speedY, radiusModifier;
 
-    private static final int MAX_RADIUS = 3;
+    private static final int MAX_RADIUS = 2;
 
     private static final int BASE_RADIUS = 2;
 
