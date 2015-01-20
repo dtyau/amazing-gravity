@@ -271,7 +271,7 @@ public class Obstacle {
 
             case 2:
 
-                return "#F44336"; // red
+                return "#F06292"; // pink
 
             case 3:
 
@@ -283,7 +283,7 @@ public class Obstacle {
 
             case 5:
 
-                return "#F06292"; // pink
+                return "#EF5350"; // red
 
             case 6:
 
@@ -291,7 +291,7 @@ public class Obstacle {
 
             case 7:
 
-                return "#9575CD"; // deep purple
+                return "#B39DDB"; // deep purple
 
         }
 
@@ -385,7 +385,7 @@ public class Obstacle {
 
     private final float MAX_RADIUS;
 
-    private static final int COLOUR_CHANGE_SCORE_INCREMENT = 5;
+    private static final int COLOUR_CHANGE_SCORE_INCREMENT = 10;
 
     private static final int NUMBER_OF_COLOURS = 7;
 
