@@ -28,7 +28,11 @@ public class GameThread extends Thread {
     @Override
     public void run() {
 
-        this.setPriority(Thread.MAX_PRIORITY);
+        //this.setPriority(Thread.MAX_PRIORITY);
+
+        double nextUpdateTime = System.nanoTime();
+
+        int loops;
 
         Canvas canvas;
 
@@ -44,7 +48,18 @@ public class GameThread extends Thread {
 
                     synchronized (surfaceHolder) {
 
-                        this.gameView.update();
+                        loops = 0;
+
+                        while ((System.nanoTime() > nextUpdateTime) &&
+                                (loops < MAX_ALLOWED_FRAMESKIPS)) {
+
+                            this.gameView.update();
+
+                            nextUpdateTime += NANOSECONDS_PER_UPDATE;
+
+                            loops++;
+
+                        }
 
                         this.gameView.render(canvas);
 
@@ -67,5 +82,11 @@ public class GameThread extends Thread {
     private GameView gameView;
 
     private Boolean running;
+
+    private static final int UPDATES_PER_SECOND = 60;
+
+    private static final double NANOSECONDS_PER_UPDATE = 1000000000 / UPDATES_PER_SECOND;
+
+    private static final int MAX_ALLOWED_FRAMESKIPS = 1;
 
 }

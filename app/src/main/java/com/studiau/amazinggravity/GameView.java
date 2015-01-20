@@ -15,6 +15,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.opengl.GLSurfaceView;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -35,13 +36,15 @@ import java.util.List;
  * @Author: Daniel Au
  */
 
-public class GameView extends SurfaceView implements SurfaceHolder.Callback {
+public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
 
     public GameView(Context context) {
 
         super(context);
 
         getHolder().addCallback(this);
+
+        getHolder().setSizeFromLayout();
 
         gameThread = new GameThread(getHolder(), this);
 
@@ -998,11 +1001,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private static boolean controlInverted, soundEnabled, vibrationEnabled;
 
-    private static final int AMOUNT_OF_EXHAUST = 30;
+    private static final int AMOUNT_OF_EXHAUST = 40;
 
     private static final int AMOUNT_OF_EXPLOSION = 300;
 
-    private static final int AMOUNT_OF_STARS = 60;
+    private static final int AMOUNT_OF_STARS = 100;
 
     private static final int TUTORIAL_ALPHA_FADE_RATE = 5;
 
