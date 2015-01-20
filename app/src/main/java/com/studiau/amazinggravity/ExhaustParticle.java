@@ -75,7 +75,7 @@ public class ExhaustParticle {
 
     private boolean fromBoost;
 
-    private static final int BASE_RADIUS = 2;
+    private static final int BASE_RADIUS = 3;
 
     private static final int MAX_ADDITIONAL_RADIUS = 1;
 

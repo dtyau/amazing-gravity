@@ -268,6 +268,8 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
 
         starsBlurMaskFilter = new BlurMaskFilter(2, BlurMaskFilter.Blur.NORMAL);
 
+        exhaustBlurMaskFilter = new BlurMaskFilter(1, BlurMaskFilter.Blur.NORMAL);
+
     }
 
     public void update() {
@@ -364,19 +366,21 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
 
                 paint.setAlpha(tutorialAlpha);
 
-                canvas.drawText("slide left or right", canvasWidth * 0.5f, canvasHeight * 0.21f, paint);
+                canvas.drawText("slide left or right", canvasWidth * 0.5f, canvasHeight * 0.19f, paint);
 
-                canvas.drawText("to avoid wormholes", canvasWidth * 0.5f, canvasHeight * 0.25f, paint);
+                canvas.drawText("to avoid wormholes and", canvasWidth * 0.5f, canvasHeight * 0.24f, paint);
 
-                canvas.drawBitmap(bitmap_arrow_left, canvasWidth * 0.25f - bitmap_arrow_left.getWidth() * 0.5f,
+                canvas.drawText("collect speed boosts", canvasWidth * 0.5f, canvasHeight * 0.29f, paint);
+
+                canvas.drawBitmap(bitmap_arrow_left, canvasWidth * 0.15f - bitmap_arrow_left.getWidth() * 0.5f,
                         canvasHeight * 0.75f - bitmap_arrow_left.getHeight() * 0.5f, paint);
 
-                canvas.drawBitmap(bitmap_arrow_right, canvasWidth * 0.75f - bitmap_arrow_right.getWidth() * 0.5f,
+                canvas.drawBitmap(bitmap_arrow_right, canvasWidth * 0.85f - bitmap_arrow_right.getWidth() * 0.5f,
                         canvasHeight * 0.75f - bitmap_arrow_right.getHeight() * 0.5f, paint);
 
                 canvas.drawText("tap while turning", canvasWidth * 0.5f, canvasHeight * 0.48f, paint);
 
-                canvas.drawText("for speed boost", canvasWidth * 0.5f, canvasHeight * 0.52f, paint);
+                canvas.drawText("for speed boost", canvasWidth * 0.5f, canvasHeight * 0.53f, paint);
 
             }
 
@@ -390,11 +394,15 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
 
             ship.draw(canvas, paint);
 
+            paint.setMaskFilter(exhaustBlurMaskFilter);
+
             for (int i = 0; i < exhaustParticles.size(); i++) {
 
                 exhaustParticles.get(i).draw(canvas, paint);
 
             }
+
+            paint.setMaskFilter(null);
 
             paint.setColor(Color.WHITE); // For score
 
@@ -969,7 +977,7 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
 
     private Paint paint;
 
-    private BlurMaskFilter starsBlurMaskFilter;
+    private BlurMaskFilter starsBlurMaskFilter, exhaustBlurMaskFilter;
 
     private Boolean started, paused, gameOverProcessed, tutoring;
 
