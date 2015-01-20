@@ -218,7 +218,7 @@ public class SpeedBoostItem {
 
     private static final int DISTANCE_FROM_OBSTACLE_MULTIPLIER = 2;
 
-    private static final int AMOUNT_OF_EXPLOSION = 30;
+    private static final int AMOUNT_OF_EXPLOSION = 50;
 
     private static final int SPEED_BOOST_ITEM_EXPLOSION_RADIUS = 4;
 
