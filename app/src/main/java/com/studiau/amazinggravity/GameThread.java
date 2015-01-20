@@ -28,8 +28,6 @@ public class GameThread extends Thread {
     @Override
     public void run() {
 
-        //this.setPriority(Thread.MAX_PRIORITY);
-
         double nextUpdateTime = System.nanoTime();
 
         int loops;
