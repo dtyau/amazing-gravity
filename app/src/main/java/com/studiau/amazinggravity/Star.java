@@ -1,6 +1,5 @@
 package com.studiau.amazinggravity;
 
-import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
@@ -15,8 +14,6 @@ public class Star {
     public Star() {
 
         random = new Random();
-
-        blurMaskFilter = new BlurMaskFilter(2, BlurMaskFilter.Blur.NORMAL);
 
         radiusModifier = GameView.canvasWidth / RADIUS_TO_SCREEN_RATIO;
 
@@ -66,17 +63,11 @@ public class Star {
 
     public void draw(Canvas canvas, Paint paint) {
 
-        paint.setMaskFilter(blurMaskFilter);
-
         canvas.drawCircle(locationX, locationY, radius, paint);
-
-        paint.setMaskFilter(null);
 
     }
 
     private Random random;
-
-    private BlurMaskFilter blurMaskFilter;
 
     private float radius, locationX, locationY, speedX, speedY, radiusModifier;
 

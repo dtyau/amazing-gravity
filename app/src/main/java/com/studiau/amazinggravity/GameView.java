@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -265,6 +266,8 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
 
         bitmap_arrow_right = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.arrow_right);
 
+        starsBlurMaskFilter = new BlurMaskFilter(2, BlurMaskFilter.Blur.NORMAL);
+
     }
 
     public void update() {
@@ -341,11 +344,15 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
 
         paint.setColor(Color.WHITE); // For stars and tutorial
 
+        paint.setMaskFilter(starsBlurMaskFilter);
+
         for (int i = 0; i < stars.size(); i++) {
 
             stars.get(i).draw(canvas, paint);
 
         }
+
+        paint.setMaskFilter(null);
 
         if (gameState == GameState.RUNNING) {
 
@@ -961,6 +968,8 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
     private GameThread gameThread;
 
     private Paint paint;
+
+    private BlurMaskFilter starsBlurMaskFilter;
 
     private Boolean started, paused, gameOverProcessed, tutoring;
 
