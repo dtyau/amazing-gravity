@@ -1,6 +1,7 @@
 package com.studiau.amazinggravity;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 
 import java.util.Random;
@@ -20,6 +21,8 @@ public class ExhaustParticle {
     }
 
     public void reset(Ship ship) {
+
+        fromBoost = ship.isBoosting();
 
         float randomFloat = random.nextFloat();
 
@@ -52,6 +55,16 @@ public class ExhaustParticle {
 
     public void draw(Canvas canvas, Paint paint) {
 
+        if (fromBoost) {
+
+            paint.setColor(Color.parseColor("#2196F3")); // For boosting exhaust particles
+
+        } else {
+
+            paint.setColor(Color.parseColor("#B0BEC5")); // For exhaust particles
+
+        }
+
         canvas.drawCircle(locationX, locationY, radius, paint);
 
     }
@@ -59,6 +72,8 @@ public class ExhaustParticle {
     private Random random;
 
     private float radius, locationX, locationY, speedX, speedY;
+
+    private boolean fromBoost;
 
     private static final int BASE_RADIUS = 2;
 
