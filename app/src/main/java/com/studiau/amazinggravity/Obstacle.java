@@ -147,17 +147,18 @@ public class Obstacle {
 
             paint.setMaskFilter(null);
 
-            if ((locationX > 0) && (locationX < GameView.canvasWidth)) {
+            if (((locationX - radius) > 0) && ((locationX + radius) < GameView.canvasWidth)) {
 
-                canvas.drawBitmap(bitmap_warning, locationX, 0, paint);
+                canvas.drawBitmap(bitmap_warning, locationX, GameView.canvasHeight * 0.01f, paint);
 
-            } else if (locationX < 0) {
+            } else if ((locationX - radius) <= 0) {
 
-                canvas.drawBitmap(bitmap_warning, 0, 0, paint);
+                canvas.drawBitmap(bitmap_warning, 0, GameView.canvasHeight * 0.01f, paint);
 
-            } else if (locationX > GameView.canvasWidth) {
+            } else if ((locationX + radius) >= GameView.canvasWidth) {
 
-                canvas.drawBitmap(bitmap_warning, GameView.canvasWidth - bitmap_warning.getWidth(), 0, paint);
+                canvas.drawBitmap(bitmap_warning, GameView.canvasWidth - bitmap_warning.getWidth(),
+                        GameView.canvasHeight * 0.01f, paint);
 
             }
 

@@ -115,7 +115,7 @@ public class ScoreManager {
 
     private final static float SCORE_PLAY_POSITION_X = 0.95f;
 
-    private final static float SCORE_PLAY_POSITION_Y = 0.05f;
+    private final static float SCORE_PLAY_POSITION_Y = 0.1f;
 
     private final static float SCORE_OVER_POSITION_X = 0.3f;
 
