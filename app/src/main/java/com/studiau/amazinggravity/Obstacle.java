@@ -8,13 +8,15 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import java.util.Random;
+
 /**
  * @Author: Daniel Au
  */
 
 public class Obstacle {
 
-    public Obstacle(Context context, Ship ship) {
+    public Obstacle(Context context, Ship ship, Random seededRandom) {
 
         if(blurMaskFilter == null) {
 
@@ -30,21 +32,21 @@ public class Obstacle {
 
         colour = setObstacleColour();
 
-        speedBoostItem = new SpeedBoostItem(context, colour, ObstacleManager.seededRandom.nextBoolean(), radius, locationX, locationY);
+        speedBoostItem = new SpeedBoostItem(context, colour, seededRandom.nextBoolean(), radius, locationX, locationY);
 
-        reset(ship);
+        reset(ship, seededRandom);
 
     }
 
-    public void reset(Ship ship) {
+    public void reset(Ship ship, Random seededRandom) {
 
-        mass = BASE_MASS + ObstacleManager.seededRandom.nextInt(MAX_ADDITIONAL_MASS);
+        mass = BASE_MASS + seededRandom.nextInt(MAX_ADDITIONAL_MASS);
 
         radius = mass * RADIUS_TO_MASS_RATIO;
 
-        float randomFloat = ObstacleManager.seededRandom.nextFloat();
+        float randomFloat = seededRandom.nextFloat();
 
-        boolean randomBoolean = ObstacleManager.seededRandom.nextBoolean();
+        boolean randomBoolean = seededRandom.nextBoolean();
 
         if (randomBoolean) {
 
@@ -90,7 +92,7 @@ public class Obstacle {
 
     }
 
-    public void update(Ship ship, float collectiveSpeedX) {
+    public void update(Ship ship, float collectiveSpeedX, Random seededRandom) {
 
         if ((locationY - radius) > Ship.bottomEdge) {
 
@@ -106,7 +108,7 @@ public class Obstacle {
 
         if ((locationY) > (GameView.canvasHeight * ObstacleManager.OBSTACLE_KILL_HEIGHT_RATIO)) {
 
-            reset(ship);
+            reset(ship, seededRandom);
 
         }
 

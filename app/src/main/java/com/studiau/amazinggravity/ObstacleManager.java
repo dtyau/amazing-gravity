@@ -18,7 +18,7 @@ public class ObstacleManager {
 
         this.context = context;
 
-        calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
 
         seed = (long) calendar.get(Calendar.DAY_OF_YEAR);
 
@@ -36,7 +36,7 @@ public class ObstacleManager {
 
         for (Obstacle obstacle : obstacles) {
 
-            obstacle.update(ship, collectiveSpeedX);
+            obstacle.update(ship, collectiveSpeedX, seededRandom);
 
         }
 
@@ -64,7 +64,7 @@ public class ObstacleManager {
 
         for (int i = 0; i < NUMBER_OF_OBSTACLES; i++) {
 
-            obstacles.add(new Obstacle(context, ship));
+            obstacles.add(new Obstacle(context, ship, seededRandom));
 
             obstacles.get(i).setBottomEdgeToLocationYWithMaxRadius(locationY);
 
@@ -127,11 +127,9 @@ public class ObstacleManager {
 
     private ArrayList<Obstacle> obstacles;
 
-    private final Calendar calendar;
-
     private long seed;
 
-    public static Random seededRandom;
+    private Random seededRandom;
 
     public static final int NUMBER_OF_OBSTACLES = 5;
 
