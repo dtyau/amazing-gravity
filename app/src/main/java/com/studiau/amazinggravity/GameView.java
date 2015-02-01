@@ -21,7 +21,6 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
@@ -75,7 +74,7 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
         setFocusable(true);
 
         /*// For FPS
-        times = new LinkedList<Long>();
+        times = new LinkedList<>();
 
         fps = 0.0;
         //*/
@@ -306,13 +305,13 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
 
         } else if (gameState == GameState.GAMEOVER) {
 
-            while (!gameOverProcessed) {
+            if (!gameOverProcessed) {
+
+                gameOverProcessed = true;
 
                 updateExperience(ScoreManager.getScore());
 
                 determineLevelAndExperience();
-
-                ship.setSpeedBoostCounter(1);
 
                 scoreManager.update();
 
@@ -322,13 +321,13 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
 
                 }
 
-                if (MainActivity.isGooglePlaySignedIn()) {
+            }
 
-                    updateToGooglePlayServices();
+            if (MainActivity.isGooglePlaySignedIn() && !updatedToGooglePlay) {
 
-                }
+                updatedToGooglePlay = true;
 
-                gameOverProcessed = true;
+                updateToGooglePlayServices();
 
             }
 
@@ -441,7 +440,6 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
 
         canvas.drawText(Double.toString(fps), canvasWidth * 0.03f, canvasHeight * 0.04f, paint);
         //*/
-
 
     }
 
@@ -625,7 +623,11 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
 
         gameOverProcessed = false;
 
+        updatedToGooglePlay = false;
+
         ship.reset();
+
+        ship.setSpeedBoostCounter(1);
 
         for (Star star : stars) {
 
@@ -970,7 +972,7 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
     /*// For FPS
     private LinkedList<Long> times;
 
-    private final int MAX_SIZE = 100;
+    private final int MAX_SIZE = 1000;
 
     private final double NANOS = 1000000000.0;
 
@@ -984,8 +986,6 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
     private Paint paint;
 
     private BlurMaskFilter starsBlurMaskFilter, exhaustBlurMaskFilter;
-
-    private Boolean started, paused, gameOverProcessed, tutoring;
 
     private Ship ship;
 
@@ -1008,13 +1008,15 @@ public class GameView extends GLSurfaceView implements SurfaceHolder.Callback {
 
     private int tutorialAlpha, level, experienceInLevel, experienceForNextLevel;
 
+    private boolean started, paused, gameOverProcessed, tutoring, updatedToGooglePlay;
+
     public static int canvasWidth, canvasHeight;
 
     private static GameState gameState;
 
     private static boolean controlInverted, soundEnabled, vibrationEnabled;
 
-    private static final int AMOUNT_OF_EXHAUST = 40;
+    private static final int AMOUNT_OF_EXHAUST = 30;
 
     private static final int AMOUNT_OF_EXPLOSION = 300;
 
