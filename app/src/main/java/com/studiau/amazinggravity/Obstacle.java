@@ -5,8 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-import java.util.Random;
-
 /**
  * @Author: Daniel Au
  */
@@ -15,15 +13,13 @@ public class Obstacle {
 
     public Obstacle(Context context, Ship ship) {
 
-        random = new Random();
-
         RADIUS_TO_MASS_RATIO = GameView.canvasWidth * 0.01f;
 
         MAX_RADIUS = (BASE_MASS + MAX_ADDITIONAL_MASS) * RADIUS_TO_MASS_RATIO;
 
         colour = setObstacleColour();
 
-        speedBoostItem = new SpeedBoostItem(context, colour, random.nextBoolean(), radius, locationX, locationY);
+        speedBoostItem = new SpeedBoostItem(context, colour, ObstacleManager.seededRandom.nextBoolean(), radius, locationX, locationY);
 
         reset(ship);
 
@@ -31,13 +27,13 @@ public class Obstacle {
 
     public void reset(Ship ship) {
 
-        mass = BASE_MASS + random.nextInt(MAX_ADDITIONAL_MASS);
+        mass = BASE_MASS + ObstacleManager.seededRandom.nextInt(MAX_ADDITIONAL_MASS);
 
         radius = mass * RADIUS_TO_MASS_RATIO;
 
-        float randomFloat = random.nextFloat();
+        float randomFloat = ObstacleManager.seededRandom.nextFloat();
 
-        boolean randomBoolean = random.nextBoolean();
+        boolean randomBoolean = ObstacleManager.seededRandom.nextBoolean();
 
         if (randomBoolean) {
 
@@ -370,8 +366,6 @@ public class Obstacle {
         return locationY;
 
     }
-
-    private Random random;
 
     private SpeedBoostItem speedBoostItem;
 

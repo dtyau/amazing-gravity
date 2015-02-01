@@ -4,9 +4,10 @@ import android.content.Context;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Random;
 
 /**
  * @Author: Daniel Au
@@ -19,6 +20,12 @@ public class ObstacleManager {
         this.context = context;
 
         blurMaskFilter = new BlurMaskFilter(42, BlurMaskFilter.Blur.OUTER);
+
+        calendar = Calendar.getInstance();
+
+        seed = (long) calendar.get(Calendar.DAY_OF_YEAR);
+
+        seededRandom = new Random(seed);
 
         obstacles = new ArrayList<>();
 
@@ -53,6 +60,8 @@ public class ObstacleManager {
     }
 
     public void reset(Ship ship) {
+
+        seededRandom = new Random(seed);
 
         obstacles.clear();
 
@@ -124,6 +133,12 @@ public class ObstacleManager {
     private BlurMaskFilter blurMaskFilter;
 
     private ArrayList<Obstacle> obstacles;
+
+    private final Calendar calendar;
+
+    private long seed;
+
+    public static Random seededRandom;
 
     public static final int NUMBER_OF_OBSTACLES = 5;
 
