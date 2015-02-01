@@ -1,6 +1,9 @@
 package com.studiau.amazinggravity;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -12,6 +15,14 @@ import android.graphics.Paint;
 public class Obstacle {
 
     public Obstacle(Context context, Ship ship) {
+
+        if(blurMaskFilter == null) {
+
+            blurMaskFilter = new BlurMaskFilter(42, BlurMaskFilter.Blur.OUTER);
+
+        }
+
+        bitmap_warning =  BitmapFactory.decodeResource(context.getResources(), R.drawable.new_releases);
 
         RADIUS_TO_MASS_RATIO = GameView.canvasWidth * 0.01f;
 
@@ -129,8 +140,31 @@ public class Obstacle {
 
     public void draw(Canvas canvas, Paint paint) {
 
+        if((locationY + radius) < 0 &&
+                (locationY + radius) > (-GameView.canvasHeight / (ObstacleManager.NUMBER_OF_OBSTACLES - 1))) {
+
+            paint.setMaskFilter(null);
+
+            if ((locationX > 0) && (locationX < GameView.canvasWidth)) {
+
+                canvas.drawBitmap(bitmap_warning, locationX, 0, paint);
+
+            } else if (locationX < 0) {
+
+                canvas.drawBitmap(bitmap_warning, 0, 0, paint);
+
+            } else if (locationX > GameView.canvasWidth) {
+
+                canvas.drawBitmap(bitmap_warning, GameView.canvasWidth, 0, paint);
+
+            }
+
+        }
+
         if(((locationX + radius) > 0) && ((locationX - radius) < GameView.canvasWidth) &&
                 ((locationY + radius) > 0) && ((locationY - radius) < GameView.canvasHeight)) {
+
+            paint.setMaskFilter(blurMaskFilter);
 
             paint.setColor(Color.parseColor(colour));
 
@@ -369,11 +403,15 @@ public class Obstacle {
 
     private SpeedBoostItem speedBoostItem;
 
+    private String colour;
+
+    private Bitmap bitmap_warning;
+
+    private static BlurMaskFilter blurMaskFilter;
+
     private float mass, radius, locationX, locationY, speedX, speedY, oldSpeedX;
 
     private boolean scored, linkedWithSpeedBoost;
-
-    private String colour;
 
     private final float RADIUS_TO_MASS_RATIO;
 
