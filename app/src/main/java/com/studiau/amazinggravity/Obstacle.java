@@ -155,7 +155,7 @@ public class Obstacle {
 
             } else if (locationX > GameView.canvasWidth) {
 
-                canvas.drawBitmap(bitmap_warning, GameView.canvasWidth, 0, paint);
+                canvas.drawBitmap(bitmap_warning, GameView.canvasWidth - bitmap_warning.getWidth(), 0, paint);
 
             }
 
